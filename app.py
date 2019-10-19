@@ -23,7 +23,11 @@ def hello():
     data = mongo.db.course.find()
     return render_template("index.html", courses = data)
 
-#Flask app run configs
+#returns manage course page and passes all courses in db
+@app.route('/manage-courses')
+def manage_courses():
+    
+    return render_template("manage-courses.html")
 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)
