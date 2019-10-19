@@ -2,12 +2,39 @@
 {%block content%}
 <h2>Manage Courses</h2>
 
-<div>
+<div class="container">
     <ul class="collapsible">
+        {%for course in courses%}
         <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header">
+                <div class="row">
+                    <div class="col s10">
+                        <ul>
+                            <li>Course: {{course.course_name}}</li>
+                            <li>Par: {{course.par}}</li>
+                            <li>Location: {{course.region}}</li>
+                            <li>Avg Rating:
+                                {% for star in range(5) %}
+                                {% if loop.index <= course.average_rating %}
+                                <i class="material-icons gold-star">star</i>
+                                {% else %}
+                                <i class="material-icons grey-star">star</i>
+                                {% endif %}
+                                {% endfor %}
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="col s2">
+                        <i class="material-icons">expand_more</i>
+                    </div>
+                </div>
+            </div>
+            <div class="collapsible-body"><span>{{course.desc}}</span></div>
         </li>
+        {%endfor%}
     </ul>
 </div>
 
