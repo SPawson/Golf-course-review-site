@@ -10,14 +10,18 @@ config = App_Connection()
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = config.db_name
 app.config["MONGO_URI"] = config.m_uri
+mongo = PyMongo(app)
+
 
 
 
 
 
 @app.route('/')
+@app.route('/home')
 def hello():
-    return 'Hello World Again'
+    data = mongo.db.course.find()
+    return render_template("index.html", courses = data)
 
 #Flask app run configs
 
