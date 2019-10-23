@@ -1,0 +1,127 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<h3>Add Course</h3>
+
+<div class="container">
+
+    <div class="row">
+        <!--Add course form details-->
+        <form action="{{url_for('add_course')}}" method="POST" class="col s12">
+
+            <h5>Course Details</h5>
+            <div class="row">
+                <div class="input-field col s9">
+                    <i class="material-icons prefix">short_text</i>
+                    <input required id="icon_prefix course_name" name="course_name" type="text" class="validate">
+                    <label for="icon_prefix">Course Name</label>
+                </div>
+
+                <div class="input-field col s3">
+                    <i class="material-icons prefix">assignment</i>
+                    <input required id="icon_prefix course_par" name="course_par" type="text" class="validate">
+                    <label for="icon_prefix">Par</label>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">description</i>
+                    <textarea required id="description" name="description"
+                        class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Course Description</label>
+                </div>
+            </div>
+
+            <h5>Address</h5>
+
+            <!--Address section-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <textarea required id="address-1" name="address_1" class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Address Line 1</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <textarea required id="address-2" name="address_2" class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Address Line 2</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <textarea required id="address-3" name="address_3" class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Address Line 3</label>
+                </div>
+            </div>
+
+            <!--Region drop down box-->
+
+            <!--<div class="row">
+            
+        </div>-->
+
+            <div class="row">
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">poll</i>
+                    <select required autofocus id="region" name="region">
+                        <option value="" disabled selected>Choose Region</option>
+                        {% for region in regions %}
+                        <option value="{{region.name}}">{{region.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label>Region</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">add_location</i>
+                    <textarea required id="post-code" name="post_code" class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Postcode</label>
+                </div>
+            </div>
+
+            <!--Links section-->
+            <h5>Links</h5>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">photo</i>
+                    <textarea required id="course-img-link" name="course_img"
+                        class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Course Image</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">attach_file</i>
+                    <textarea required id="affiliate-link" name="affiliate_link"
+                        class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Affiliate Link</label>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <button class="btn waves-effect waves-light" type="submit">Add Course
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

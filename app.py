@@ -25,6 +25,16 @@ def manage_courses():
     
     return render_template("manage-courses.html", courses = course_list)
 
+#add course into the DB, also retrieves all regions for region selection box
+@app.route('/add-course')
+def add_course():
+    regions = mongo.db.region.find()
+    region_list = Record.return_list(regions)
+    print(region_list)
 
+    return render_template("add-course.html", regions = region_list)
+
+
+#Setting app runtime conditions 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)
