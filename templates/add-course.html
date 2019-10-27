@@ -7,7 +7,7 @@
 
     <div class="row">
         <!--Add course form details-->
-        <form action="{{url_for('add_course')}}" method="POST" class="col s12">
+        <form action="{{url_for('insert_course')}}" method="POST" class="col s12">
 
             <h5>Course Details</h5>
             <div class="row">
@@ -19,7 +19,7 @@
 
                 <div class="input-field col s3">
                     <i class="material-icons prefix">assignment</i>
-                    <input required id="icon_prefix course_par" name="course_par" type="text" class="validate">
+                    <input required id="icon_prefix course_par" name="par" type="text" class="validate">
                     <label for="icon_prefix">Par</label>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-1" name="address_1" class="validate materialize-textarea"></textarea>
+                    <textarea required id="address-1" name="address_line_1" class="validate materialize-textarea"></textarea>
                     <label for="icon_telephone">Address Line 1</label>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-2" name="address_2" class="validate materialize-textarea"></textarea>
+                    <textarea required id="address-2" name="address_line_2" class="validate materialize-textarea"></textarea>
                     <label for="icon_telephone">Address Line 2</label>
                 </div>
             </div>
@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-3" name="address_3" class="validate materialize-textarea"></textarea>
+                    <textarea required id="address-3" name="address_line_3" class="validate materialize-textarea"></textarea>
                     <label for="icon_telephone">Address Line 3</label>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 
                 <div class="input-field col s6">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="post-code" name="post_code" class="validate materialize-textarea"></textarea>
+                    <textarea required id="post-code" name="postcode" class="validate materialize-textarea"></textarea>
                     <label for="icon_telephone">Postcode</label>
                 </div>
             </div>

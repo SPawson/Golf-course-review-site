@@ -25,14 +25,20 @@ def manage_courses():
     
     return render_template("manage-courses.html", courses = course_list)
 
-#add course into the DB, also retrieves all regions for region selection box
+#retrieves add course template and popualtes region drop box
 @app.route('/add-course')
 def add_course():
     regions = mongo.db.region.find()
     region_list = Record.return_list(regions)
-    print(region_list)
-
     return render_template("add-course.html", regions = region_list)
+
+#Inserts the record into the course DB
+@app.route('/insert_course', methods=['POST','GET'])
+def insert_course():
+    course = mongo.db.course
+    data = Record.create_course_record(request.form)
+    course.insert_one(data)
+    return redirect(url_for('manage_courses'))
 
 
 #Setting app runtime conditions 
