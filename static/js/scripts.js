@@ -1,10 +1,14 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     //Initialises the collapsible text box elements
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems);
+    var collaps = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(collaps);
 
     //Initialises the drop down boxes
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems);
+    var dropDowns = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(dropDowns);
+
+    
+
+
   });

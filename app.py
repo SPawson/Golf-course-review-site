@@ -33,13 +33,18 @@ def add_course():
     return render_template("add-course.html", regions = region_list)
 
 #Inserts the record into the course DB
-@app.route('/insert_course', methods=['POST','GET'])
+@app.route('/add-course/insert', methods=['POST','GET'])
 def insert_course():
     course = mongo.db.course
     data = Record.create_course_record(request.form)
     course.insert_one(data)
     return redirect(url_for('manage_courses'))
 
+@app.route('/manage-courses/<course_id>')
+def delete_course(course_id):
+    course = mongo.db.course
+    course.remove({'_id': ObjectId(course_id)})
+    return redirect(url_for('manage_courses'))
 
 #Setting app runtime conditions 
 if __name__ == '__main__':
