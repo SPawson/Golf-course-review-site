@@ -40,12 +40,33 @@ def insert_course():
     course.insert_one(data)
     return redirect(url_for('manage_courses'))
 
-@app.route('/manage-courses/<course_id>')
+#Deletes the selected course based on the id passed into the function
+@app.route('/manage-courses/delete')
 def delete_course(course_id):
     course = mongo.db.course
     course.remove({'_id': ObjectId(course_id)})
     return redirect(url_for('manage_courses'))
 
+#Loads the edit page and populates all the fields based on the record retrieved
+@app.route('/manage-courses/edit/<course_id>')
+def edit_course(course_id, methods=['POST','GET']):
+    regions = mongo.db.region.find()
+    region_list = Record.return_list(regions)
+
+    course = mongo.db.course
+    selected_course = course.find_one({"_id": ObjectId(course_id)})
+
+    return render_template("edit-course.html", regions = region_list , course = selected_course)
+
+#Updates the existing record based on the information entered into the form
+@app.route('/manage-courses/update/<course_id>', methods=['POST','GET'])
+def update_course(course_id):
+    course = mongo.db.course
+    data = Record.create_course_record(request.form)
+    print(data)
+    course.update({'_id': ObjectId(course_id)}, data)
+
+    return redirect(url_for('manage_courses'))
 #Setting app runtime conditions 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)

@@ -1,0 +1,123 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<h3>Edit Course</h3>
+
+<div class="container">
+
+    <div class="row">
+        <!--Add course form details-->
+        <form action="{{url_for('update_course', course_id = course._id)}}" method="POST" class="col s12">
+
+            <h5>Course Details</h5>
+            <div class="row">
+                <div class="input-field col s9">
+                    <i class="material-icons prefix">short_text</i>
+                    <input required id="course_name-edit" name="course_name" type="text" class="validate" value="{{course.course_name}}">
+                    <label for="icon_prefix">Course Name</label>
+                </div>
+
+                <div class="input-field col s3">
+                    <i class="material-icons prefix">assignment</i>
+                    <input required id="course_par-edit" name="par" type="text" class="validate" value="{{course.par}}">
+                    <label for="icon_prefix">Par</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">description</i>
+                    <textarea required id="description-edit" name="description"
+                        class="validate materialize-textarea" >{{course.description}}</textarea>
+                    <label for="icon_telephone">Course Description</label>
+                </div>
+            </div>
+
+            <h5>Address</h5>
+
+            <!--Address section-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <input required id="address-1-edit" name="address_line_1" type="text" class="validate" value="{{course.address_line_1}}">
+                    <label for="icon_telephone">Address Line 1</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <input required id="address-2-edit" name="address_line_2" type="text" class="validate" value="{{course.address_line_2}}">
+                    <label for="icon_telephone">Address Line 2</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">add_location</i>
+                    <input required id="address-3-edit" name="address_line_3" type="text" class="validate" value="{{course.address_line_3}}">
+                    <label for="icon_telephone">Address Line 3</label>
+                </div>
+            </div>
+
+            <!--Region drop down box-->
+
+            <!--<div class="row">
+            
+        </div>-->
+
+            <div class="row">
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">poll</i>
+                    <select required autofocus id="region" name="region">
+                        {% for region in regions %}
+                        {% if course.region == region.name %}
+                        <option selected value="{{region.name}}">{{region.name}}</option>
+                        {% else %}
+                        <option value="{{region.name}}">{{region.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label>Region</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">add_location</i>
+                    <input required id="post-code-edit" name="postcode" type="text" class="validate" value="{{course.postcode}}">
+                    <label for="icon_telephone">Postcode</label>
+                </div>
+            </div>
+
+            <!--Links section-->
+            <h5>Links</h5>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">photo</i>
+                    <input required id="course-img-link-edit" name="course-img-link" type="text" class="validate" value="{{course.course_img}}">
+                    <label for="icon_telephone">Course Image</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">attach_file</i>
+                    <input required id="affiliate-link-edit" name="affiliate_link" type="text" class="validate" value="{{course.affiliate_link}}">
+                    <label for="icon_telephone">Affiliate Link</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn waves-effect waves-light" type="submit">Update Course
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
