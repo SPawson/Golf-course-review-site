@@ -3,10 +3,10 @@ class Record:
     @staticmethod   
     def find_value(obj,key):
     #Finds the value of certain key/value pair passed in
-        value = ""
+        value = []
         for fields in obj:
-            value = fields[key]
-        return str(value)
+            value.append(fields[key]) 
+        return value
     
     @staticmethod
     def update_kv(obj,key,value):

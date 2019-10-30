@@ -13,10 +13,19 @@ app.config["MONGO_DBNAME"] = config.db_name
 app.config["MONGO_URI"] = config.m_uri
 mongo = PyMongo(app)
 
+#Temporary User Login ID var
+active_user = "5daaff251c9d440000d69d06"
+
 @app.route('/')
 @app.route('/home')
 def hello():
     return render_template("index.html")
+
+
+"""
+Golf course management controllers
+
+"""
 
 #returns manage course page and passes all courses in db
 @app.route('/manage-courses')
@@ -67,6 +76,36 @@ def update_course(course_id):
     course.update({'_id': ObjectId(course_id)}, data)
 
     return redirect(url_for('manage_courses'))
+
+
+"""
+Review Management controller
+
+"""
+
+@app.route('/manage-reviews')
+def manage_reviews():
+    reviews = mongo.db.review
+    review_list = list(reviews.find({"user_id": ObjectId(active_user)}))
+    print("Tests")
+
+    list_courseIds = Record.find_value(review_list, "course_id")
+
+    list_of_courses = []
+    for id in list_courseIds:
+        course = mongo.db.course
+        list_of_courses += course.find({"_id": ObjectId(id)})
+        print(id)
+    
+    courses = list(list_of_courses)
+    
+    print(courses)
+
+    
+    return render_template("manage-reviews.html", reviews = review_list, courses = courses)
+
+
+
 #Setting app runtime conditions 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)
