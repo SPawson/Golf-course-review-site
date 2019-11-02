@@ -15,6 +15,8 @@ mongo = PyMongo(app)
 
 #Temporary User Login ID var
 active_user = "5daaff251c9d440000d69d06"
+#Temp Course ID for testing
+selected_course = "5dbd85633da78418944a2760"
 
 @app.route('/')
 @app.route('/home')
@@ -82,7 +84,7 @@ def update_course(course_id):
 Review Management controller
 
 """
-
+#Retrieves list of all reviews created by user logged in
 @app.route('/manage-reviews')
 def manage_reviews():
     reviews = mongo.db.review
@@ -104,14 +106,35 @@ def manage_reviews():
     return render_template("manage-reviews.html", reviews = review_list, courses = courses)
 
 @app.route('/add-review')
-def add_review(course_id):
-
+def add_review():
 
     return render_template("add-review.html")
 
-
-
+@app.route('/add-review/insert', methods=['POST','GET'])
+def insert_review():
+    review = mongo.db.review
+    data = Record.create_review_record(request.form,active_user,selected_course)
+    review.insert_one(data)
+    average_review(selected_course)
+    return redirect(url_for('manage_reviews'))
 
 #Setting app runtime conditions 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)
+
+
+def average_review(course_id):
+    review = mongo.db.review
+    course = mongo.db.course
+
+    list_of_reviews = review.find({"course_id": ObjectId(course_id)})
+    review_avg = Record.average_rating(list_of_reviews)
+
+    course.update_one({"_id": ObjectId(course_id)}, 
+    {
+        "avg_rating": review_avg
+    }
+    )
+
+
+

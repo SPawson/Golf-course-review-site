@@ -1,4 +1,6 @@
 from .time import Time
+import time
+from bson.objectid import ObjectId
 
 class Record:
     
@@ -51,6 +53,19 @@ class Record:
         return data
 
     @staticmethod
+    def create_review_record(obj,user,course):
+    #Creates a dictionary from the form fields
+        data = {
+        'user_id': ObjectId(user),
+        'date': time.time(),
+        'star_rating': int(obj.get('star_rating')),
+        'review_title': obj.get('review_title'),
+        'review_article': obj.get('review_article'),
+        'course_id': ObjectId(course)
+        }
+        return data
+
+    @staticmethod
     def convert_time(obj):
         
         records = []
@@ -62,6 +77,20 @@ class Record:
             records.append(updated)
         
         return records
+    
+    @staticmethod
+    #find the sum of ratings and return avg rating (rounded)
+    def average_rating(obj):
+        data = Record.find_value(obj,"star_rating")
+        total = 0
+        for val in data:
+            total += val
+        
+        average = round(total / len(data))
+
+        return average
+
+
 
 
         
