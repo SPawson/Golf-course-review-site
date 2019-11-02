@@ -91,13 +91,12 @@ def manage_reviews():
     review_list = list(reviews.find({"user_id": ObjectId(active_user)}))
     print("Tests")
 
-    list_courseIds = Record.find_value(review_list, "course_id")
+    list_courseIds = Record.find_course_ids(review_list)
 
     list_of_courses = []
     for id in list_courseIds:
         course = mongo.db.course
         list_of_courses += course.find({"_id": ObjectId(id)})
-        print(id)
     
     courses = list(list_of_courses)
 

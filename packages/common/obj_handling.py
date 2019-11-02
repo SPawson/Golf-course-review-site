@@ -65,6 +65,14 @@ class Record:
         }
         return data
     
+    @staticmethod
+    #Removes duplicates from list due to conversion to dict and then back
+    def find_course_ids(obj):
+        data = Record.find_value(obj, 'course_id')
+        data = list(dict.fromkeys(data))
+
+        return data
+    
 
     @staticmethod
     def convert_time(obj):
