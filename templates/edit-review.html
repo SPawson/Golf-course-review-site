@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<h3>Write a Review</h3>
+
+<div class="container">
+
+    <div class="row">
+        <form action="{{url_for('update_review', review_id = review._id, course_id = review.course_id)}}" method="POST" class="col s12">
+
+            <h5></h5>
+            <div class="row">
+                <div class="input-field col s9">
+                    <i class="material-icons prefix">short_text</i>
+                    <input required id="review-title" name="review_title" type="text" class="validate" value="{{review.review_title}}">
+                    <label for="icon_prefix">Title</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">description</i>
+                    <textarea required id="review-article" name="review_article"
+                        class="validate materialize-textarea">{{review.review_article}}</textarea>
+                    <label for="icon_telephone">Review</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <h5>Star Rating</h5>
+                    <input class="rating" name="star_rating" type="hidden" value="{{review.star_rating}}">
+                    <div class="stars">
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn waves-effect waves-light" type="submit">Update
+                    <i class="material-icons right">send</i>
+                </button>
+
+                <button href="{{url_for('manage_reviews')}}" class="btn waves-effect waves-light">Cancel
+                    <i class="material-icons right">clear</i>
+                </button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/star-rating.js') }}"></script>
+{% endblock %}

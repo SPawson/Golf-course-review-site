@@ -110,6 +110,7 @@ def add_review():
 
     return render_template("add-review.html")
 
+#inserts data from form into the review db
 @app.route('/add-review/insert', methods=['POST','GET'])
 def insert_review():
     review = mongo.db.review
@@ -118,6 +119,7 @@ def insert_review():
     average_review(selected_course)
     return redirect(url_for('manage_reviews'))
 
+#calculates the average score from all reviews associated with the given course_id
 def average_review(course_id):
     review = mongo.db.review
     course = mongo.db.course
@@ -128,6 +130,23 @@ def average_review(course_id):
     course.update_one({"_id": ObjectId(course_id)}, 
     {"$set": {"avg_rating": review_avg}}, upsert=True)
 
+#loads the edit review page with the relevant record
+@app.route('/edit-review/<review_id>', methods=['POST','GET'])
+def edit_review(review_id):
+    review = mongo.db.review
+    selected_review = review.find_one({"_id": ObjectId(review_id)})
+    print(selected_review)
+
+    return render_template('edit-review.html', review = selected_review)
+
+#Updates review record and updates average score for course
+@app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
+def update_review(review_id, course_id):
+    review = mongo.db.review
+    data = Record.create_review_record(request.form,active_user,course_id)
+    review.update({'_id': ObjectId(review_id)}, data)
+    average_review(course_id)
+    return redirect(url_for('manage_reviews'))
 
 #Setting app runtime conditions 
 if __name__ == '__main__':
