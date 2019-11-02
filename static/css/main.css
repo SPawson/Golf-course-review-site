@@ -1,0 +1,8 @@
+.gold-star{
+    color: goldenrod;
+
+}
+
+.stars span i{
+    cursor: pointer;
+}

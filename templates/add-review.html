@@ -1,0 +1,53 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<h3>Write a Review</h3>
+
+<div class="container">
+
+    <div class="row">
+        <!--Add course form details-->
+        <form action="" method="POST" class="col s12">
+
+            <h5></h5>
+            <div class="row">
+                <div class="input-field col s9">
+                    <i class="material-icons prefix">short_text</i>
+                    <input required id="review-title" name="review_title" type="text" class="validate">
+                    <label for="icon_prefix">Title</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">description</i>
+                    <textarea required id="review-article" name="review_article"
+                        class="validate materialize-textarea"></textarea>
+                    <label for="icon_telephone">Review</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <h5>Star Rating</h5>
+
+
+                    <input class="rating" name="star_rating" type="hidden" value="1">
+                    <div class="stars">
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                        <span><i class="material-icons star">star</i></span>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/star-rating.js') }}"></script>
+{% endblock %}

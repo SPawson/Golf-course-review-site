@@ -103,6 +103,11 @@ def manage_reviews():
         
     return render_template("manage-reviews.html", reviews = review_list, courses = courses)
 
+@app.route('/add-review')
+def add_review():
+    return render_template("add-review.html")
+
+
 
 
 #Setting app runtime conditions 
