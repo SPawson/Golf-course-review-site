@@ -98,10 +98,9 @@ def manage_reviews():
         print(id)
     
     courses = list(list_of_courses)
-    
-    print(courses)
 
-    
+    #updated_course = Record.convert_time(courses)
+        
     return render_template("manage-reviews.html", reviews = review_list, courses = courses)
 
 
