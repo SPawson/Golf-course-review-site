@@ -50,7 +50,7 @@ def insert_course():
     return redirect(url_for('manage_courses'))
 
 #Deletes the selected course based on the id passed into the function
-@app.route('/manage-courses/delete')
+@app.route('/manage-courses/delete/<course_id>')
 def delete_course(course_id):
     course = mongo.db.course
     course.remove({'_id': ObjectId(course_id)})
@@ -104,7 +104,9 @@ def manage_reviews():
     return render_template("manage-reviews.html", reviews = review_list, courses = courses)
 
 @app.route('/add-review')
-def add_review():
+def add_review(course_id):
+
+
     return render_template("add-review.html")
 
 
