@@ -118,11 +118,6 @@ def insert_review():
     average_review(selected_course)
     return redirect(url_for('manage_reviews'))
 
-#Setting app runtime conditions 
-if __name__ == '__main__':
-    app.run(host = config.host_val , port = config.port_val, debug=True)
-
-
 def average_review(course_id):
     review = mongo.db.review
     course = mongo.db.course
@@ -131,10 +126,14 @@ def average_review(course_id):
     review_avg = Record.average_rating(list_of_reviews)
 
     course.update_one({"_id": ObjectId(course_id)}, 
-    {
-        "avg_rating": review_avg
-    }
-    )
+    {"$set": {"avg_rating": review_avg}}, upsert=True)
+
+
+#Setting app runtime conditions 
+if __name__ == '__main__':
+    app.run(host = config.host_val , port = config.port_val, debug=True)
+
+
 
 
 
