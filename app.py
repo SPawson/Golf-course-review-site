@@ -18,10 +18,20 @@ active_user = "5daaff251c9d440000d69d06"
 #Temp Course ID for testing
 selected_course = "5dbd85633da78418944a2760"
 
+"""
+Index Page Controller
+
+"""
+
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template("index.html")
+    course = mongo.db.course
+
+    featured_course = Record.return_list(course.aggregate([{'$sample': {'size':1}}])) 
+    print(featured_course[0])
+
+    return render_template("index.html", featured = featured_course[0])
 
 
 """

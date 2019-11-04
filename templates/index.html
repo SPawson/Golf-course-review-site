@@ -1,4 +1,109 @@
 {%extends 'base.html'%}
 {%block content%}
-<p>I am home</p>
+
+<div class="slider">
+    <ul class="slides">
+        <li>
+            <img src="{{ url_for('static', filename='media/images/index-slider/course-1.jpg')}}"> <!-- random image -->
+            <div class="caption center-align">
+                <h3>Sign Up Today!</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+
+<!--Featured Course-->
+
+<div class="container">
+        
+        <div class="section center-align">
+                <h4>Featured Course</h4>
+            <div class="row">
+                <div class="col s12 m10 push-m1">
+                        
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{featured.course_img}}">
+                            <span class="card-title"> <strong>{{featured.course_name}}</strong> </span>
+                        </div>
+                        <div class="card-content left-align">
+                            <ul>
+                                <li><strong>Avg Rating</strong> :
+                                    {% for star in range(5) %}
+                                    {% if loop.index <= featured.avg_rating %}
+                                    <i class="material-icons gold-star">star</i>
+                                    {% else %}
+                                    <i class="material-icons grey-star">star</i>
+                                    {% endif %}
+                                    {% endfor %}
+                                </li>
+                                <li><strong>Description:</strong> {{featured.description}} </li>
+                                <li><strong>Par:</strong> {{featured.par}}</li>
+                                <li><strong>Region:</strong> {{featured.region}}</li>
+                            </ul>
+    
+                            <div>
+                                <a href="" class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                            </div>
+    
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+    
+        </div>
+    </div>
+    
+
+
+
+
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Company Bio</h5>
+                <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's
+                    our full time job. Any amount would help support and continue development on this project and is
+                    greatly appreciated.</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Settings</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
+    </div>
+</footer>
+
+
+
+
 {% endblock %}

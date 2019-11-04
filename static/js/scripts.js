@@ -3,6 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
   var nav = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(nav);
 
+  //Initialises index image carousel
+  let options = {
+    height: 600,
+    indicators: false,
+    interval: 6000
+  }
+
+  var slider = document.querySelectorAll('.slider');
+  var instances = M.Slider.init(slider, options);
+
+  
+
   //Initialises the collapsible text box elements
   var collaps = document.querySelectorAll('.collapsible');
   var instances = M.Collapsible.init(collaps);

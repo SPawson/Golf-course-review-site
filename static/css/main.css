@@ -6,3 +6,8 @@
 .stars span i{
     cursor: pointer;
 }
+
+.slider{
+    max-height: 70vh;
+    display: block;
+}
