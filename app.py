@@ -20,7 +20,7 @@ selected_course = "5dbd85633da78418944a2760"
 
 @app.route('/')
 @app.route('/home')
-def hello():
+def index():
     return render_template("index.html")
 
 
