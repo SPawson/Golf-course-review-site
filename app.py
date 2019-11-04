@@ -27,12 +27,43 @@ Index Page Controller
 @app.route('/home')
 def index():
     course = mongo.db.course
+    region = mongo.db.region
 
     featured_course = Record.return_list(course.aggregate([{'$sample': {'size':1}}])) 
-    print(featured_course[0])
 
-    return render_template("index.html", featured = featured_course[0])
+    regions = region.find()
+    region_list = Record.return_list(regions)
 
+
+
+    return render_template("index.html", featured = featured_course[0], regions = region_list)
+
+
+"""
+Search Course
+
+"""
+#Searches the database using user query and returns listed results
+@app.route('/search', methods=['POST','GET'])
+def search():
+
+    course= mongo.db.course
+
+    region = request.form.get('region')
+    course_name = request.form.get('course_name')
+    min_rating = int(request.form.get('min_rating'))
+
+    search_item = Record.search_term(region,course_name,min_rating)
+
+    if search_item != "":
+        results = course.find(search_item)
+    else:
+        results = []
+           
+    list_of_results = Record.return_list(results)
+        
+
+    return render_template('search-results.html', results = list_of_results)
 
 """
 Golf course management controllers

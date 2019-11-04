@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+{%block content%}
+
+
+<div class="container center-align">
+    <h4>Search Results</h4>
+    {% for result in results %}
+    <div class="row left-align card-row">
+        <div class="card-size col s12 m12 ">
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="{{result.course_img}}">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <span class="card-title">{{result.course_name}}</span>
+                        <ul>
+                            <li><strong>Avg Rating</strong> :
+                                {% for star in range(5) %}
+                                {% if loop.index <= result.avg_rating %}
+                                <i class="material-icons gold-star">star</i>
+                                {% else %}
+                                <i class="material-icons grey-star">star</i>
+                                {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li><strong>Par:</strong> {{result.par}}</li>
+                            <li><strong>Region:</strong> {{result.region}}</li>
+                        </ul>
+
+                        <div>
+                                <a href="{{url_for('view_course', course_id= result._id)}}"
+                                    class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+{% endblock %}

@@ -30,7 +30,7 @@ function setRating(ev) {
         }
         if(star == span){
             match = true;
-            num= index + 1;
+            num= index +1;
         }
         let starValue = parseInt(document.querySelector('.rating').getAttribute('value'))
     });

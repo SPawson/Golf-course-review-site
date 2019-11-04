@@ -19,48 +19,102 @@
 <!--Featured Course-->
 
 <div class="container">
-        
-        <div class="section center-align">
-                <h4>Featured Course</h4>
-            <div class="row">
-                <div class="col s12 m10 push-m1">
-                        
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{featured.course_img}}">
-                            <span class="card-title"> <strong>{{featured.course_name}}</strong> </span>
+
+    <div class="section center-align">
+        <h4>Featured Course</h4>
+        <div class="row">
+            <div class="col s12 m10 push-m1">
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{featured.course_img}}">
+                        <span class="card-title"> <strong>{{featured.course_name}}</strong> </span>
+                    </div>
+                    <div class="card-content left-align">
+                        <ul>
+                            <li><strong>Avg Rating</strong> :
+                                {% for star in range(5) %}
+                                {% if loop.index <= featured.avg_rating %}
+                                <i class="material-icons gold-star">star</i>
+                                {% else %}
+                                <i class="material-icons grey-star">star</i>
+                                {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li><strong>Description:</strong> {{featured.description}} </li>
+                            <li><strong>Par:</strong> {{featured.par}}</li>
+                            <li><strong>Region:</strong> {{featured.region}}</li>
+                        </ul>
+
+                        <div>
+                            <a href="{{url_for('view_course', course_id= featured._id)}}"
+                                class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
                         </div>
-                        <div class="card-content left-align">
-                            <ul>
-                                <li><strong>Avg Rating</strong> :
-                                    {% for star in range(5) %}
-                                    {% if loop.index <= featured.avg_rating %}
-                                    <i class="material-icons gold-star">star</i>
-                                    {% else %}
-                                    <i class="material-icons grey-star">star</i>
-                                    {% endif %}
-                                    {% endfor %}
-                                </li>
-                                <li><strong>Description:</strong> {{featured.description}} </li>
-                                <li><strong>Par:</strong> {{featured.par}}</li>
-                                <li><strong>Region:</strong> {{featured.region}}</li>
-                            </ul>
-    
-                            <div>
-                                <a href="{{url_for('view_course', course_id= featured._id)}}" class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
-                            </div>
-    
-    
-                        </div>
+
+
                     </div>
                 </div>
             </div>
-    
-    
-    
+        </div>
+
+    </div>
+
+<hr>
+    <!--Search Course-->
+
+    <div id="search" class="row center-align">
+        <h4>Search</h4>
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content row">
+
+                    <form action="{{url_for('search')}}" method="POST" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select autofocus id="region" name="region">
+                                    <option value="" disabled selected>Choose Region</option>
+                                    {% for region in regions %}
+                                    <option value="{{region.name}}">{{region.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="icon_prefix">Region</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">short_text</i>
+                                <input id="review-title" name="course_name" type="text" class="validate">
+                                <label for="icon_prefix">Course Name</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <h5>Minimum Rating</h5>
+                                <input class="rating" name="min_rating" type="hidden" value="0">
+                                <div class="stars">
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" type="submit">Search
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    
 
 
 
@@ -68,6 +122,7 @@
 
 
 
+</div>
 
-
+<script type="text/javascript" src="{{ url_for('static', filename='js/star-rating.js') }}"></script>
 {% endblock %}

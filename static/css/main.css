@@ -11,3 +11,11 @@
     max-height: 70vh;
     display: block;
 }
+
+.card-size{
+    
+    height: 280px;
+}
+.card-row{
+    display: block;
+}

@@ -96,6 +96,30 @@ class Record:
         average = round(total / len(data))
 
         return average
+    
+    @staticmethod
+    #determines the search term that will be used in db search
+    def search_term(region,course_name,min_rating):
+        if region != None and course_name != "" and min_rating != 0:
+            search = {"region": region, "course_name": course_name, 'avg_rating':{"$gte": min_rating}}
+        elif region != None and course_name != "" :
+            search = {"region": region, "course_name": course_name}
+        elif region != None and min_rating != 0 :
+            search = {"region": region, "avg_rating":{"$gte": min_rating}}
+        elif course_name != "" and min_rating != 0 :
+            search = {"course_name": course_name, "avg_rating":{"$gte": min_rating}}
+        elif course_name != "" and min_rating != 0 :
+            search = {"course_name": course_name, "avg_rating":{"$gte": min_rating}}
+        elif  region != None:
+            search = {"region": region}
+        elif  min_rating != 0:
+            search = {"avg_rating":{"$gte": min_rating}}
+        elif  course_name != 0:
+            search = {"course_name": course_name}
+        else: 
+            search = ""
+
+        return search
 
 
 
