@@ -150,6 +150,29 @@ def delete_review(review_id,course_id):
     average_review(course_id)
     return redirect(url_for('manage_reviews'))
 
+
+"""
+Course View
+
+"""
+
+@app.route('/view')
+def view_course():
+    #Need course record
+    #reviews for course limit 5
+
+    course = mongo.db.course
+    review = mongo.db.review
+
+    course_data = course.find_one({"_id": ObjectId(selected_course)})
+
+    list_of_reviews = review.find({"course_id": ObjectId(selected_course)}, limit=5).sort('date', -1)
+    updated_reviews = Record.convert_time(list_of_reviews)
+
+
+    return render_template('course-view.html', course = course_data, reviews = updated_reviews)
+
+
 #Setting app runtime conditions 
 if __name__ == '__main__':
     app.run(host = config.host_val , port = config.port_val, debug=True)
