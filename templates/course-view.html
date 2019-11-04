@@ -4,11 +4,11 @@
     <h3>Course</h3>
 
     <div class="row">
-        <div class="col s12 m7">
+        <div class="col s12 m10">
             <div class="card">
                 <div class="card-image">
                     <img src="{{course.course_img}}">
-                    <span class="card-title">{{course.course_name}}</span>
+                    <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
                 </div>
                 <div class="card-content">
                     <ul>
@@ -43,10 +43,10 @@
     <h3>Reviews</h3>
     <hr>
 
-
+    {% if reviews|length > 0 %}
     {% for review in reviews %}
     <div class="row">
-        <div class="col s12 m7">
+        <div class="col s12 m10">
             <div class="card">
                 <div class="card-content">
                     <div class="row">
@@ -73,9 +73,14 @@
             </div>
         </div>
     </div>
-
-
     {% endfor %}
+    {% else %}
+        <p>No reviews have been left for this course yet!</p>
+    {% endif %}
+
+
+
+    
 
 </div>
 
