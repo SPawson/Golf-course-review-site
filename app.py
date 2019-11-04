@@ -166,17 +166,17 @@ Course View
 
 """
 
-@app.route('/view')
-def view_course():
+@app.route('/view/<course_id>')
+def view_course(course_id):
     #Need course record
     #reviews for course limit 5
 
     course = mongo.db.course
     review = mongo.db.review
 
-    course_data = course.find_one({"_id": ObjectId(selected_course)})
+    course_data = course.find_one({"_id": ObjectId(course_id)})
 
-    list_of_reviews = review.find({"course_id": ObjectId(selected_course)}, limit=5).sort('date', -1)
+    list_of_reviews = review.find({"course_id": ObjectId(course_id)}, limit=5).sort('date', -1)
     updated_reviews = Record.convert_time(list_of_reviews)
 
 
