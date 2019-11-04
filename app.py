@@ -87,7 +87,7 @@ Review Management controller
 @app.route('/manage-reviews')
 def manage_reviews():
     reviews = mongo.db.review
-    review_list = list(reviews.find({"user_id": ObjectId(active_user)}))
+    review_list = list(reviews.find({"user_id": ObjectId(active_user)}).sort('date', -1))
     #converts the unix time to dd/mm/yy
     updated_reviews = Record.convert_time(review_list)
 
