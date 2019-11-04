@@ -74,7 +74,6 @@ def edit_course(course_id, methods=['POST','GET']):
 def update_course(course_id):
     course = mongo.db.course
     data = Record.create_course_record(request.form)
-    print(data)
     course.update({'_id': ObjectId(course_id)}, data)
 
     return redirect(url_for('manage_courses'))
@@ -89,20 +88,17 @@ Review Management controller
 def manage_reviews():
     reviews = mongo.db.review
     review_list = list(reviews.find({"user_id": ObjectId(active_user)}))
-    print("Tests")
+    #converts the unix time to dd/mm/yy
+    updated_reviews = Record.convert_time(review_list)
 
     list_courseIds = Record.find_course_ids(review_list)
-
     list_of_courses = []
     for id in list_courseIds:
         course = mongo.db.course
         list_of_courses += course.find({"_id": ObjectId(id)})
-    
     courses = list(list_of_courses)
 
-    #updated_course = Record.convert_time(courses)
-        
-    return render_template("manage-reviews.html", reviews = review_list, courses = courses)
+    return render_template("manage-reviews.html", reviews = updated_reviews, courses = courses)
 
 @app.route('/add-review')
 def add_review():
@@ -134,7 +130,6 @@ def average_review(course_id):
 def edit_review(review_id):
     review = mongo.db.review
     selected_review = review.find_one({"_id": ObjectId(review_id)})
-    print(selected_review)
 
     return render_template('edit-review.html', review = selected_review)
 
@@ -144,6 +139,14 @@ def update_review(review_id, course_id):
     review = mongo.db.review
     data = Record.create_review_record(request.form,active_user,course_id)
     review.update({'_id': ObjectId(review_id)}, data)
+    average_review(course_id)
+    return redirect(url_for('manage_reviews'))
+
+#Deletes the selected review from the collection and updates the avg score for the course
+@app.route('/manage-reviews/delete/<review_id>&<course_id>')
+def delete_review(review_id,course_id):
+    review = mongo.db.review
+    review.remove({'_id': ObjectId(review_id)})
     average_review(course_id)
     return redirect(url_for('manage_reviews'))
 

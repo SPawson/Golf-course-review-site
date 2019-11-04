@@ -7,7 +7,7 @@ class Time(object):
         timestamp = float(unix_time)
         conversion = datetime.fromtimestamp(timestamp)
 
-        time = conversion.strftime("%d-%m-%Y")
+        time = conversion.strftime("%d %B %Y")
 
         return time
 

@@ -15,9 +15,7 @@ class Record:
     @staticmethod   
     def find_single_value(obj,key):
     #Finds the value of certain key/value pair passed in
-        value = ""
-        for fields in obj:
-            value += int(fields[key])
+        value = obj.get(key)
         return value
     
     @staticmethod
@@ -79,8 +77,8 @@ class Record:
         
         records = []
         for record in obj:
-            print(record)
             unix_time = Record.find_single_value(record, "date")
+            print(unix_time)
             date_val = Time.return_time(unix_time)
             updated = Record.update_kv(record,"date",date_val)
             records.append(updated)
