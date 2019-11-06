@@ -145,19 +145,18 @@ def manage_reviews():
 
     return render_template("manage-reviews.html", reviews = updated_reviews, courses = courses)
 
-@app.route('/add-review')
-def add_review():
-
-    return render_template("add-review.html")
+@app.route('/add-review/<course_id>', methods=['POST','GET'])
+def add_review(course_id):
+    return render_template("add-review.html", course_id = course_id)
 
 #inserts data from form into the review db
-@app.route('/add-review/insert', methods=['POST','GET'])
-def insert_review():
+@app.route('/add-review/insert/<course_id>', methods=['POST','GET'])
+def insert_review(course_id):
     review = mongo.db.review
-    data = Record.create_review_record(request.form,active_user,selected_course)
+    data = Record.create_review_record(request.form,active_user,course_id)
     review.insert_one(data)
-    average_review(selected_course)
-    return redirect(url_for('manage_reviews'))
+    average_review(course_id)
+    return redirect(url_for('view_course', course_id = course_id))
 
 #calculates the average score from all reviews associated with the given course_id
 def average_review(course_id):
@@ -166,7 +165,7 @@ def average_review(course_id):
 
     list_of_reviews = review.find({"course_id": ObjectId(course_id)})
     review_avg = Record.average_rating(list_of_reviews)
-    num_reviews = Record.num_reviews(list_of_reviews)
+    num_reviews = review.find({"course_id": ObjectId(course_id)}).count()
 
     course.update_one({"_id": ObjectId(course_id)}, 
     {"$set": {

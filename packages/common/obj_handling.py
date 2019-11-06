@@ -99,12 +99,6 @@ class Record:
         return average
 
     @staticmethod
-    #find the number of reviews
-    def num_reviews(obj):
-        total =  len(obj)
-        return total
-    
-    @staticmethod
     #determines the search term that will be used in db search
     def search_term(region,course_name,min_rating):
         if region != None and course_name != "" and min_rating != 0:

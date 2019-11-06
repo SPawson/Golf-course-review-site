@@ -30,8 +30,8 @@
                     </ul>
 
                     <div>
-                        <a href="" class="modal-trigger del-btn waves-effect waves-light btn btn_small">Book Now</a>
-                        <a href="" class="waves-effect waves-light btn btn_small blue">Write Review</a>
+                        <a href="{{course.affiliate_link}}" class="modal-trigger del-btn waves-effect waves-light btn btn_small">Book Now</a>
+                        <a href="{{url_for('add_review',course_id = course._id)}}" class="waves-effect waves-light btn btn_small blue">Write Review</a>
                     </div>
 
 
