@@ -29,14 +29,18 @@ def index():
     course = mongo.db.course
     region = mongo.db.region
 
-    featured_course = Record.return_list(course.aggregate([{'$sample': {'size':1}}])) 
+    featured_course = Record.return_list(list(course.aggregate([{'$sample': {'size':1}}]))) 
 
     regions = region.find()
     region_list = Record.return_list(regions)
 
+    top_courses = course.find().sort('num_reviews', -1).limit(3)
+    tc_list = Record.return_list(top_courses)
 
 
-    return render_template("index.html", featured = featured_course[0], regions = region_list)
+
+
+    return render_template("index.html", featured = featured_course[0], regions = region_list, tc_courses = tc_list)
 
 
 """
@@ -162,9 +166,13 @@ def average_review(course_id):
 
     list_of_reviews = review.find({"course_id": ObjectId(course_id)})
     review_avg = Record.average_rating(list_of_reviews)
+    num_reviews = Record.num_reviews(list_of_reviews)
 
     course.update_one({"_id": ObjectId(course_id)}, 
-    {"$set": {"avg_rating": review_avg}}, upsert=True)
+    {"$set": {
+        "avg_rating": review_avg,
+        "num_reviews": num_reviews
+        }}, upsert=True)
 
 #loads the edit review page with the relevant record
 @app.route('/edit-review/<review_id>', methods=['POST','GET'])

@@ -40,6 +40,7 @@
                                 <i class="material-icons grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
+                                <span>({{featured.num_reviews}})</span>
                             </li>
                             <li><strong>Description:</strong> {{featured.description}} </li>
                             <li><strong>Par:</strong> {{featured.par}}</li>
@@ -59,7 +60,7 @@
 
     </div>
 
-<hr>
+    <hr>
     <!--Search Course-->
 
     <div id="search" class="row center-align">
@@ -116,9 +117,45 @@
         </div>
     </div>
 
+    <!--Top Courses-->
+    <hr>
+    <div class="row top-courses">
+        <h4>Top Courses</h4>
+        {% for course in tc_courses %}
+        <div class="col s4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{course.course_img}}">
+                    <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
+                </div>
+                <div class="card-content left-align">
+                    <ul>
+                        <li><strong>Avg Rating</strong> :
+                            {% for star in range(5) %}
+                            {% if loop.index <= course.avg_rating %}
+                            <i class="material-icons gold-star">star</i>
+                            {% else %}
+                            <i class="material-icons grey-star">star</i>
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{course.num_reviews}})</span>
+                        </li>
+                        <li><strong>Par:</strong> {{course.par}}</li>
+                        <li><strong>Region:</strong> {{course.region}}</li>
+                    </ul>
+
+                    <div>
+                        <a href="{{url_for('view_course', course_id= course._id)}}"
+                            class="modal-trigger del-btn waves-effect waves-light btn btn_small">See More</a>
+                    </div>
 
 
+                </div>
+            </div>
+        </div>
+        {% endfor %}
 
+    </div>
 
 
 

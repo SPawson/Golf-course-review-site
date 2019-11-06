@@ -46,7 +46,8 @@ class Record:
         'affiliate_link': obj.get('affiliate_link'),
         'avg_rating': 0,
         'par': int(obj.get('par')),
-        'description': obj.get('description')
+        'description': obj.get('description'),
+        'num_reviews': 0
         }
         return data
 
@@ -96,6 +97,12 @@ class Record:
         average = round(total / len(data))
 
         return average
+
+    @staticmethod
+    #find the number of reviews
+    def num_reviews(obj):
+        total =  len(obj)
+        return total
     
     @staticmethod
     #determines the search term that will be used in db search
