@@ -1,0 +1,79 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<h3>Login</h3>
+
+<div class="container">
+
+    <!--Add user form details-->
+    <form action="" method="POST" class="col s12">
+        {{  form.hidden_tag()   }}
+
+        <div class="class row">
+            <div class="input-field col s9">
+                <i class="material-icons prefix">short_text</i>
+                <label for="icon_prefix">{{ form.email.label() }}</label>
+                {% if form.email.errors %}
+                {{  form.email() }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{  form.email() }}
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="class row">
+            <div class="input-field col s9">
+                <i class="material-icons prefix">short_text</i>
+                <label for="icon_prefix">{{ form.password.label() }}</label>
+                {% if form.password.errors %}
+                {{  form.password() }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{  form.password() }}
+                {% endif %}
+            </div>
+
+        </div>
+        
+        <label>
+            <span><a href="#">Forgot Password?</a></span>
+        </label>
+
+        <div class="class row">
+            <div class="input-field col s9">
+                <label for="icon_prefix"></label>
+                <p>
+                    <label>
+                        <input type="checkbox" class="filled-in" checked="checked" />
+                        <span>{{ form.remember.label() }}</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row">
+            {{ form.submit(class="btn")}}
+        </div>
+
+    </form>
+
+
+
+    <div>
+        Don't have an account? Register Today <a href="{{url_for('register')}}">Register</a>
+    </div>
+</div>
+
+
+{% endblock %}

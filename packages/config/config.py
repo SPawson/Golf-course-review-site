@@ -7,3 +7,4 @@ class App_Connection:
         self.port_val = int(os.environ.get('PORT'))
         self.m_uri = os.environ.get('MONGO_URI')
         self.db_name = 'golf_course'
+        self.secret_key = os.environ.get('SECRET_KEY')

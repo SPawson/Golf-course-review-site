@@ -115,7 +115,7 @@ class Record:
             search = {"region": region}
         elif  min_rating != 0:
             search = {"avg_rating":{"$gte": min_rating}}
-        elif  course_name != 0:
+        elif  course_name != "":
             search = {"course_name": course_name}
         else: 
             search = ""

@@ -1,16 +1,20 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, flash ,redirect, request, url_for
 from flask_pymongo import PyMongo
+from flask_bcrypt import Bcrypt
 from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
+from packages.common.forms import RegistrationForm, LoginForm
 import json
 
 #Configuration for app instance
 config = App_Connection()
 app = Flask(__name__)
+bcrypt = Bcrypt()
 app.config["MONGO_DBNAME"] = config.db_name
 app.config["MONGO_URI"] = config.m_uri
+app.config["SECRET_KEY"] = config.secret_key
 mongo = PyMongo(app)
 
 #Temporary User Login ID var
@@ -62,12 +66,38 @@ def search():
     if search_item != "":
         results = course.find(search_item)
     else:
-        results = []
+        results = course.find().sort('num_reviews', -1)
            
     list_of_results = Record.return_list(results)
         
 
     return render_template('search-results.html', results = list_of_results)
+
+
+"""
+Registration/Login Controllers
+
+"""
+@app.route("/register", methods=['GET','POST'])
+def register():
+    form = RegistrationForm()       
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'card-panel teal lighten-2')
+        return redirect(url_for('login'))
+
+    return render_template('register.html', title = 'Register', form=form)
+
+@app.route("/login", methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'sam.pawson@gmail.com' and form.password.data == '1234':
+            flash('Login Succesfull!', 'card-panel teal lighten-2')
+            return redirect(url_for('index'))
+    else:
+        flash('Login Unsuccesfull, please check username and password', 'card-panel teal lighten-2')
+    return render_template('login.html', title = 'Login', form=form)
+
 
 """
 Golf course management controllers
