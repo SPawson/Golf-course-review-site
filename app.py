@@ -11,14 +11,21 @@ import json
 #Configuration for app instance
 config = App_Connection()
 app = Flask(__name__)
-bcrypt = Bcrypt()
+bcrypt = Bcrypt(app)
 app.config["MONGO_DBNAME"] = config.db_name
 app.config["MONGO_URI"] = config.m_uri
 app.config["SECRET_KEY"] = config.secret_key
+app.config['DEBUG'] = True
 mongo = PyMongo(app)
 
+#Database names
+user_db = mongo.db.user
+course_db = mongo.db.course
+region_db = mongo.db.region
+review_db = mongo.db.review
+
 #Temporary User Login ID var
-active_user = "5daaff251c9d440000d69d06"
+active_user = "5e356a4eebbec2e8a85aaabd"
 #Temp Course ID for testing
 selected_course = "5dbd85633da78418944a2760"
 
@@ -30,15 +37,14 @@ Index Page Controller
 @app.route('/')
 @app.route('/home')
 def index():
-    course = mongo.db.course
-    region = mongo.db.region
+    
 
-    featured_course = Record.return_list(list(course.aggregate([{'$sample': {'size':1}}]))) 
+    featured_course = Record.return_list(list(course_db.aggregate([{'$sample': {'size':1}}]))) 
 
-    regions = region.find()
+    regions = region_db.find()
     region_list = Record.return_list(regions)
 
-    top_courses = course.find().sort('num_reviews', -1).limit(3)
+    top_courses = course_db.find().sort('num_reviews', -1).limit(3)
     tc_list = Record.return_list(top_courses)
 
 
@@ -54,9 +60,6 @@ Search Course
 #Searches the database using user query and returns listed results
 @app.route('/search', methods=['POST','GET'])
 def search():
-
-    course= mongo.db.course
-
     region = request.form.get('region')
     course_name = request.form.get('course_name')
     min_rating = int(request.form.get('min_rating'))
@@ -64,9 +67,9 @@ def search():
     search_item = Record.search_term(region,course_name,min_rating)
 
     if search_item != "":
-        results = course.find(search_item)
+        results = course_db.find(search_item)
     else:
-        results = course.find().sort('num_reviews', -1)
+        results = course_db.find().sort('num_reviews', -1)
            
     list_of_results = Record.return_list(results)
         
@@ -82,21 +85,44 @@ Registration/Login Controllers
 def register():
     form = RegistrationForm()       
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'card-panel teal lighten-2')
+        if does_email_exist(form.email.data):
+            flash(f'Account with email {form.email.data} exists', 'card-panel teal lighten-2')
+            return redirect(url_for('register'))
+        else:
+            secure_password = bcrypt.generate_password_hash(form.password.data).decode('utf8')
+            data = Record.create_user_record(request.form, secure_password)
+            user_db.insert_one(data)
+            flash(f'Account created for {form.username.data}!', 'card-panel teal lighten-2')
         return redirect(url_for('login'))
 
     return render_template('register.html', title = 'Register', form=form)
+
+def does_email_exist(search_item):
+    result = user_db.find_one({'email':search_item})
+    if not result:
+        return False
+    else:
+        return True 
+
+
 
 @app.route("/login", methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'sam.pawson@gmail.com' and form.password.data == '1234':
+        user_record = user_db.find_one({'email':form.email.data})
+        user_email = user_record["email"]
+        user_password = user_record["password"]
+
+        if form.email.data == user_email and bcrypt.check_password_hash(user_password, form.password.data):
             flash('Login Succesfull!', 'card-panel teal lighten-2')
             return redirect(url_for('index'))
+        else:
+            flash('Login Unsuccesfull, please check username and password', 'card-panel teal lighten-2')
+            return render_template('login.html', title = 'Login', form=form)
+
     else:
-        flash('Login Unsuccesfull, please check username and password', 'card-panel teal lighten-2')
-    return render_template('login.html', title = 'Login', form=form)
+        return render_template('login.html', title = 'Login', form=form)
 
 
 """
@@ -107,49 +133,45 @@ Golf course management controllers
 #returns manage course page and passes all courses in db
 @app.route('/manage-courses')
 def manage_courses():
-    course_list = list(mongo.db.course.find())
+    course_list = list(mongo.db.course_db.find())
     
     return render_template("manage-courses.html", courses = course_list)
 
 #retrieves add course template and popualtes region drop box
 @app.route('/add-course')
 def add_course():
-    regions = mongo.db.region.find()
+    regions = region_db.find()
     region_list = Record.return_list(regions)
     return render_template("add-course.html", regions = region_list)
 
 #Inserts the record into the course DB
 @app.route('/add-course/insert', methods=['POST','GET'])
 def insert_course():
-    course = mongo.db.course
     data = Record.create_course_record(request.form)
-    course.insert_one(data)
+    course_db.insert_one(data)
     return redirect(url_for('manage_courses'))
 
 #Deletes the selected course based on the id passed into the function
 @app.route('/manage-courses/delete/<course_id>')
 def delete_course(course_id):
-    course = mongo.db.course
-    course.remove({'_id': ObjectId(course_id)})
+    course_db.remove({'_id': ObjectId(course_id)})
     return redirect(url_for('manage_courses'))
 
 #Loads the edit page and populates all the fields based on the record retrieved
 @app.route('/manage-courses/edit/<course_id>')
 def edit_course(course_id, methods=['POST','GET']):
-    regions = mongo.db.region.find()
+    regions = region_db.find()
     region_list = Record.return_list(regions)
 
-    course = mongo.db.course
-    selected_course = course.find_one({"_id": ObjectId(course_id)})
+    selected_course = course_db.find_one({"_id": ObjectId(course_id)})
 
     return render_template("edit-course.html", regions = region_list , course = selected_course)
 
 #Updates the existing record based on the information entered into the form
 @app.route('/manage-courses/update/<course_id>', methods=['POST','GET'])
 def update_course(course_id):
-    course = mongo.db.course
     data = Record.create_course_record(request.form)
-    course.update({'_id': ObjectId(course_id)}, data)
+    course_db.update({'_id': ObjectId(course_id)}, data)
 
     return redirect(url_for('manage_courses'))
 
@@ -169,8 +191,7 @@ def manage_reviews():
     list_courseIds = Record.find_course_ids(review_list)
     list_of_courses = []
     for id in list_courseIds:
-        course = mongo.db.course
-        list_of_courses += course.find({"_id": ObjectId(id)})
+        list_of_courses += course_db.find({"_id": ObjectId(id)})
     courses = list(list_of_courses)
 
     return render_template("manage-reviews.html", reviews = updated_reviews, courses = courses)
@@ -182,22 +203,19 @@ def add_review(course_id):
 #inserts data from form into the review db
 @app.route('/add-review/insert/<course_id>', methods=['POST','GET'])
 def insert_review(course_id):
-    review = mongo.db.review
+
     data = Record.create_review_record(request.form,active_user,course_id)
-    review.insert_one(data)
+    review_db.insert_one(data)
     average_review(course_id)
     return redirect(url_for('view_course', course_id = course_id))
 
 #calculates the average score from all reviews associated with the given course_id
 def average_review(course_id):
-    review = mongo.db.review
-    course = mongo.db.course
-
-    list_of_reviews = review.find({"course_id": ObjectId(course_id)})
+    list_of_reviews = review_db.find({"course_id": ObjectId(course_id)})
     review_avg = Record.average_rating(list_of_reviews)
-    num_reviews = review.find({"course_id": ObjectId(course_id)}).count()
+    num_reviews = review_db.find({"course_id": ObjectId(course_id)}).count()
 
-    course.update_one({"_id": ObjectId(course_id)}, 
+    course_db.update_one({"_id": ObjectId(course_id)}, 
     {"$set": {
         "avg_rating": review_avg,
         "num_reviews": num_reviews
@@ -206,25 +224,22 @@ def average_review(course_id):
 #loads the edit review page with the relevant record
 @app.route('/edit-review/<review_id>', methods=['POST','GET'])
 def edit_review(review_id):
-    review = mongo.db.review
-    selected_review = review.find_one({"_id": ObjectId(review_id)})
+    selected_review = review_db.find_one({"_id": ObjectId(review_id)})
 
     return render_template('edit-review.html', review = selected_review)
 
 #Updates review record and updates average score for course
 @app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
 def update_review(review_id, course_id):
-    review = mongo.db.review
     data = Record.create_review_record(request.form,active_user,course_id)
-    review.update({'_id': ObjectId(review_id)}, data)
+    review_db.update({'_id': ObjectId(review_id)}, data)
     average_review(course_id)
     return redirect(url_for('manage_reviews'))
 
 #Deletes the selected review from the collection and updates the avg score for the course
 @app.route('/manage-reviews/delete/<review_id>&<course_id>')
 def delete_review(review_id,course_id):
-    review = mongo.db.review
-    review.remove({'_id': ObjectId(review_id)})
+    review_db.remove({'_id': ObjectId(review_id)})
     average_review(course_id)
     return redirect(url_for('manage_reviews'))
 
@@ -239,16 +254,14 @@ def view_course(course_id):
     #Need course record
     #reviews for course limit 5
 
-    course = mongo.db.course
-    review = mongo.db.review
+    course_data = course_db.find_one({"_id": ObjectId(course_id)})
 
-    course_data = course.find_one({"_id": ObjectId(course_id)})
-
-    list_of_reviews = review.find({"course_id": ObjectId(course_id)}, limit=5).sort('date', -1)
+    list_of_reviews = review_db.find({"course_id": ObjectId(course_id)}, limit=5).sort('date', -1)
     updated_reviews = Record.convert_time(list_of_reviews)
 
 
     return render_template('course-view.html', course = course_data, reviews = updated_reviews)
+
 
 
 #Setting app runtime conditions 

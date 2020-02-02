@@ -63,6 +63,17 @@ class Record:
         'course_id': ObjectId(course)
         }
         return data
+
+    @staticmethod
+    def create_user_record(obj,password):
+    #Creates a dictionary from the form fields
+        data = {
+        'username': obj.get('username'),
+        'email': obj.get('email'),
+        'password': password,
+        'is_admin': False
+        }
+        return data
     
     @staticmethod
     #Removes duplicates from list due to conversion to dict and then back
