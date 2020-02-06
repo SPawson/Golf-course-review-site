@@ -145,7 +145,7 @@ Golf course management controllers
 #returns manage course page and passes all courses in db
 @app.route('/manage-courses')
 def manage_courses():
-    course_list = list(mongo.db.course_db.find())
+    course_list = list(course_db.find())
     
     return render_template("manage-courses.html", courses = course_list)
 
