@@ -31,7 +31,9 @@
 
                     <div>
                         <a href="{{course.affiliate_link}}" class="modal-trigger del-btn waves-effect waves-light btn btn_small">Book Now</a>
+                        {% if session.logged_in %}
                         <a href="{{url_for('add_review',course_id = course._id)}}" class="waves-effect waves-light btn btn_small blue">Write Review</a>
+                        {% endif %}
                     </div>
 
 
