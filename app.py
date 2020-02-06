@@ -28,9 +28,9 @@ region_db = mongo.db.region
 review_db = mongo.db.review
 
 #Temporary User Login ID var
-active_user = "5e356a4eebbec2e8a85aaabd"         
+#active_user = "5e356a4eebbec2e8a85aaabd"         
 #Temp Course ID for testing
-selected_course = "5dbd85633da78418944a2760"
+#selected_course = "5dbd85633da78418944a2760"
 
 """
 Index Page Controller
@@ -195,8 +195,7 @@ Review Management controller
 #Retrieves list of all reviews created by user logged in
 @app.route('/manage-reviews')
 def manage_reviews():
-    reviews = mongo.db.review
-    review_list = list(reviews.find({"user_id": ObjectId(active_user)}).sort('date', -1))
+    review_list = list(review_db.find({"user_id": ObjectId(session["user_id"])}).sort('date', -1))
     #converts the unix time to dd/mm/yy
     updated_reviews = Record.convert_time(review_list)
 
@@ -216,7 +215,7 @@ def add_review(course_id):
 @app.route('/add-review/insert/<course_id>', methods=['POST','GET'])
 def insert_review(course_id):
 
-    data = Record.create_review_record(request.form,active_user,course_id)
+    data = Record.create_review_record(request.form,session["user_id"],course_id)
     review_db.insert_one(data)
     average_review(course_id)
     return redirect(url_for('view_course', course_id = course_id))
@@ -243,7 +242,7 @@ def edit_review(review_id):
 #Updates review record and updates average score for course
 @app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
 def update_review(review_id, course_id):
-    data = Record.create_review_record(request.form,active_user,course_id)
+    data = Record.create_review_record(request.form,session["user_id"],course_id)
     review_db.update({'_id': ObjectId(review_id)}, data)
     average_review(course_id)
     return redirect(url_for('manage_reviews'))
