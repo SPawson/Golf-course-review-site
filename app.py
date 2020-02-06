@@ -1,11 +1,14 @@
 import os
-from flask import Flask, render_template, flash ,redirect, request, url_for
+from flask import Flask, render_template, flash ,redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
 from packages.common.forms import RegistrationForm, LoginForm
+
+
+from flask_login import LoginManager, UserMixin, current_user
 import json
 
 #Configuration for app instance
@@ -25,7 +28,7 @@ region_db = mongo.db.region
 review_db = mongo.db.review
 
 #Temporary User Login ID var
-active_user = "5e356a4eebbec2e8a85aaabd"
+active_user = "5e356a4eebbec2e8a85aaabd"         
 #Temp Course ID for testing
 selected_course = "5dbd85633da78418944a2760"
 
@@ -38,7 +41,6 @@ Index Page Controller
 @app.route('/home')
 def index():
     
-
     featured_course = Record.return_list(list(course_db.aggregate([{'$sample': {'size':1}}]))) 
 
     regions = region_db.find()
@@ -46,9 +48,6 @@ def index():
 
     top_courses = course_db.find().sort('num_reviews', -1).limit(3)
     tc_list = Record.return_list(top_courses)
-
-
-
 
     return render_template("index.html", featured = featured_course[0], regions = region_list, tc_courses = tc_list)
 
@@ -93,10 +92,10 @@ def register():
             data = Record.create_user_record(request.form, secure_password)
             user_db.insert_one(data)
             flash(f'Account created for {form.username.data}!', 'card-panel teal lighten-2')
-        return redirect(url_for('login'))
+            return redirect(url_for('login'))
 
     return render_template('register.html', title = 'Register', form=form)
-
+#Determines if the email exists
 def does_email_exist(search_item):
     result = user_db.find_one({'email':search_item})
     if not result:
@@ -105,7 +104,7 @@ def does_email_exist(search_item):
         return True 
 
 
-
+#logs in the user and sets the session variables
 @app.route("/login", methods=['GET','POST'])
 def login():
     form = LoginForm()
@@ -116,6 +115,10 @@ def login():
 
         if form.email.data == user_email and bcrypt.check_password_hash(user_password, form.password.data):
             flash('Login Succesfull!', 'card-panel teal lighten-2')
+            session["user_id"] = str(user_record["_id"])
+            session["username"] = user_record["username"]
+            session["logged_in"] = True
+            session["is_admin"] = user_record["is_admin"]
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccesfull, please check username and password', 'card-panel teal lighten-2')
@@ -125,6 +128,15 @@ def login():
         return render_template('login.html', title = 'Login', form=form)
 
 
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('username', None)
+    session.pop('logged_in', None)
+    session.pop('is_admin', None)
+    return redirect(url_for('index'))
+
+#active_user = session["user_id"]
 """
 Golf course management controllers
 

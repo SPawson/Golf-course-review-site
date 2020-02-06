@@ -21,8 +21,21 @@
                 <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('index')}}">Home</a></li>
-                    <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
-                    <li><a href="{{url_for('manage_courses')}}">Manage Courses</a></li>
+                    {% if not session.logged_in %}
+                    <li><a href="{{url_for('login')}}">Login</a></li>
+                    <li><a href="{{url_for('register')}}">Register</a></li>
+                    {% else %}
+                        {% if session.is_admin %}
+                            <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
+                            <li><a href="{{url_for('manage_courses')}}">Manage Courses</a></li>
+                            <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
+                        {% else %}
+                        <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
+                        <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
+                        {% endif %}
+                    
+                    {% endif %}
+                    
                 </ul>
             </div>
         </nav>
