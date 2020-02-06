@@ -52,11 +52,12 @@ class Record:
         return data
 
     @staticmethod
-    def create_review_record(obj,user,course):
+    def create_review_record(obj,user,course,username):
     #Creates a dictionary from the form fields
         data = {
         'user_id': ObjectId(user),
         'date': time.time(),
+        'username':username,
         'star_rating': int(obj.get('star_rating')),
         'review_title': obj.get('review_title'),
         'review_article': obj.get('review_article'),
@@ -104,8 +105,10 @@ class Record:
         total = 0
         for val in data:
             total += val
-        
-        average = round(total / len(data))
+        if len(data) != 0:
+            average = round(total / len(data))
+        else:
+            average = 0
 
         return average
 

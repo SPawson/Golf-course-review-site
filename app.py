@@ -214,8 +214,8 @@ def add_review(course_id):
 #inserts data from form into the review db
 @app.route('/add-review/insert/<course_id>', methods=['POST','GET'])
 def insert_review(course_id):
-    if session.logged_in:
-        data = Record.create_review_record(request.form,session["user_id"],course_id)
+    if session["logged_in"]:
+        data = Record.create_review_record(request.form,session["user_id"],course_id, session["username"])
         review_db.insert_one(data)
         average_review(course_id)
         return redirect(url_for('view_course', course_id = course_id))
@@ -244,7 +244,7 @@ def edit_review(review_id):
 #Updates review record and updates average score for course
 @app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
 def update_review(review_id, course_id):
-    data = Record.create_review_record(request.form,session["user_id"],course_id)
+    data = Record.create_review_record(request.form,session["user_id"],course_id,session["username"] )
     review_db.update({'_id': ObjectId(review_id)}, data)
     average_review(course_id)
     return redirect(url_for('manage_reviews'))

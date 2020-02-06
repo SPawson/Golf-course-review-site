@@ -53,7 +53,7 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="col s8">
-                            <span>User</span>
+                            <span>{{review.username}}</span>
                             <span> {% for star in range(5) %}
                                 {% if loop.index <= review.star_rating %}
                                 <i class="material-icons gold-star">star</i>
