@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
-from packages.common.forms import RegistrationForm, LoginForm
+from packages.common.forms import RegistrationForm, LoginForm, Course, Review
 
 
 from flask_login import LoginManager, UserMixin, current_user
@@ -209,18 +209,26 @@ def manage_reviews():
 
 @app.route('/add-review/<course_id>', methods=['POST','GET'])
 def add_review(course_id):
-    return render_template("add-review.html", course_id = course_id)
-
-#inserts data from form into the review db
-@app.route('/add-review/insert/<course_id>', methods=['POST','GET'])
-def insert_review(course_id):
     if session["logged_in"]:
-        data = Record.create_review_record(request.form,session["user_id"],course_id, session["username"])
-        review_db.insert_one(data)
-        average_review(course_id)
-        return redirect(url_for('view_course', course_id = course_id))
+        form = Review()
+        if form.validate_on_submit():
+             data = Record.create_review_record(request.form, session["user_id"],course_id, session["username"])
+             review_db.insert_one(data)
+             average_review(course_id)
+             return redirect(url_for("manage_reviews"))
+        else:
+            return render_template("add-review.html", course_id = course_id, form=form)
+    
     else:
         return redirect(url_for('view_course', course_id = course_id))
+        
+
+
+    
+
+#TODO:
+#inserts data from form into the review db
+
 
 #calculates the average score from all reviews associated with the given course_id
 def average_review(course_id):

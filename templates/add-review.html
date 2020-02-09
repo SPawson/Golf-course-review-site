@@ -7,23 +7,41 @@
 
     <div class="row">
         <!--Add course form details-->
-        <form action="{{url_for('insert_review', course_id = course_id)}}" method="POST" class="col s12">
+        <form action="{{url_for('add_review', course_id = course_id)}}" method="POST" class="col s12">
+            {{  form.hidden_tag()   }}
 
-            <h5></h5>
             <div class="row">
                 <div class="input-field col s9">
                     <i class="material-icons prefix">short_text</i>
-                    <input required id="review-title" name="review_title" type="text" class="validate">
-                    <label for="icon_prefix">Title</label>
+                    <label for="icon_prefix">{{ form.review_title.label() }}</label>
+                    {% if form.review_title.errors %}
+                    {{  form.review_title() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.review_title.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.review_title() }}
+                    {% endif %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">description</i>
-                    <textarea required id="review-article" name="review_article"
-                        class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Review</label>
+                    <label for="icon_prefix">{{ form.review_article.label() }}</label>
+                    {% if form.review_article.errors %}
+                    {{  form.review_article(cols="100", rows="200") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.review_article.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.review_article() }}
+                    {% endif %}
+                    
                 </div>
             </div>
 
