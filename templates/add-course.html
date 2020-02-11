@@ -7,31 +7,55 @@
 
     <div class="row">
         <!--Add course form details-->
-        <form action="{{url_for('insert_course')}}" method="POST" class="col s12">
-
+        <form action="{{url_for('add_course')}}" method="POST" class="col s12">
+            {{ form.csrf_token  }}
             <h5>Course Details</h5>
             <div class="row">
                 <div class="input-field col s9">
                     <i class="material-icons prefix">short_text</i>
-                    <input required id="icon_prefix course_name" name="course_name" type="text" class="validate">
-                    <label for="icon_prefix">Course Name</label>
+                    <label for="icon_prefix">{{ form.course_name.label() }}</label>
+                    {% if form.course_name.errors %}
+                    {{  form.course_name() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.course_name.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.course_name() }}
+                    {% endif %}
                 </div>
 
                 <div class="input-field col s3">
                     <i class="material-icons prefix">assignment</i>
-                    <input required id="icon_prefix course_par" name="par" type="text" class="validate">
-                    <label for="icon_prefix">Par</label>
+                    <label for="icon_prefix">{{ form.par.label() }}</label>
+                    {% if form.par.errors %}
+                    {{  form.par() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.par.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.par() }}
+                    {% endif %}
                 </div>
             </div>
-
-
 
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">description</i>
-                    <textarea required id="description" name="description"
-                        class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Course Description</label>
+                    <label for="icon_prefix">{{ form.description.label() }}</label>
+                    {% if form.description.errors %}
+                    {{  form.description() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.description() }}
+                    {% endif %}
                 </div>
             </div>
 
@@ -41,24 +65,51 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-1" name="address_line_1" class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Address Line 1</label>
+                    <label for="icon_prefix">{{ form.address_line_1.label() }}</label>
+                    {% if form.address_line_1.errors %}
+                    {{  form.address_line_1() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address_line_1.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.address_line_1() }}
+                    {% endif %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-2" name="address_line_2" class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Address Line 2</label>
+                    <label for="icon_prefix">{{ form.address_line_2.label() }}</label>
+                    {% if form.address_line_2.errors %}
+                    {{  form.address_line_2() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address_line_2.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.address_line_2() }}
+                    {% endif %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="address-3" name="address_line_3" class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Address Line 3</label>
+                    <label for="icon_prefix">{{ form.address_line_3.label() }}</label>
+                    {% if form.address_line_3.errors %}
+                    {{  form.address_line_3() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address_line_3.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.address_line_3() }}
+                    {% endif %}
                 </div>
             </div>
 
@@ -83,8 +134,17 @@
 
                 <div class="input-field col s6">
                     <i class="material-icons prefix">add_location</i>
-                    <textarea required id="post-code" name="postcode" class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Postcode</label>
+                    <label for="icon_prefix">{{ form.postcode.label() }}</label>
+                    {% if form.postcode.errors %}
+                    {{  form.postcode() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.postcode.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.postcode() }}
+                    {% endif %}
                 </div>
             </div>
 
@@ -94,18 +154,34 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">photo</i>
-                    <textarea required id="course-img-link" name="course_img"
-                        class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Course Image</label>
+                    <label for="icon_prefix">{{ form.course_img.label() }}</label>
+                    {% if form.course_img.errors %}
+                    {{  form.course_img() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.course_img.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.course_img() }}
+                    {% endif %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">attach_file</i>
-                    <textarea required id="affiliate-link" name="affiliate_link"
-                        class="validate materialize-textarea"></textarea>
-                    <label for="icon_telephone">Affiliate Link</label>
+                    <label for="icon_prefix">{{ form.affiliate_link.label() }}</label>
+                    {% if form.affiliate_link.errors %}
+                    {{  form.affiliate_link() }}
+                        <div class="invalid-feedback">
+                            {% for error in form.affiliate_link.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{  form.affiliate_link() }}
+                    {% endif %}
                 </div>
             </div>
 

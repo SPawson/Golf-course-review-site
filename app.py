@@ -150,18 +150,27 @@ def manage_courses():
     return render_template("manage-courses.html", courses = course_list)
 
 #retrieves add course template and popualtes region drop box
-@app.route('/add-course')
+#TODO:
+@app.route('/add-course', methods=['POST','GET'])
 def add_course():
-    regions = region_db.find()
-    region_list = Record.return_list(regions)
-    return render_template("add-course.html", regions = region_list)
+    if session["logged_in"]:
+        form = Course()
+        regions = region_db.find()
+        region_list = Record.return_list(regions)
+
+        if form.validate_on_submit():
+            data = Record.create_course_record(request.form)
+            course_db.insert_one(data)
+            return redirect(url_for('manage_courses'))
+
+        return render_template("add-course.html", regions = region_list, form = form)
+    else:
+        return redirect(url_for("index"))
 
 #Inserts the record into the course DB
-@app.route('/add-course/insert', methods=['POST','GET'])
-def insert_course():
-    data = Record.create_course_record(request.form)
-    course_db.insert_one(data)
-    return redirect(url_for('manage_courses'))
+#@app.route('/add-course/insert', methods=['POST','GET'])
+#def insert_course():
+    
 
 #Deletes the selected course based on the id passed into the function
 @app.route('/manage-courses/delete/<course_id>')
@@ -207,6 +216,7 @@ def manage_reviews():
 
     return render_template("manage-reviews.html", reviews = updated_reviews, courses = courses)
 
+#inserts data from form into the review db
 @app.route('/add-review/<course_id>', methods=['POST','GET'])
 def add_review(course_id):
     if session["logged_in"]:
@@ -223,11 +233,6 @@ def add_review(course_id):
         return redirect(url_for('view_course', course_id = course_id))
         
 
-
-    
-
-#TODO:
-#inserts data from form into the review db
 
 
 #calculates the average score from all reviews associated with the given course_id

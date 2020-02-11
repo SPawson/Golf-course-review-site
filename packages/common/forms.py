@@ -28,20 +28,19 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 class Course(FlaskForm):
     course_name = StringField('Course Name'
-    ,validators=[DataRequired(), Length(min=2, max=45)])
+    ,validators=[DataRequired(), Length(min=3, max=90)])
     par = IntegerField('Par', validators=[DataRequired()])
-    course_description = StringField('Course Name'
-    ,validators=[DataRequired(), Length(min=2, max=45)])
+    description = TextAreaField('Description'
+    ,validators=[DataRequired(), Length(min=3)])
     address_line_1 = StringField('Address Line 1'
-    ,validators=[DataRequired(), Length(min=2, max=45)])
+    ,validators=[DataRequired(), Length(min=3, max=70)])
     address_line_2 = StringField('Address Line 2'
-    ,validators=[DataRequired(), Length(min=2, max=45)])
+    ,validators=[DataRequired(), Length(min=3, max=70)])
     address_line_3 = StringField('Address Line 3'
-    ,validators=[DataRequired(), Length(min=2, max=45)])
-    region = SelectField(validators=[DataRequired()])
+    ,validators=[DataRequired(), Length(min=3, max=70)])
     postcode = StringField('Postcode'
-    ,validators=[DataRequired(), Length(min=2, max=8)])
-    course_image = StringField('Course Image'
+    ,validators=[DataRequired(), Length(min=6, max=8)])
+    course_img = StringField('Course Image'
     ,validators=[DataRequired()])
     affiliate_link = StringField('Affiliate Link'
     ,validators=[DataRequired()])
