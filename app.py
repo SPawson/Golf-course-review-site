@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
-from packages.common.forms import RegistrationForm, LoginForm, Course, Review
+from packages.common.forms import RegistrationForm, LoginForm, Course, Review, CourseObj
 
 
 from flask_login import LoginManager, UserMixin, current_user
@@ -167,11 +167,6 @@ def add_course():
     else:
         return redirect(url_for("index"))
 
-#Inserts the record into the course DB
-#@app.route('/add-course/insert', methods=['POST','GET'])
-#def insert_course():
-    
-
 #Deletes the selected course based on the id passed into the function
 @app.route('/manage-courses/delete/<course_id>')
 def delete_course(course_id):
@@ -181,20 +176,41 @@ def delete_course(course_id):
 #Loads the edit page and populates all the fields based on the record retrieved
 @app.route('/manage-courses/edit/<course_id>')
 def edit_course(course_id, methods=['POST','GET']):
-    regions = region_db.find()
-    region_list = Record.return_list(regions)
+    if session["logged_in"]:
+        regions = region_db.find()
+        region_list = Record.return_list(regions)
+        selected_course = course_db.find_one({"_id": ObjectId(course_id)})
+        selected_region = Record.find_single_value(selected_course, "region")
+        form_data = Record.prepopulate_course_form(selected_course)
+        form = Course(obj = form_data)
 
-    selected_course = course_db.find_one({"_id": ObjectId(course_id)})
 
-    return render_template("edit-course.html", regions = region_list , course = selected_course)
+        return render_template("edit-course.html", regions = region_list , course = selected_course, form = form, selected_region=selected_region)
+            
+    else:
+        return redirect(url_for("index"))
+
+
+    
 
 #Updates the existing record based on the information entered into the form
 @app.route('/manage-courses/update/<course_id>', methods=['POST','GET'])
 def update_course(course_id):
-    data = Record.create_course_record(request.form)
-    course_db.update({'_id': ObjectId(course_id)}, data)
-
-    return redirect(url_for('manage_courses'))
+    if session["logged_in"]:
+        form = Course()
+        regions = region_db.find()
+        region_list = Record.return_list(regions)
+        
+        selected_course = course_db.find_one({"_id": ObjectId(course_id)})
+        selected_region = Record.find_single_value(selected_course, "region")
+        if form.validate_on_submit():
+            data = Record.create_course_record(request.form)
+            course_db.update({'_id': ObjectId(course_id)}, data)
+            return redirect(url_for('manage_courses'))
+        else:
+            return render_template("edit-course.html", regions = region_list , course = selected_course, form = form, selected_region=selected_region)
+    else:
+        return redirect(url_for('manage_courses'))
 
 
 """

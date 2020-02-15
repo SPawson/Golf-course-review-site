@@ -1,6 +1,7 @@
 from .time import Time
 import time
 from bson.objectid import ObjectId
+from packages.common.forms import CourseObj
 
 class Record:
     
@@ -50,6 +51,24 @@ class Record:
         'num_reviews': 0
         }
         return data
+
+    @staticmethod
+    def prepopulate_course_form(data):
+        #Creates prepop object for form instansiation
+        obj = CourseObj()
+
+        obj.course_name = data.get('course_name')
+        obj.address_line_1 = data.get('address_line_1')
+        obj.address_line_2 = data.get('address_line_2')
+        obj.address_line_3 = data.get('address_line_3')
+        obj.region = data.get('region')
+        obj.postcode = data.get('postcode')
+        obj.course_img = data.get('course_img')
+        obj.affiliate_link = data.get('affiliate_link')
+        obj.par = int(data.get('par'))
+        obj.description = data.get('description')
+        
+        return obj
 
     @staticmethod
     def create_review_record(obj,user,course,username):

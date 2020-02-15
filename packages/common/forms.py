@@ -48,3 +48,24 @@ class Course(FlaskForm):
 class Review(FlaskForm):
     review_title = StringField('Title',validators=[DataRequired(), Length(min=3, max=45)])
     review_article = TextAreaField('Review',validators=[DataRequired(), Length(min=5)])
+
+class CourseObj():
+    def __init__(self):
+        self.course_name = None
+        self.par = None
+        self.description = None
+        self.address_line_1 = None
+        self.address_line_2 = None
+        self.address_line_3 = None
+        self.postcode = None
+        self.course_img = None
+        self.affiliate_link = None
+
+
+
+
+
+
+    
+    
+
