@@ -6,7 +6,8 @@ from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
 from packages.common.forms import RegistrationForm, LoginForm, Course, Review, CourseObj
-
+from packages.search.search import Search_Results
+import math
 
 from flask_login import LoginManager, UserMixin, current_user
 import json
@@ -26,11 +27,6 @@ user_db = mongo.db.user
 course_db = mongo.db.course
 region_db = mongo.db.region
 review_db = mongo.db.review
-
-#Temporary User Login ID var
-#active_user = "5e356a4eebbec2e8a85aaabd"         
-#Temp Course ID for testing
-#selected_course = "5dbd85633da78418944a2760"
 
 """
 Index Page Controller
@@ -57,23 +53,53 @@ Search Course
 
 """
 #Searches the database using user query and returns listed results
-@app.route('/search', methods=['POST','GET'])
-def search():
-    region = request.form.get('region')
-    course_name = request.form.get('course_name')
-    min_rating = int(request.form.get('min_rating'))
+@app.route('/search/<searching>/<dir>', methods=['POST','GET'])
+def search(searching,dir):
+    if searching == 'True':
+        region = request.form.get('region')
+        course_name = request.form.get('course_name')
+        min_rating = int(request.form.get('min_rating'))
+        session["search_item"] = Record.search_term(region,course_name,min_rating)
+        session["skip"] = 0
 
-    search_item = Record.search_term(region,course_name,min_rating)
 
-    if search_item != "":
-        results = course_db.find(search_item)
+    limit=5
+    count = 0
+    if dir == 'next':
+        session["skip"] += 1 
+    elif dir == 'prev':
+        session["skip"] -= 1 
+    skips = round(int(session["skip"]) * limit)
+    
+    results = None
+
+    if session["search_item"] != "":
+        count = course_db.count(session["search_item"])
+        results = course_db.find(session["search_item"]).skip(skips).limit(limit)
     else:
-        results = course_db.find().sort('num_reviews', -1)
-           
-    list_of_results = Record.return_list(results)
+        count = course_db.count()
+        results = course_db.find().sort('num_reviews', -1).skip(skips).limit(limit)
         
+        #search_results = get_search_results(5,skip_amount,count,None)
 
-    return render_template('search-results.html', results = list_of_results)
+    pagination = math.ceil(count/limit)
+    next_url = True
+    previous_url = False
+
+    if pagination == int(session["skip"]):
+        next_url = False
+
+    return render_template('search-results.html', results = results, pagination = pagination, next_url = next_url)
+
+def get_search_results(limit,skip_amount,search_count,search_term):
+    results = Search_Results(limit)
+    results.amount =search_count
+    results.paginiation()
+    db_results = course_db.find(search_term).sort('num_reviews', -1).skip(skip_amount*5).limit(limit)
+    results.items = Record.return_list(db_results)
+    return results
+
+
 
 
 """
@@ -150,7 +176,7 @@ def manage_courses():
     return render_template("manage-courses.html", courses = course_list)
 
 #retrieves add course template and popualtes region drop box
-#TODO:
+
 @app.route('/add-course', methods=['POST','GET'])
 def add_course():
     if session["logged_in"]:

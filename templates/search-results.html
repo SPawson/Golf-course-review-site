@@ -40,10 +40,20 @@
 
     </div>
     {% endfor %}
+<!--disabled-->
+    <ul class="pagination">
+        <li class="waves-effect chev-prev"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i class="material-icons">chevron_left</i></a></li>
+      {% if next_url == True %}
+        <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+      {% else %}
+      <li class="chev-next disabled"><a href="{{url_for('search', searching = False ,dir='next')}}"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+      {% endif %}
 </div>
 
 
 
-
+<script type="text/javascript" src="{{ url_for('static', filename='js/pagination.js') }}"></script>
 
 {% endblock %}
