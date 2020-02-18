@@ -30,9 +30,9 @@
                         </ul>
 
                         <div>
-                                <a href="{{url_for('view_course', course_id= result._id)}}"
-                                    class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
-                            </div>
+                            <a href="{{url_for('view_course', course_id= result._id)}}"
+                                class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,16 +40,24 @@
 
     </div>
     {% endfor %}
-<!--disabled-->
-    <ul class="pagination">
-        <li class="waves-effect chev-prev"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i class="material-icons">chevron_left</i></a></li>
-      {% if next_url == True %}
-        <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i class="material-icons">chevron_right</i></a></li>
-      </ul>
-      {% else %}
-      <li class="chev-next disabled"><a href="{{url_for('search', searching = False ,dir='next')}}"><i class="material-icons">chevron_right</i></a></li>
-      </ul>
-      {% endif %}
+    <!--disabled-->
+    <ul id="course-pagination"class="pagination">
+        {% if previous_url == True %}
+        <li class="waves-effect chev-prev"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% else %}
+        <li class="waves-effect chev-prev disabled"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% endif %}
+        {% if next_url == True %}
+        <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
+                    class="material-icons">chevron_right</i></a></li>
+    </ul>
+    {% else %}
+    <li class="chev-next disabled"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
+                class="material-icons">chevron_right</i></a></li>
+    </ul>
+    {% endif %}
 </div>
 
 

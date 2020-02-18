@@ -19,3 +19,6 @@
 .card-row{
     display: block;
 }
+#course-pagination .disabled{
+    display: none;
+}

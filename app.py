@@ -83,13 +83,20 @@ def search(searching,dir):
         #search_results = get_search_results(5,skip_amount,count,None)
 
     pagination = math.ceil(count/limit)
-    next_url = True
-    previous_url = False
+    
+    
 
-    if pagination == int(session["skip"]):
+    if pagination -1 != int(session["skip"]):
+        next_url = True
+    else:
         next_url = False
 
-    return render_template('search-results.html', results = results, pagination = pagination, next_url = next_url)
+    if int(session["skip"]) != 0:
+        previous_url = True
+    else:
+        previous_url = False
+
+    return render_template('search-results.html', results = results, pagination = pagination, next_url = next_url, previous_url = previous_url)
 
 def get_search_results(limit,skip_amount,search_count,search_term):
     results = Search_Results(limit)
