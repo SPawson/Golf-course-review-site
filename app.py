@@ -6,7 +6,7 @@ from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
 from packages.common.forms import RegistrationForm, LoginForm, Course, Review, CourseObj
-from packages.search.search import Search_Results
+from packages.search.search import Pagination
 import math
 
 from flask_login import LoginManager, UserMixin, current_user
@@ -62,49 +62,25 @@ def search(searching,dir):
         session["search_item"] = Record.search_term(region,course_name,min_rating)
         session["skip"] = 0
 
-
     limit=5
-    count = 0
     if dir == 'next':
         session["skip"] += 1 
     elif dir == 'prev':
-        session["skip"] -= 1 
-    skips = round(int(session["skip"]) * limit)
-    
-    results = None
+        session["skip"] -= 1  
 
     if session["search_item"] != "":
         count = course_db.count(session["search_item"])
-        results = course_db.find(session["search_item"]).skip(skips).limit(limit)
+        pagination = Pagination(limit,count,session["skip"])
+        pagination.results = course_db.find(session["search_item"]).skip(pagination.skips).limit(pagination.limit)
     else:
         count = course_db.count()
-        results = course_db.find().sort('num_reviews', -1).skip(skips).limit(limit)
-        
-        #search_results = get_search_results(5,skip_amount,count,None)
-
-    pagination = math.ceil(count/limit)
+        pagination = Pagination(limit,count,session["skip"])
+        pagination.results = course_db.find().sort('num_reviews', -1).skip(pagination.skips).limit(pagination.limit)
     
+    return render_template('search-results.html', pagination = pagination)
+
+
     
-
-    if pagination -1 != int(session["skip"]):
-        next_url = True
-    else:
-        next_url = False
-
-    if int(session["skip"]) != 0:
-        previous_url = True
-    else:
-        previous_url = False
-
-    return render_template('search-results.html', results = results, pagination = pagination, next_url = next_url, previous_url = previous_url)
-
-def get_search_results(limit,skip_amount,search_count,search_term):
-    results = Search_Results(limit)
-    results.amount =search_count
-    results.paginiation()
-    db_results = course_db.find(search_term).sort('num_reviews', -1).skip(skip_amount*5).limit(limit)
-    results.items = Record.return_list(db_results)
-    return results
 
 
 

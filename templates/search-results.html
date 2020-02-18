@@ -4,7 +4,7 @@
 
 <div class="container center-align">
     <h4>Search Results</h4>
-    {% for result in results %}
+    {% for result in pagination.results %}
     <div class="row left-align card-row">
         <div class="card-size col s12 m12 ">
             <div class="card horizontal">
@@ -42,14 +42,14 @@
     {% endfor %}
     <!--disabled-->
     <ul id="course-pagination"class="pagination">
-        {% if previous_url == True %}
+        {% if pagination.prevUrl == True %}
         <li class="waves-effect chev-prev"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
                     class="material-icons">chevron_left</i></a></li>
         {% else %}
         <li class="waves-effect chev-prev disabled"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
                     class="material-icons">chevron_left</i></a></li>
         {% endif %}
-        {% if next_url == True %}
+        {% if pagination.nextUrl == True %}
         <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
                     class="material-icons">chevron_right</i></a></li>
     </ul>
