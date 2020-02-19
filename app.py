@@ -323,18 +323,28 @@ Course View
 
 """
 
-@app.route('/view/<course_id>')
-def view_course(course_id):
-    #Need course record
-    #reviews for course limit 5
+@app.route('/view/<load>/<dir>/<course_id>')
+def view_course(load,dir,course_id):
+
+    if load == 'True':
+        session["skip"] = 0
+    
+    limit=5
+    if dir == 'next':
+        session["skip"] += 1 
+    elif dir == 'prev':
+        session["skip"] -= 1 
 
     course_data = course_db.find_one({"_id": ObjectId(course_id)})
 
     list_of_reviews = review_db.find({"course_id": ObjectId(course_id)}, limit=5).sort('date', -1)
     updated_reviews = Record.convert_time(list_of_reviews)
 
+    count = len(updated_reviews)
+    pagination = Pagination(limit,count,session["skip"])
+    pagination.results = updated_reviews
 
-    return render_template('course-view.html', course = course_data, reviews = updated_reviews)
+    return render_template('course-view.html', course = course_data, pagination = pagination)
 
 
 

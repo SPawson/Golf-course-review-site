@@ -48,7 +48,7 @@
                         </ul>
 
                         <div>
-                            <a href="{{url_for('view_course', course_id= featured._id)}}"
+                            <a href="{{url_for('view_course',load= True ,dir=False ,course_id= featured._id)}}"
                                 class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
                         </div>
 
@@ -145,7 +145,7 @@
                     </ul>
 
                     <div>
-                        <a href="{{url_for('view_course', course_id= course._id)}}"
+                        <a href="{{url_for('view_course',load= True ,dir=False ,course_id= course._id)}}"
                             class="modal-trigger del-btn waves-effect waves-light btn btn_small">See More</a>
                     </div>
 

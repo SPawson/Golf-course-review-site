@@ -45,8 +45,8 @@
     <h3>Reviews</h3>
     <hr>
 
-    {% if reviews|length > 0 %}
-    {% for review in reviews %}
+    {% if pagination.results|length > 0 %}
+    {% for review in pagination.results %}
     <div class="row">
         <div class="col s12 m10 push-m1">
             <div class="card">
@@ -81,7 +81,23 @@
         <p>No reviews have been left for this course yet!</p>
     {% endif %}
 
+    <ul class="pagination">
+        {% if pagination.prevUrl == True %}
+        <li class="waves-effect chev-prev"><a href="{{url_for('view_course', load= False ,dir='prev', course_id = course._id)}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% else %}
+        <li class="waves-effect chev-prev disabled"><a href="{{url_for('view_course', load= False ,dir='prev', course_id = course._id)}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% endif %}
+        {% if pagination.nextUrl == True %}
+        <li class="waves-effect chev-next"><a href="{{url_for('view_course', load= False ,dir='next', course_id = course._id)}}"><i
+                    class="material-icons">chevron_right</i></a></li>
 
+        {% else %}
+        <li class="chev-next disabled"><a href="{{url_for('view_course', load= False ,dir='next', course_id = course._id)}}"><i
+                    class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+    </ul>
 
     
 
