@@ -6,7 +6,7 @@
 
 <div class="container">
     <ul class="collapsible">
-        {% for review in reviews %}
+        {% for review in pagination.results %}
         <li>
             <!--Container for the course's-->
             <div class="collapsible-header">
@@ -55,6 +55,23 @@
         {%endfor%}
     </ul>
 
+    <ul class="pagination">
+        {% if pagination.prevUrl == True %}
+        <li class="waves-effect chev-prev"><a href="{{url_for('manage_reviews', load= False ,dir='prev')}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% else %}
+        <li class="waves-effect chev-prev disabled"><a href="{{url_for('manage_reviews', load= False ,dir='prev')}}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% endif %}
+        {% if pagination.nextUrl == True %}
+        <li class="waves-effect chev-next"><a href="{{url_for('manage_reviews', load= False ,dir='next')}}"><i
+                    class="material-icons">chevron_right</i></a></li>
+
+        {% else %}
+        <li class="chev-next disabled"><a href="{{url_for('manage_reviews', load= False ,dir='next')}}"><i
+                    class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+    </ul>
 
 </div>
 

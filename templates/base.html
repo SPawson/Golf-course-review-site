@@ -25,14 +25,13 @@
                     <li><a href="{{url_for('login')}}">Login</a></li>
                     <li><a href="{{url_for('register')}}">Register</a></li>
                     {% else %}
-                        {% if session.is_admin %}
-                            <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
-                            <li><a href="{{url_for('manage_courses', load= 'True' ,dir=False)}}">Manage Courses</a></li>
+                        
+                            <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
+                            {% if session.is_admin %}
+                            <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
+                            {% endif %}
                             <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
-                        {% else %}
-                        <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
-                        <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
-                        {% endif %}
+                        
                     
                     {% endif %}
                     
@@ -42,7 +41,7 @@
 
         <ul class="sidenav" id="mobile-demo">
             <li><a href="{{url_for('index')}}">Home</a></li>
-            <li><a href="{{url_for('manage_reviews')}}">Manage Reviews</a></li>
+            <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
             <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
         </ul>
     </header>

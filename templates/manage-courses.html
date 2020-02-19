@@ -57,7 +57,7 @@
         {%endfor%}
     </ul>
 
-    <ul id="course-pagination" class="pagination">
+    <ul class="pagination">
         {% if pagination.prevUrl == True %}
         <li class="waves-effect chev-prev"><a href="{{url_for('manage_courses', load= False ,dir='prev')}}"><i
                     class="material-icons">chevron_left</i></a></li>

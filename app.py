@@ -236,19 +236,33 @@ Review Management controller
 
 """
 #Retrieves list of all reviews created by user logged in
-@app.route('/manage-reviews')
-def manage_reviews():
+@app.route('/manage-reviews/<load>/<dir>')
+def manage_reviews(load,dir):
     review_list = list(review_db.find({"user_id": ObjectId(session["user_id"])}).sort('date', -1))
     #converts the unix time to dd/mm/yy
     updated_reviews = Record.convert_time(review_list)
+
+    if load == 'True':
+        session["skip"] = 0
+
+    limit=8
+    if dir == 'next':
+        session["skip"] += 1 
+    elif dir == 'prev':
+        session["skip"] -= 1
+
+    count = len(updated_reviews)
+    pagination = Pagination(limit,count,session["skip"])
+    pagination.results = updated_reviews
 
     list_courseIds = Record.find_course_ids(review_list)
     list_of_courses = []
     for id in list_courseIds:
         list_of_courses += course_db.find({"_id": ObjectId(id)})
+
     courses = list(list_of_courses)
 
-    return render_template("manage-reviews.html", reviews = updated_reviews, courses = courses)
+    return render_template("manage-reviews.html", pagination = pagination, courses = courses)
 
 #inserts data from form into the review db
 @app.route('/add-review/<course_id>', methods=['POST','GET'])
