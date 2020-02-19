@@ -82,9 +82,6 @@ def search(searching,dir):
 
     
 
-
-
-
 """
 Registration/Login Controllers
 
@@ -145,18 +142,30 @@ def logout():
     session.pop('is_admin', None)
     return redirect(url_for('index'))
 
-#active_user = session["user_id"]
+
 """
 Golf course management controllers
 
 """
 
 #returns manage course page and passes all courses in db
-@app.route('/manage-courses')
-def manage_courses():
-    course_list = list(course_db.find())
+@app.route('/manage-courses/<load>/<dir>')
+def manage_courses(load,dir):
+
+    if load == 'True':
+        session["skip"] = 0
     
-    return render_template("manage-courses.html", courses = course_list)
+    limit=5
+    if dir == 'next':
+        session["skip"] += 1 
+    elif dir == 'prev':
+        session["skip"] -= 1 
+
+    count = course_db.count()
+    pagination = Pagination(limit,count,session["skip"])
+    pagination.results = course_db.find().skip(pagination.skips).limit(pagination.limit)
+    
+    return render_template("manage-courses.html", pagination = pagination)
 
 #retrieves add course template and popualtes region drop box
 

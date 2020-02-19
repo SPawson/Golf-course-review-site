@@ -52,12 +52,13 @@
         {% if pagination.nextUrl == True %}
         <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
                     class="material-icons">chevron_right</i></a></li>
-    </ul>
+
     {% else %}
     <li class="chev-next disabled"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
                 class="material-icons">chevron_right</i></a></li>
-    </ul>
     {% endif %}
+    </ul>
+    
 </div>
 
 
