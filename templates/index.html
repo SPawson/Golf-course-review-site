@@ -4,35 +4,47 @@
 <div class="slider">
     <ul class="slides">
         <li>
-            <img src="{{ url_for('static', filename='media/images/index-slider/course-1.jpg')}}"> <!-- random image -->
-            <div class="caption center-align">
+            <img src="{{ url_for('static', filename='media/images/index-slider/player.jpg')}}">
+            <div class="caption center-align ">
                 <h3>Sign Up Today!</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                <h5 class="light grey-text text-lighten-3">Making everyday golf better</h5>
+                <a href="{{url_for('register')}}"
+                    class="modal-trigger del-btn waves-effect waves-light btn btn_small btn-register">Register</a>
             </div>
         </li>
     </ul>
 </div>
 
+<!-- <div class="carousel carousel-slider">
+    <div class="caption center-align ">
+        <h3>Sign Up Today!</h3>
+        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+    </div>
+    <a class="carousel-item" href="#one!"><img src="{{ url_for('static', filename='media/images/index-slider/player.jpg')}}"></a>
+    <a class="carousel-item" href="#two!"><img src="{{ url_for('static', filename='media/images/index-slider/course-1.jpg')}}"></a>
 
+  </div> -->
 
 
 <!--Featured Course-->
 
 <div class="container">
-
     <div class="section center-align">
+
         <h4>Featured Course</h4>
         <div class="row">
-            <div class="col s12 m10 push-m1">
+            <div class="col s12 featured">
 
-                <div class="card">
+                <div class="card featured-card">
                     <div class="card-image">
-                        <img src="{{featured.course_img}}">
-                        <span class="card-title"> <strong>{{featured.course_name}}</strong> </span>
+                        <img  src="{{featured.course_img}}">
+                        <h4>
+                            <span class="card-title"> {{featured.course_name}}</span>
+                        </h4>
                     </div>
                     <div class="card-content left-align">
                         <ul>
-                            <li><strong>Avg Rating</strong> :
+                            <li><span class="field-title">Avg Rating</span> :
                                 {% for star in range(5) %}
                                 {% if loop.index <= featured.avg_rating %}
                                 <i class="material-icons gold-star">star</i>
@@ -42,14 +54,14 @@
                                 {% endfor %}
                                 <span>({{featured.num_reviews}})</span>
                             </li>
-                            <li><strong>Description:</strong> {{featured.description}} </li>
-                            <li><strong>Par:</strong> {{featured.par}}</li>
-                            <li><strong>Region:</strong> {{featured.region}}</li>
+                            <li><span class="field-title">Description:</span> {{featured.description}} </li>
+                            <li><span class="field-title">Par:</span> {{featured.par}}</li>
+                            <li class="region"><span class="field-title">Region:</span> {{featured.region}}</li>
                         </ul>
 
-                        <div>
+                        <div class="center-align ">
                             <a href="{{url_for('view_course',load= True ,dir=False ,course_id= featured._id)}}"
-                                class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                                class="modal-trigger del-btn waves-effect waves-light btn btn_small btn-viewmore">View</a>
                         </div>
 
 
@@ -59,10 +71,20 @@
         </div>
 
     </div>
+</div>
 
-    <hr>
-    <!--Search Course-->
 
+<!--Search Course-->
+
+<div class="parallax-container">
+    <div class="parallax">
+        <img src="../static/media/images/parallax/course-1.jpg">
+    </div>
+</div>
+
+<br id="nav-search">
+
+<div class="container">
     <div id="search" class="row center-align">
         <h4>Search</h4>
         <div class="col s12">
@@ -71,7 +93,8 @@
 
                     <form action="{{url_for('search', searching = True ,dir = false)}}" method="POST" class="col s12">
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 left-align">
+                                <i class="material-icons prefix">add_location</i>
                                 <select autofocus id="region" name="region">
                                     <option value="" disabled selected>Choose Region</option>
                                     {% for region in regions %}
@@ -116,21 +139,29 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!--Top Courses-->
-    <hr>
-    <div class="row top-courses">
+<!--Top Courses-->
+
+<div class="parallax-container">
+    <div class="parallax">
+        <img class="" src="../static/media/images/parallax/course-4.jpg">
+    </div>
+</div>
+
+<div class="container">
+    <div class="row center-align top-courses">
         <h4>Top Courses</h4>
         {% for course in tc_courses %}
-        <div class="col s12 m12 l4">
+        <div class="col s12 m8 push-m2 l8 push-l2 xl4">
             <div class="card">
                 <div class="card-image">
-                    <img src="{{course.course_img}}">
-                    <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
+                    <img class="responsive-img"src="{{course.course_img}}">
+                    <h4><span class="card-title"> {{course.course_name}}</span></h4>
                 </div>
                 <div class="card-content left-align">
                     <ul>
-                        <li><strong>Avg Rating</strong> :
+                        <li><span class="field-title">Avg Rating</span> :
                             {% for star in range(5) %}
                             {% if loop.index <= course.avg_rating %}
                             <i class="material-icons gold-star">star</i>
@@ -140,13 +171,13 @@
                             {% endfor %}
                             <span>({{course.num_reviews}})</span>
                         </li>
-                        <li><strong>Par:</strong> {{course.par}}</li>
-                        <li><strong>Region:</strong> {{course.region}}</li>
+                        <li><span class="field-title">Par:</span> {{course.par}}</li>
+                        <li class="region"><span class="field-title">Region:</span> {{course.region}}</li>
                     </ul>
 
-                    <div>
+                    <div class="center-align">
                         <a href="{{url_for('view_course',load= True ,dir=False ,course_id= course._id)}}"
-                            class="modal-trigger del-btn waves-effect waves-light btn btn_small">See More</a>
+                            class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
                     </div>
 
 
@@ -156,10 +187,9 @@
         {% endfor %}
 
     </div>
-
-
-
 </div>
+
+
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/star-rating.js') }}"></script>
 {% endblock %}

@@ -1,17 +1,23 @@
-document.addEventListener('DOMContentLoaded', function () {
+
+document.addEventListener('DOMContentLoaded', function() {
   //Initialises the mobile nav bar
   var nav = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(nav);
+  $('.parallax').parallax();
 
   //Initialises index image carousel
   let options = {
-    height: 600,
+    //fullWidth: true,
+    height:500,
     indicators: false,
     interval: 6000
   }
 
-  var slider = document.querySelectorAll('.slider');
-  var instances = M.Slider.init(slider, options);
+  var element = document.querySelectorAll('.slider');
+  var instances = M.Slider.init(element, options);
+
+  // var parallax = document.querySelectorAll('.parallax');
+  // var instances = M.Parallax.init(parallax);
 
   
 
@@ -22,5 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
   //Initialises the drop down boxes
   var dropDowns = document.querySelectorAll('select');
   var instances = M.FormSelect.init(dropDowns);
+
+  //var slider = document.querySelectorAll('.carousel');
+  //var instances = M.Carousel.init(slider, options);
+
+  var slider = M.Carousel.init({
+    fullWidth: true
+  });
 
 });

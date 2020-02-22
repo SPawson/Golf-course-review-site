@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Course Finder | Finding the best courses</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -17,87 +18,100 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a href="{{url_for('index')}}" class="brand-logo">Course Finder</a>
+                <a href="{{url_for('index')}}" class="brand-logo">Play Golf!</a>
                 <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('index')}}">Home</a></li>
+                    <li><a href="/home#nav-search">Search</a></li>
                     {% if not session.logged_in %}
                     <li><a href="{{url_for('login')}}">Login</a></li>
                     <li><a href="{{url_for('register')}}">Register</a></li>
                     {% else %}
-                        
-                            <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
-                            {% if session.is_admin %}
-                            <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
-                            {% endif %}
-                            <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
-                        
-                    
+
+                    <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
+                    {% if session.is_admin %}
+                    <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
                     {% endif %}
-                    
+                    <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
+
+
+                    {% endif %}
+
                 </ul>
             </div>
         </nav>
 
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{url_for('index')}}">Home</a></li>
+            <li><a href="/home#nav-search">Search</a></li>
+            {% if not session.logged_in %}
+            <li><a href="{{url_for('login')}}">Login</a></li>
+            <li><a href="{{url_for('register')}}">Register</a></li>
+            {% else %}
+
             <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
+            {% if session.is_admin %}
             <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
+            {% endif %}
+            <li><a href="{{url_for('logout')}}">Logout ({{ session.username }})</a></li>
+
+
+            {% endif %}
         </ul>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true ) %}
-        {% if messages %}
-            {% for category,message in messages %}
-                <div class="alert">
-                    {{message}}
-                </div>
-            {% endfor %}
-        {%endif%}
+    {% if messages %}
+    {% for category,message in messages %}
+    <div class="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {%endif%}
     {% endwith %}
     {%block content%}
     {%endblock%}
 
-    <footer class="page-footer teal">
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Company Bio</h5>
+                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like
+                        it's
+                        our full time job. Any amount would help support and continue development on this project and is
+                        greatly appreciated.</p>
+
+
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Settings</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Connect</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
             <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Company Bio</h5>
-                        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's
-                            our full time job. Any amount would help support and continue development on this project and is
-                            greatly appreciated.</p>
-        
-        
-                    </div>
-                    <div class="col l3 s12">
-                        <h5 class="white-text">Settings</h5>
-                        <ul>
-                            <li><a class="white-text" href="#!">Link 1</a></li>
-                            <li><a class="white-text" href="#!">Link 2</a></li>
-                            <li><a class="white-text" href="#!">Link 3</a></li>
-                            <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul>
-                    </div>
-                    <div class="col l3 s12">
-                        <h5 class="white-text">Connect</h5>
-                        <ul>
-                            <li><a class="white-text" href="#!">Link 1</a></li>
-                            <li><a class="white-text" href="#!">Link 2</a></li>
-                            <li><a class="white-text" href="#!">Link 3</a></li>
-                            <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul>
-                    </div>
-                </div>
+                Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
             </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-                </div>
-            </div>
-        </footer>
+        </div>
+    </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
     <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
 </body>
