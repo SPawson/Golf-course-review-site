@@ -62,7 +62,7 @@ def search(searching,dir):
         session["search_item"] = Record.search_term(region,course_name,min_rating)
         session["skip"] = 0
 
-    limit=5
+    limit=4
     if dir == 'next':
         session["skip"] += 1 
     elif dir == 'prev':
@@ -71,11 +71,11 @@ def search(searching,dir):
     if session["search_item"] != "":
         count = course_db.count(session["search_item"])
         pagination = Pagination(limit,count,session["skip"])
-        pagination.results = course_db.find(session["search_item"]).skip(pagination.skips).limit(pagination.limit)
+        pagination.results = Record.return_list(course_db.find(session["search_item"]).skip(pagination.skips).limit(pagination.limit))
     else:
         count = course_db.count()
         pagination = Pagination(limit,count,session["skip"])
-        pagination.results = course_db.find().sort('num_reviews', -1).skip(pagination.skips).limit(pagination.limit)
+        pagination.results = Record.return_list(course_db.find().sort('num_reviews', -1).skip(pagination.skips).limit(pagination.limit)) 
     
     return render_template('search-results.html', pagination = pagination)
 
@@ -329,7 +329,7 @@ def view_course(load,dir,course_id):
     if load == 'True':
         session["skip"] = 0
     
-    limit=5
+    limit=4
     if dir == 'next':
         session["skip"] += 1 
     elif dir == 'prev':

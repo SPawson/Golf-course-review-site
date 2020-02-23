@@ -2,67 +2,75 @@
 {%block content%}
 
 
-<div class="container center-align">
-    <h4>Search Results</h4>
-    {% for result in pagination.results %}
-    <div class="row left-align card-row">
-        <div class="card-size col s12 m12 ">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img src="{{result.course_img}}">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title">{{result.course_name}}</span>
+<div class="container">
+    <div class="row center-align top-courses">
+        <h4>Results</h4>
+        {% for course in pagination.results %}
+        {% if pagination.results|length == 3 %}
+        <div class="col s12 m8 push-m2 l8 push-l2 xl4">
+        {% else %}
+            <div class="col s12 m8 push-m2 l8 push-l2 xl6">
+        {% endif %}
+                <div class="card">
+                    <div class="card-image">
+                        <img class="responsive-img" src="{{course.course_img}}">
+                        <h4><span class="card-title"> {{course.course_name}}</span></h4>
+                    </div>
+                    <div class="card-content left-align">
                         <ul>
-                            <li><strong>Avg Rating</strong> :
+                            <li><span class="field-title">Avg Rating</span> :
                                 {% for star in range(5) %}
-                                {% if loop.index <= result.avg_rating %}
+                                {% if loop.index <= course.avg_rating %}
                                 <i class="material-icons gold-star">star</i>
                                 {% else %}
                                 <i class="material-icons grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
-                                <span>({{result.num_reviews}})</span>
+                                <span>({{course.num_reviews}})</span>
                             </li>
-                            <li><strong>Par:</strong> {{result.par}}</li>
-                            <li><strong>Region:</strong> {{result.region}}</li>
+                            <li><span class="field-title">Par:</span> {{course.par}}</li>
+                            <li class="region"><span class="field-title">Region:</span> {{course.region}}</li>
                         </ul>
 
-                        <div>
-                            <a href="{{url_for('view_course',load= True ,dir=False ,course_id= result._id)}}"
+                        <div class="center-align">
+                            <a href="{{url_for('view_course',load= True ,dir=False ,course_id= course._id)}}"
                                 class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
                         </div>
+
+
                     </div>
                 </div>
             </div>
+            {% endfor %}
+            <ul class="pagination">
+                {% if pagination.prevUrl == True %}
+                <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination"
+                        href="{{url_for('search', searching = False ,dir='prev')}}"><i
+                            class="material-icons">chevron_left</i></a>
+                </li>
+                {% else %}
+                <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination"
+                        href="{{url_for('search', searching = False ,dir='prev')}}"><i
+                            class="material-icons">chevron_left</i></a>
+                </li>
+                {% endif %}
+                {% if pagination.nextUrl == True %}
+                <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination"
+                        href="{{url_for('search', searching = False ,dir='next')}}"><i
+                            class="material-icons">chevron_right</i></a>
+                </li>
+
+                {% else %}
+                <li class="chev-next disabled"><a class="btn btn_small btn-pagination"
+                        href="{{url_for('search', searching = False ,dir='next')}}"><i
+                            class="material-icons">chevron_right</i></a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-
     </div>
-    {% endfor %}
-    <!--disabled-->
-    <ul id="course-pagination"class="pagination">
-        {% if pagination.prevUrl == True %}
-        <li class="waves-effect chev-prev"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
-                    class="material-icons">chevron_left</i></a></li>
-        {% else %}
-        <li class="waves-effect chev-prev disabled"><a href="{{url_for('search', searching = False ,dir='prev')}}"><i
-                    class="material-icons">chevron_left</i></a></li>
-        {% endif %}
-        {% if pagination.nextUrl == True %}
-        <li class="waves-effect chev-next"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
-                    class="material-icons">chevron_right</i></a></li>
-
-    {% else %}
-    <li class="chev-next disabled"><a href="{{url_for('search', searching = False ,dir='next')}}"><i
-                class="material-icons">chevron_right</i></a></li>
-    {% endif %}
-    </ul>
-    
-</div>
 
 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/pagination.js') }}"></script>
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/pagination.js') }}"></script>
-
-{% endblock %}
+    {% endblock %}
