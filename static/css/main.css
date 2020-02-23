@@ -109,6 +109,10 @@ font-size: 2em;
     
 }
 
+.page-footer a{
+    color: white;
+}
+
 /*Forms*/
 .register{
     display: flex;
