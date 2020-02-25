@@ -29,7 +29,7 @@ class Pagination:
         self.skips = round(int(self.session_skips) * self.limit)
 
     def has_next_url(self):
-        if self.pagination_amount -1 != int(self.session_skips):
+        if self.pagination_amount -1 != int(self.session_skips) and self.count != 0:
             return True
         else:
             return False
@@ -38,3 +38,29 @@ class Pagination:
             return True
         else:
             return False
+
+class Search:
+
+    @staticmethod
+    #determines the search term that will be used in db search
+    def search_term(region,course_name,min_rating):
+        if region != None and course_name != "" and min_rating != 0:
+            search = {"region": region, "course_name":{"$regex" : course_name, "$options":'i'} , 'avg_rating':{"$gte": min_rating}}
+        elif region != None and course_name != "" :
+            search = {"region": region, "course_name": {"$regex" : course_name, "$options":'i'}}
+        elif region != None and min_rating != 0 :
+            search = {"region": region, "avg_rating":{"$gte": min_rating}}
+        elif course_name != "" and min_rating != 0 :
+            search = {"course_name": {"$regex" : course_name, "$options":'i'}, "avg_rating":{"$gte": min_rating}}
+        elif course_name != "" and min_rating != 0 :
+            search = {"course_name": {"$regex" : course_name, "$options":'i'}, "avg_rating":{"$gte": min_rating}}
+        elif  region != None:
+            search = {"region": region}
+        elif  min_rating != 0:
+            search = {"avg_rating":{"$gte": min_rating}}
+        elif  course_name != "":
+            search = {"course_name": {"$regex" : course_name, "$options":'i'}}
+        else: 
+            search = ""
+
+        return search

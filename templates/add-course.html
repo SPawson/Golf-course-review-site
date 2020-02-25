@@ -1,23 +1,25 @@
 {%extends 'base.html'%}
 {%block content%}
 
-<h3>Add Course</h3>
+<h3 class="head">New Course</h3>
 
 <div class="container">
 
-    <div class="row">
+    <div class="row ">
         <!--Add course form details-->
         <form action="{{url_for('add_course')}}" method="POST" class="col s12">
-        {% include "partials/course-form.html" %}
-        <div class="row">
-            <button class="btn waves-effect waves-light" type="submit">Add Course
-                <i class="material-icons right">send</i>
-            </button>
-        </div>
+            <div class="row">
+                {% include "partials/course-form.html" %}
+            </div>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light" type="submit">Add Course
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
 
 
 
-    </form>
+        </form>
 
     </div>
 </div>

@@ -102,6 +102,10 @@ font-size: 2em;
     text-transform: capitalize;
 }
 
+/*Search*/
+.no-results{
+    margin-top: 50px;
+}
 
 /*Footer*/
 .page-footer {
@@ -302,7 +306,11 @@ font-size: 2em;
     border: #176d2d solid 2px;
 }
 
+/*Forms*/
 
+textarea{
+    height: 10rem;
+}
 
 
 .gold-star {
@@ -336,5 +344,14 @@ font-size: 2em;
     .view .btn{
         margin: 0 10px;
         
+    }
+
+    .no-results{
+        margin-top: 40px;
+        margin-bottom: 13em;
+    }
+
+    .no-results-text{
+        margin-top: 70px;
     }
 }

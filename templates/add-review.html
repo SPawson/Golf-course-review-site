@@ -1,73 +1,28 @@
 {%extends 'base.html'%}
 {%block content%}
 
-<h3>Write a Review</h3>
+<h3 class="head">Write a Review</h3>
 
 <div class="container">
 
     <div class="row">
         <!--Add course form details-->
         <form action="{{url_for('add_review', course_id = course_id)}}" method="POST" class="col s12">
-            {{  form.hidden_tag()   }}
 
-            <div class="row">
-                <div class="input-field col s9">
-                    <i class="material-icons prefix">short_text</i>
-                    <label for="icon_prefix">{{ form.review_title.label() }}</label>
-                    {% if form.review_title.errors %}
-                    {{  form.review_title() }}
-                        <div class="invalid-feedback">
-                            {% for error in form.review_title.errors %}
-                                <span>{{error}}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{  form.review_title() }}
-                    {% endif %}
-                </div>
-            </div>
+            <div class="card form-card col s12 m8 push-m2">
+                <div class="card-content ">
+                    <div class="row">
 
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">description</i>
-                    <label for="icon_prefix">{{ form.review_article.label() }}</label>
-                    {% if form.review_article.errors %}
-                    {{  form.review_article(cols="100", rows="200") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.review_article.errors %}
-                                <span>{{error}}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{  form.review_article() }}
-                    {% endif %}
-                    
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <h5>Star Rating</h5>
-
-
-                    <input class="rating" name="star_rating" type="hidden" value="1">
-                    <div class="stars">
-                        <span><i class="material-icons star">star</i></span>
-                        <span><i class="material-icons star">star</i></span>
-                        <span><i class="material-icons star">star</i></span>
-                        <span><i class="material-icons star">star</i></span>
-                        <span><i class="material-icons star">star</i></span>
+                        {% include "partials/review-form.html" %}
                     </div>
 
+                    <div class="row center-align">
+                        <button class="btn waves-effect waves-light" type="submit">Add Review
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div class="row">
-                <button class="btn waves-effect waves-light" type="submit">Add Review
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-
 
         </form>
     </div>

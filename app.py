@@ -6,7 +6,7 @@ from bson.objectid import ObjectId
 from packages.config.config import *
 from packages.common.obj_handling import Record
 from packages.common.forms import RegistrationForm, LoginForm, Course, Review, CourseObj
-from packages.search.search import Pagination
+from packages.search.search import Pagination, Search
 import math
 
 from flask_login import LoginManager, UserMixin, current_user
@@ -59,7 +59,7 @@ def search(searching,dir):
         region = request.form.get('region')
         course_name = request.form.get('course_name')
         min_rating = int(request.form.get('min_rating'))
-        session["search_item"] = Record.search_term(region,course_name,min_rating)
+        session["search_item"] = Search.search_term(region,course_name,min_rating)
         session["skip"] = 0
 
     limit=4
@@ -273,7 +273,7 @@ def add_review(course_id):
              data = Record.create_review_record(request.form, session["user_id"],course_id, session["username"])
              review_db.insert_one(data)
              average_review(course_id)
-             return redirect(url_for("manage_reviews"))
+             return redirect(url_for("manage_reviews" , load= True ,dir=False))
         else:
             return render_template("add-review.html", course_id = course_id, form=form)
     
@@ -299,8 +299,11 @@ def average_review(course_id):
 @app.route('/edit-review/<review_id>', methods=['POST','GET'])
 def edit_review(review_id):
     selected_review = review_db.find_one({"_id": ObjectId(review_id)})
+    form_data = Record.prepopulate_review_form(selected_review)
+    form = Review(obj = form_data)
 
-    return render_template('edit-review.html', review = selected_review)
+    return render_template('edit-review.html', review = selected_review, form= form)
+
 
 #Updates review record and updates average score for course
 @app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
@@ -308,14 +311,14 @@ def update_review(review_id, course_id):
     data = Record.create_review_record(request.form,session["user_id"],course_id,session["username"] )
     review_db.update({'_id': ObjectId(review_id)}, data)
     average_review(course_id)
-    return redirect(url_for('manage_reviews'))
+    return redirect(url_for('manage_reviews', load= True ,dir=False))
 
 #Deletes the selected review from the collection and updates the avg score for the course
 @app.route('/manage-reviews/delete/<review_id>&<course_id>')
 def delete_review(review_id,course_id):
     review_db.remove({'_id': ObjectId(review_id)})
     average_review(course_id)
-    return redirect(url_for('manage_reviews'))
+    return redirect(url_for('manage_reviews', load= True ,dir=False))
 
 
 """

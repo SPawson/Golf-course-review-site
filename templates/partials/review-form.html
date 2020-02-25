@@ -1,0 +1,54 @@
+{{ form.csrf_token  }}
+<div class="input-field col s9">
+    <i class="material-icons prefix">short_text</i>
+    <label for="icon_prefix">{{ form.review_title.label() }}</label>
+    {% if form.review_title.errors %}
+    {{  form.review_title() }}
+    <div class="invalid-feedback">
+        {% for error in form.review_title.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+    </div>
+    {% else %}
+    {{  form.review_title() }}
+    {% endif %}
+</div>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        <label for="icon_prefix">{{ form.review_article.label() }}</label>
+    {% if form.review_article.errors %}
+    {{  form.review_article() }}
+    <div class="invalid-feedback">
+        {% for error in form.review_article.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+    </div>
+    {% else %}
+    {{  form.review_article() }}
+    {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        <h5>Star Rating</h5>
+        {% if review %}
+        <input class="rating" name="star_rating" type="hidden"
+        value="{{review.star_rating}}">
+        {% else %}
+        <input class="rating" name="star_rating" type="hidden"
+        value="1">
+        {% endif %}
+
+        <div class="stars">
+            <span><i class="material-icons star">star</i></span>
+            <span><i class="material-icons star">star</i></span>
+            <span><i class="material-icons star">star</i></span>
+            <span><i class="material-icons star">star</i></span>
+            <span><i class="material-icons star">star</i></span>
+        </div>
+
+    </div>
+</div>

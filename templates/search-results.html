@@ -5,12 +5,16 @@
 <div class="container">
     <div class="row center-align top-courses">
         <h4>Results</h4>
-        {% for course in pagination.results %}
-        {% if pagination.results|length == 3 %}
-        <div class="col s12 m8 push-m2 l8 push-l2 xl4">
-        {% else %}
+
+        {% if pagination.results|length != 0 %}
+            {% for course in pagination.results %}
+            {% if pagination.results|length == 3 %}
+            <div class="col s12 m8 push-m2 l8 push-l2 xl4">
+            {% elif pagination.results|length == 1 %}
+            <div class="col s12 m8 push-m2 l8 push-l2 view ">
+            {% else %}
             <div class="col s12 m8 push-m2 l8 push-l2 xl6">
-        {% endif %}
+            {% endif %}
                 <div class="card">
                     <div class="card-image">
                         <img class="responsive-img" src="{{course.course_img}}">
@@ -42,6 +46,12 @@
                 </div>
             </div>
             {% endfor %}
+        {% else %}
+
+            <h6 class="no-results-text">Sorry there are no results found</h6>
+            <a href="/home#nav-search" class="waves-effect waves-light btn btn_small btn-new no-results">Back To Search</a>
+        {% endif %}
+
             <ul class="pagination">
                 {% if pagination.prevUrl == True %}
                 <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination"
