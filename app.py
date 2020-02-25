@@ -39,7 +39,7 @@ def index():
     
     featured_course = Record.return_list(list(course_db.aggregate([{'$sample': {'size':1}}]))) 
 
-    regions = region_db.find()
+    regions = region_db.find().sort('name', 1)
     region_list = Record.return_list(regions)
 
     top_courses = course_db.find().sort('num_reviews', -1).limit(3)
@@ -175,7 +175,7 @@ def manage_courses(load,dir):
 def add_course():
     if session["logged_in"]:
         form = Course()
-        regions = region_db.find()
+        regions = region_db.find().sort('name', 1)
         region_list = Record.return_list(regions)
 
         if form.validate_on_submit():
@@ -197,7 +197,7 @@ def delete_course(course_id):
 @app.route('/manage-courses/edit/<course_id>')
 def edit_course(course_id, methods=['POST','GET']):
     if session["logged_in"]:
-        regions = region_db.find()
+        regions = region_db.find().sort('name', 1)
         region_list = Record.return_list(regions)
         selected_course = course_db.find_one({"_id": ObjectId(course_id)})
         selected_region = Record.find_single_value(selected_course, "region")
@@ -218,7 +218,7 @@ def edit_course(course_id, methods=['POST','GET']):
 def update_course(course_id):
     if session["logged_in"]:
         form = Course()
-        regions = region_db.find()
+        regions = region_db.find().sort('name', 1)
         region_list = Record.return_list(regions)
         
         selected_course = course_db.find_one({"_id": ObjectId(course_id)})
