@@ -307,6 +307,11 @@ font-size: 2em;
 }
 
 /*Forms*/
+.alert{
+    display: flex;
+    justify-content: center;
+  
+}  
 
 textarea{
     height: 10rem;
@@ -320,6 +325,10 @@ textarea{
 
 .stars span i {
     cursor: pointer;
+}
+
+.error{
+    color: #ff4b4b;
 }
 
 .slider {

@@ -5,8 +5,10 @@
 
 
 <div class="container">
+    {% if pagination.results|length != 0 %}
     <ul class="collapsible">
-        {% for review in pagination.results %}
+        
+            {% for review in pagination.results %}
         <li>
             <!--Container for the course's-->
             <div class="collapsible-header">
@@ -53,7 +55,14 @@
         </li>
         {%endfor%}
     </ul>
+    {% else %}
+    <div class="row center-align">
+        <h6 class="no-results-text">You haven't left any reviews yet</h6>
+        <a href="/home" class="waves-effect waves-light btn btn_small btn-new no-results">Back</a>
+    </div>
 
+    
+{% endif %}
     <div class="center-align">
         <ul class="pagination">
             {% if pagination.prevUrl == True %}

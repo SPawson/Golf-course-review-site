@@ -116,18 +116,20 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user_record = user_db.find_one({'email':form.email.data})
-        user_email = user_record["email"]
-        user_password = user_record["password"]
+        user_email =  ""
+        user_password = ""
+        if user_record:
+            user_email =  user_record["email"]
+            user_password = user_record["password"]
 
         if form.email.data == user_email and bcrypt.check_password_hash(user_password, form.password.data):
-            flash('Login Succesfull!', 'card-panel teal lighten-2')
             session["user_id"] = str(user_record["_id"])
             session["username"] = user_record["username"]
             session["logged_in"] = True
             session["is_admin"] = user_record["is_admin"]
             return redirect(url_for('index'))
         else:
-            flash('Login Unsuccesfull, please check username and password', 'card-panel teal lighten-2')
+            flash('Login Unsuccesfull, please check email and password', 'card-panel teal lighten-2')
             return render_template('login.html', title = 'Login', form=form)
 
     else:

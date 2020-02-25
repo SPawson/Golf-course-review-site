@@ -19,7 +19,7 @@
                             {{  form.username() }}
                             <div class="invalid-feedback">
                                 {% for error in form.username.errors %}
-                                    <span>{{error}}</span>
+                                    <span class="error">{{error}}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
@@ -36,7 +36,7 @@
                         {{  form.email() }}
                         <div class="invalid-feedback">
                             {% for error in form.email.errors %}
-                                <span>{{error}}</span>
+                                <span class="error">{{error}}</span>
                             {% endfor %}
                         </div>
                         {% else %}
@@ -52,7 +52,7 @@
                         {{  form.password() }}
                         <div class="invalid-feedback">
                             {% for error in form.password.errors %}
-                                <span>{{error}}</span>
+                                <span class="error">{{error}}</span>
                             {% endfor %}
                         </div>
                         {% else %}
@@ -68,7 +68,7 @@
                         {{  form.confirm_password() }}
                         <div class="invalid-feedback">
                             {% for error in form.confirm_password.errors %}
-                                <span>{{error}}</span>
+                                <span class="error">{{error}}</span>
                             {% endfor %}
                         </div>
                         {% else %}

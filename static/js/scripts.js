@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
   //Initialises the mobile nav bar
   var nav = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(nav);
+
+  //parallax initialisation
   $('.parallax').parallax();
+
+  //Modal initialisation
+  $('.modal').modal();
 
   //Initialises index image carousel
   let options = {
     //fullWidth: true,
-    height:500,
+    height:650,
     indicators: false,
     interval: 6000
   }

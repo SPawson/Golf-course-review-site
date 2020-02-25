@@ -62,9 +62,14 @@
     {% with messages = get_flashed_messages(with_categories=true ) %}
     {% if messages %}
     {% for category,message in messages %}
-    <div class="alert">
-        {{message}}
-    </div>
+   
+        <div class=" alert">
+            <div class="card form-card popup">
+                <div class="card-content ">
+                    {{message}}
+                </div>
+            </div>
+        </div>
     {% endfor %}
     {%endif%}
     {% endwith %}
@@ -76,7 +81,9 @@
             <div class="row">
                 <div class="col l6 s12">
                     <h5 class="white-text">Play Golf!</h5>
-                    <p class="grey-text text-lighten-4">Our mission is to help golfers of all ability find the perfect course for them. Whether that be a local gem yet to be discovered or far away paradise. Powered by our community we bring you the very best, British golf has to offer.</p>
+                    <p class="grey-text text-lighten-4">Our mission is to help golfers of all ability find the perfect
+                        course for them. Whether that be a local gem yet to be discovered or far away paradise. Powered
+                        by our community we bring you the very best, British golf has to offer.</p>
 
 
                 </div>
@@ -84,19 +91,19 @@
                     <h5 class="white-text">Pages</h5>
                     <ul>
                         <li><a href="{{url_for('index')}}">Home</a></li>
-                    <li><a href="/home#nav-search">Search</a></li>
-                    {% if not session.logged_in %}
-                    <li><a href="{{url_for('login')}}">Login</a></li>
-                    <li><a href="{{url_for('register')}}">Register</a></li>
-                    {% else %}
+                        <li><a href="/home#nav-search">Search</a></li>
+                        {% if not session.logged_in %}
+                        <li><a href="{{url_for('login')}}">Login</a></li>
+                        <li><a href="{{url_for('register')}}">Register</a></li>
+                        {% else %}
 
-                    <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
-                    {% if session.is_admin %}
-                    <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
-                    {% endif %}
+                        <li><a href="{{url_for('manage_reviews', load= True ,dir=False)}}">Manage Reviews</a></li>
+                        {% if session.is_admin %}
+                        <li><a href="{{url_for('manage_courses', load= True ,dir=False)}}">Manage Courses</a></li>
+                        {% endif %}
 
 
-                    {% endif %}
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="col l3 s12">
