@@ -60,7 +60,7 @@
                         </ul>
 
                         <div class="center-align ">
-                            <a href="{{url_for('view_course',load= True ,dir=False ,course_id= featured._id)}}"
+                            <a href="{{url_for('view_course', course_id= featured._id, page=[0])}}"
                                 class="modal-trigger del-btn waves-effect waves-light btn btn_small btn-viewmore">View</a>
                         </div>
 
@@ -91,7 +91,7 @@
             <div class="card">
                 <div class="card-content row">
 
-                    <form action="{{url_for('search', searching = True ,dir = false)}}" method="POST" class="col s12">
+                    <form action="{{url_for('search', search=['True'], page=[0])}}" method="POST" class="col s12">
                         <div class="row">
                             <div class="input-field col s12 left-align">
                                 <i class="material-icons prefix">add_location</i>
@@ -176,7 +176,7 @@
                     </ul>
 
                     <div class="center-align">
-                        <a href="{{url_for('view_course',load= True ,dir=False ,course_id= course._id)}}"
+                        <a href="{{url_for('view_course',course_id= course._id, page=[0])}}"
                             class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
                     </div>
 

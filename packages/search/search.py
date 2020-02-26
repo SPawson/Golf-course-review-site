@@ -5,10 +5,10 @@ class Pagination:
     """
     Calculates all necessary parameters for controlling pagination
     """
-    def __init__(self,limit, count, session_skips):
+    def __init__(self,limit, count, page):
         self.limit = limit
         self.results = None
-        self.session_skips = session_skips
+        self.page = page
         self.skips = None
         self.count = count
         self.pagination_amount= None
@@ -26,15 +26,15 @@ class Pagination:
         self.pagination_amount = math.ceil(self.count / self.limit)
 
     def calculate_skips(self):
-        self.skips = round(int(self.session_skips) * self.limit)
+        self.skips = round(int(self.page) * self.limit)
 
     def has_next_url(self):
-        if self.pagination_amount -1 != int(self.session_skips) and self.count != 0:
+        if self.pagination_amount -1 != int(self.page) and self.count != 0:
             return True
         else:
             return False
     def has_prev_url(self):
-        if int(self.session_skips) != 0:
+        if int(self.page) != 0:
             return True
         else:
             return False

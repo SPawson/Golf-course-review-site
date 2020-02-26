@@ -1,5 +1,11 @@
 {%extends 'base.html'%}
 {%block content%}
+
+<!--Pagination Functionality-->>
+{% set page = pagination.page%}
+{% set next_page = page + 1%}
+{% set prev_page = page - 1%}
+
 <h2 class="head">Your Reviews</h2>
 
 
@@ -67,24 +73,24 @@
         <ul class="pagination">
             {% if pagination.prevUrl == True %}
             <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination"
-                    href="{{url_for('manage_reviews', load= False ,dir='prev')}}"><i
+                    href="{{url_for('manage_reviews', page=[prev_page])}}"><i
                         class="material-icons">chevron_left</i></a>
             </li>
             {% else %}
             <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination"
-                    href="{{url_for('manage_reviews', load= False ,dir='prev')}}"><i
+                    href="{{url_for('manage_reviews', page=[prev_page])}}"><i
                         class="material-icons">chevron_left</i></a>
             </li>
             {% endif %}
             {% if pagination.nextUrl == True %}
             <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination"
-                    href="{{url_for('manage_reviews', load= False ,dir='next')}}"><i
+                    href="{{url_for('manage_reviews', page=[next_page])}}"><i
                         class="material-icons">chevron_right</i></a>
             </li>
 
             {% else %}
             <li class="chev-next disabled"><a class="btn btn_small btn-pagination"
-                    href="{{url_for('manage_reviews', load= False ,dir='next')}}"><i
+                    href="{{url_for('manage_reviews', page=[next_page])}}"><i
                         class="material-icons">chevron_right</i></a>
             </li>
             {% endif %}

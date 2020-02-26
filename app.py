@@ -53,8 +53,10 @@ Search Course
 
 """
 #Searches the database using user query and returns listed results
-@app.route('/search/<searching>/<dir>', methods=['POST','GET'])
-def search(searching,dir):
+@app.route('/search', methods=['POST','GET'])
+def search():
+    searching = request.args["search"]
+    page = int(request.args["page"])
     if searching == 'True':
         region = request.form.get('region')
         course_name = request.form.get('course_name')
@@ -63,18 +65,19 @@ def search(searching,dir):
         session["skip"] = 0
 
     limit=4
-    if dir == 'next':
-        session["skip"] += 1 
-    elif dir == 'prev':
-        session["skip"] -= 1  
+
+    # if dir == 'next':
+    #     session["skip"] += 1 
+    # elif dir == 'prev':
+    #     session["skip"] -= 1  
 
     if session["search_item"] != "":
         count = course_db.count(session["search_item"])
-        pagination = Pagination(limit,count,session["skip"])
+        pagination = Pagination(limit,count,page)
         pagination.results = Record.return_list(course_db.find(session["search_item"]).skip(pagination.skips).limit(pagination.limit))
     else:
         count = course_db.count()
-        pagination = Pagination(limit,count,session["skip"])
+        pagination = Pagination(limit,count,page)
         pagination.results = Record.return_list(course_db.find().sort('num_reviews', -1).skip(pagination.skips).limit(pagination.limit)) 
     
     return render_template('search-results.html', pagination = pagination)
@@ -151,20 +154,15 @@ Golf course management controllers
 """
 
 #returns manage course page and passes all courses in db
-@app.route('/manage-courses/<load>/<dir>')
-def manage_courses(load,dir):
-
-    if load == 'True':
-        session["skip"] = 0
+@app.route('/manage-courses')
+def manage_courses():
+    page = int(request.args["page"])
     
     limit=5
-    if dir == 'next':
-        session["skip"] += 1 
-    elif dir == 'prev':
-        session["skip"] -= 1 
+   
 
     count = course_db.count()
-    pagination = Pagination(limit,count,session["skip"])
+    pagination = Pagination(limit,count,page)
     pagination.results = course_db.find().skip(pagination.skips).limit(pagination.limit)
     
     return render_template("manage-courses.html", pagination = pagination)
@@ -181,7 +179,7 @@ def add_course():
         if form.validate_on_submit():
             data = Record.create_course_record(request.form)
             course_db.insert_one(data)
-            return redirect(url_for('manage_courses'))
+            return redirect(url_for('manage_courses', page=[0]))
 
         return render_template("add-course.html", regions = region_list, form = form)
     else:
@@ -191,7 +189,7 @@ def add_course():
 @app.route('/manage-courses/delete/<course_id>')
 def delete_course(course_id):
     course_db.remove({'_id': ObjectId(course_id)})
-    return redirect(url_for('manage_courses'))
+    return redirect(url_for('manage_courses', page=[0]))
 
 #Loads the edit page and populates all the fields based on the record retrieved
 @app.route('/manage-courses/edit/<course_id>')
@@ -226,11 +224,11 @@ def update_course(course_id):
         if form.validate_on_submit():
             data = Record.create_course_record(request.form)
             course_db.update({'_id': ObjectId(course_id)}, data)
-            return redirect(url_for('manage_courses'))
+            return redirect(url_for('manage_courses', page=[0]))
         else:
             return render_template("edit-course.html", regions = region_list , course = selected_course, form = form, selected_region=selected_region)
     else:
-        return redirect(url_for('manage_courses'))
+        return redirect(url_for('manage_courses', page=[0]))
 
 
 """
@@ -238,23 +236,19 @@ Review Management controller
 
 """
 #Retrieves list of all reviews created by user logged in
-@app.route('/manage-reviews/<load>/<dir>')
-def manage_reviews(load,dir):
-    review_list = list(review_db.find({"user_id": ObjectId(session["user_id"])}).sort('date', -1))
+@app.route('/manage-reviews')
+def manage_reviews():
+    
+
+    limit = 4
+    page = int(request.args["page"])
+    count = review_db.count({"user_id": ObjectId(session["user_id"])})
+    pagination = Pagination(limit,count,page)
+
+    review_list = list(review_db.find({"user_id": ObjectId(session["user_id"])}).sort('date', -1).skip(pagination.skips).limit(pagination.limit))
     #converts the unix time to dd/mm/yy
     updated_reviews = Record.convert_time(review_list)
 
-    if load == 'True':
-        session["skip"] = 0
-
-    limit=8
-    if dir == 'next':
-        session["skip"] += 1 
-    elif dir == 'prev':
-        session["skip"] -= 1
-
-    count = len(updated_reviews)
-    pagination = Pagination(limit,count,session["skip"])
     pagination.results = updated_reviews
 
     list_courseIds = Record.find_course_ids(review_list)
@@ -275,12 +269,12 @@ def add_review(course_id):
              data = Record.create_review_record(request.form, session["user_id"],course_id, session["username"])
              review_db.insert_one(data)
              average_review(course_id)
-             return redirect(url_for("manage_reviews" , load= True ,dir=False))
+             return redirect(url_for("manage_reviews" , page=[0]))
         else:
             return render_template("add-review.html", course_id = course_id, form=form)
     
     else:
-        return redirect(url_for('view_course', course_id = course_id))
+        return redirect(url_for('view_course', course_id = course_id, page=[0]))
         
 
 
@@ -313,14 +307,14 @@ def update_review(review_id, course_id):
     data = Record.create_review_record(request.form,session["user_id"],course_id,session["username"] )
     review_db.update({'_id': ObjectId(review_id)}, data)
     average_review(course_id)
-    return redirect(url_for('manage_reviews', load= True ,dir=False))
+    return redirect(url_for('manage_reviews', page=[0]))
 
 #Deletes the selected review from the collection and updates the avg score for the course
 @app.route('/manage-reviews/delete/<review_id>&<course_id>')
 def delete_review(review_id,course_id):
     review_db.remove({'_id': ObjectId(review_id)})
     average_review(course_id)
-    return redirect(url_for('manage_reviews', load= True ,dir=False))
+    return redirect(url_for('manage_reviews', page=[0]))
 
 
 """
@@ -328,25 +322,21 @@ Course View
 
 """
 
-@app.route('/view/<load>/<dir>/<course_id>')
-def view_course(load,dir,course_id):
+@app.route('/view/<course_id>')
+def view_course(course_id):
 
-    if load == 'True':
-        session["skip"] = 0
+    page = int(request.args["page"])
     
     limit=4
-    if dir == 'next':
-        session["skip"] += 1 
-    elif dir == 'prev':
-        session["skip"] -= 1 
+
+    count = review_db.count({"course_id": ObjectId(course_id)})
+    pagination = Pagination(limit,count,page)
 
     course_data = course_db.find_one({"_id": ObjectId(course_id)})
 
-    list_of_reviews = review_db.find({"course_id": ObjectId(course_id)}, limit=5).sort('date', -1)
+    list_of_reviews = review_db.find({"course_id": ObjectId(course_id)}).sort('date', -1).skip(pagination.skips).limit(pagination.limit)
     updated_reviews = Record.convert_time(list_of_reviews)
 
-    count = len(updated_reviews)
-    pagination = Pagination(limit,count,session["skip"])
     pagination.results = updated_reviews
 
     return render_template('course-view.html', course = course_data, pagination = pagination)

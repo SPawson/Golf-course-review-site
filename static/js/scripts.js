@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   //parallax initialisation
   $('.parallax').parallax();
 
-  //Modal initialisation
-  $('.modal').modal();
 
   //Initialises index image carousel
   let options = {

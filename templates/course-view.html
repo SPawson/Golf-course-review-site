@@ -1,5 +1,10 @@
 {%extends 'base.html'%}
 {%block content%}
+
+{% set page = pagination.page%}
+{% set next_page = page + 1%}
+{% set prev_page = page - 1%}
+
 <div class="container center-align">
     <h3>Course</h3>
 
@@ -87,18 +92,18 @@
 
     <ul class="pagination">
         {% if pagination.prevUrl == True %}
-        <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', load= False ,dir='prev', course_id = course._id)}}"><i
+        <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', course_id = course._id, page=[prev_page])}}"><i
                     class="material-icons">chevron_left</i></a></li>
         {% else %}
-        <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', load= False ,dir='prev', course_id = course._id)}}"><i
+        <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', course_id = course._id, page=[prev_page])}}"><i
                     class="material-icons">chevron_left</i></a></li>
         {% endif %}
         {% if pagination.nextUrl == True %}
-        <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', load= False ,dir='next', course_id = course._id)}}"><i
+        <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', course_id = course._id, page=[next_page])}}"><i
                     class="material-icons">chevron_right</i></a></li>
 
         {% else %}
-        <li class="chev-next disabled"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', load= False ,dir='next', course_id = course._id)}}"><i
+        <li class="chev-next disabled"><a class="btn btn_small btn-pagination" href="{{url_for('view_course', course_id = course._id, page=[next_page])}}"><i
                     class="material-icons">chevron_right</i></a></li>
         {% endif %}
     </ul>
