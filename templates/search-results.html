@@ -10,80 +10,83 @@
         <h4>Results</h4>
 
         {% if pagination.results|length != 0 %}
-            {% for course in pagination.results %}
-            {% if pagination.results|length == 3 %}
-            <div class="col s12 m8 push-m2 l8 push-l2 xl4">
+        {% for course in pagination.results %}
+        {% if pagination.results|length == 3 %}
+        <div class="col s12 m8 push-m2 l8 push-l2 xl4">
             {% elif pagination.results|length == 1 %}
             <div class="col s12 m8 push-m2 l8 push-l2 view ">
-            {% else %}
-            <div class="col s12 m8 push-m2 l8 push-l2 xl6">
-            {% endif %}
-                <div class="card">
-                    <div class="card-image">
-                        <img class="responsive-img" src="{{course.course_img}}">
-                        <h4><span class="card-title"> {{course.course_name}}</span></h4>
-                    </div>
-                    <div class="card-content left-align">
-                        <ul>
-                            <li><span class="field-title">Avg Rating</span> :
-                                {% for star in range(5) %}
-                                {% if loop.index <= course.avg_rating %}
-                                <i class="material-icons gold-star">star</i>
-                                {% else %}
-                                <i class="material-icons grey-star">star</i>
-                                {% endif %}
-                                {% endfor %}
-                                <span>({{course.num_reviews}})</span>
-                            </li>
-                            <li><span class="field-title">Par:</span> {{course.par}}</li>
-                            <li class="region"><span class="field-title">Region:</span> {{course.region}}</li>
-                        </ul>
-
-                        <div class="center-align">
-                            <a href="{{url_for('view_course', course_id= course._id, page=[0])}}"
-                                class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                {% else %}
+                <div class="col s12 m8 push-m2 l8 push-l2 xl6">
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-image">
+                            <img class="responsive-img" src="{{course.course_img}}">
+                            <h4><span class="card-title"> {{course.course_name}}</span></h4>
                         </div>
+                        <div class="card-content left-align">
+                            <ul>
+                                <li><span class="field-title">Avg Rating</span> :
+                                    {% for star in range(5) %}
+                                    {% if loop.index <= course.avg_rating %}
+                                    <i class="material-icons gold-star">star</i>
+                                    {% else %}
+                                    <i class="material-icons grey-star">star</i>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <span>({{course.num_reviews}})</span>
+                                </li>
+                                <li><span class="field-title">Par:</span> {{course.par}}</li>
+                                <li class="region"><span class="field-title">Region:</span> {{course.region}}</li>
+                            </ul>
+
+                            <div class="center-align">
+                                <a href="{{url_for('view_course', course_id= course._id, page=[0])}}"
+                                    class="modal-trigger del-btn waves-effect waves-light btn btn_small">View</a>
+                            </div>
 
 
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
+                {% else %}
+
+                <h6 class="no-results-text">Sorry there are no results found</h6>
+                <a href="/home#nav-search" class="waves-effect waves-light btn btn_small btn-new no-results">Back To
+                    Search</a>
+                {% endif %}
             </div>
-            {% endfor %}
-        {% else %}
+            <div class="row">
+                <ul class="pagination center-align">
+                    {% if pagination.prevUrl == True %}
+                    <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination"
+                            href="{{url_for('search', search=['False'], page=[prev_page])}}"><i
+                                class="material-icons">chevron_left</i></a>
+                    </li>
+                    {% else %}
+                    <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination"
+                            href="{{url_for('search', search=['False'], page=[prev_page])}}"><i
+                                class="material-icons">chevron_left</i></a>
+                    </li>
+                    {% endif %}
+                    {% if pagination.nextUrl == True %}
+                    <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination"
+                            href="{{url_for('search', search=['False'], page=[next_page])}}"><i
+                                class="material-icons">chevron_right</i></a>
+                    </li>
 
-            <h6 class="no-results-text">Sorry there are no results found</h6>
-            <a href="/home#nav-search" class="waves-effect waves-light btn btn_small btn-new no-results">Back To Search</a>
-        {% endif %}
+                    {% else %}
+                    <li class="chev-next disabled"><a class="btn btn_small btn-pagination"
+                            href="{{url_for('search', search=['False'], page=[next_page])}}"><i
+                                class="material-icons">chevron_right</i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
 
-            <ul class="pagination">
-                {% if pagination.prevUrl == True %}
-                <li class="waves-effect chev-prev"><a class="btn btn_small btn-pagination"
-                        href="{{url_for('search', search=['False'], page=[prev_page])}}"><i
-                            class="material-icons">chevron_left</i></a>
-                </li>
-                {% else %}
-                <li class="waves-effect chev-prev disabled"><a class="btn btn_small btn-pagination"
-                        href="{{url_for('search', search=['False'], page=[prev_page])}}"><i
-                            class="material-icons">chevron_left</i></a>
-                </li>
-                {% endif %}
-                {% if pagination.nextUrl == True %}
-                <li class="waves-effect chev-next"><a class="btn btn_small btn-pagination"
-                        href="{{url_for('search', search=['False'], page=[next_page])}}"><i
-                            class="material-icons">chevron_right</i></a>
-                </li>
-
-                {% else %}
-                <li class="chev-next disabled"><a class="btn btn_small btn-pagination"
-                        href="{{url_for('search', search=['False'], page=[next_page])}}"><i
-                            class="material-icons">chevron_right</i></a>
-                </li>
-                {% endif %}
-            </ul>
         </div>
-    </div>
 
 
-    <script type="text/javascript" src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/pagination.js') }}"></script>
 
-    {% endblock %}
+        {% endblock %}

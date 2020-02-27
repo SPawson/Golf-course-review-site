@@ -10,7 +10,7 @@
                 {{  form.course_name() }}
                 <div class="invalid-feedback">
                     {% for error in form.course_name.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -25,7 +25,7 @@
                 {{  form.par() }}
                 <div class="invalid-feedback">
                     {% for error in form.par.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -42,7 +42,7 @@
                 {{  form.description() }}
                 <div class="invalid-feedback">
                     {% for error in form.description.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -62,7 +62,7 @@
                 {{  form.address_line_1() }}
                 <div class="invalid-feedback">
                     {% for error in form.address_line_1.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -79,7 +79,7 @@
                 {{  form.address_line_2() }}
                 <div class="invalid-feedback">
                     {% for error in form.address_line_2.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -96,7 +96,7 @@
                 {{  form.address_line_3() }}
                 <div class="invalid-feedback">
                     {% for error in form.address_line_3.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -136,7 +136,7 @@
                 {{  form.postcode() }}
                 <div class="invalid-feedback">
                     {% for error in form.postcode.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -156,7 +156,7 @@
                 {{  form.course_img() }}
                 <div class="invalid-feedback">
                     {% for error in form.course_img.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -173,7 +173,7 @@
                 {{  form.affiliate_link() }}
                 <div class="invalid-feedback">
                     {% for error in form.affiliate_link.errors %}
-                    <span>{{error}}</span>
+                    <span class="error">{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}

@@ -28,7 +28,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 class Course(FlaskForm):
     course_name = StringField('Course Name'
-    ,validators=[DataRequired(), Length(min=3, max=90)])
+    ,validators=[DataRequired("A valid number must be used"), Length(min=3, max=90)])
     par = IntegerField('Par', validators=[DataRequired()])
     description = TextAreaField('Description'
     ,validators=[DataRequired(), Length(min=3)])

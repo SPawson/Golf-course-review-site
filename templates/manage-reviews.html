@@ -23,7 +23,7 @@
                     <div class="col s10 m10 manage-courses">
                         {% for course in courses %}
                         {% if review.course_id == course._id %}
-                        <h4>{{course.course_name}}</h4>
+                        <h4 class="title"><a href="{{url_for('view_course', course_id= course._id, page=[0])}}">{{course.course_name}}</a></h4>
                         {% endif %}
                         {% endfor %}
                         <ul>

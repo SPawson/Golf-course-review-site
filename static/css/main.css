@@ -24,6 +24,22 @@ h6,
     font-weight: 700;
 }
 
+.course-name  a{
+    color: black;
+}
+
+.course-name a:hover{
+    color: #5e5b5b;
+}
+
+.title a{
+    color: black;
+}
+
+.title a:hover {
+    color: #5e5b5b;
+}
+
 /*Nav Bar*/
 
 nav {
@@ -117,6 +133,12 @@ font-size: 2em;
     color: white;
 }
 
+.page-footer a:hover{
+    color: #dad8d8;
+}
+
+
+
 /*Forms*/
 .register{
     display: flex;
@@ -144,6 +166,7 @@ font-size: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 5%;
 }
 .featured-card{
     

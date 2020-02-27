@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let rating = parseInt(document.querySelector('.rating').getAttribute('value'));
     let selected = stars[rating - 1];
 
-    selected.dispatchEvent(new MouseEvent('click'));
+    if(selected != null){
+        selected.dispatchEvent(new MouseEvent('click'));
+    }
+    
 
 });
 
