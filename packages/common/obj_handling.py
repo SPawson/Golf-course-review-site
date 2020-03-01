@@ -98,9 +98,10 @@ class Record:
     @staticmethod
     def create_user_record(obj,password):
     #Creates a dictionary from the form fields
+        email = obj.get('email')
         data = {
         'username': obj.get('username'),
-        'email': obj.get('email'),
+        'email': email.lower(),
         'password': password,
         'is_admin': False
         }

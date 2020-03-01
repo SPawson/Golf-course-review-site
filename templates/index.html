@@ -4,7 +4,7 @@
 <div class="slider">
     <ul class="slides">
         <li>
-            <img src="{{ url_for('static', filename='media/images/index-slider/player.jpg')}}">
+            <img alt="image of a golfer" src="{{ url_for('static', filename='media/images/index-slider/player.jpg')}}">
             <div class="caption center-align ">
                 <h3>Sign Up Today!</h3>
                 <h5 class="light grey-text text-lighten-3">Making everyday golf better</h5>
@@ -27,7 +27,7 @@
 
                 <div class="card featured-card">
                     <div class="card-image">
-                        <img  src="{{featured.course_img}}">
+                        <img alt="image of the featured course" src="{{featured.course_img}}">
                         <h4>
                             <span class="card-title"> {{featured.course_name}}</span>
                         </h4>
@@ -68,7 +68,7 @@
 
 <div class="parallax-container">
     <div class="parallax">
-        <img src="../static/media/images/parallax/course-1.jpg">
+        <img alt="image of a course" src="../static/media/images/parallax/course-1.jpg">
     </div>
 </div>
 
@@ -91,7 +91,7 @@
                                     <option value="{{region.name}}">{{region.name}}</option>
                                     {% endfor %}
                                 </select>
-                                <label for="icon_prefix">Region</label>
+                                <label for="region">Region</label>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">short_text</i>
                                 <input id="review-title" name="course_name" type="text" class="validate">
-                                <label for="icon_prefix">Course Name</label>
+                                <label for="course_name">Course Name</label>
                             </div>
                         </div>
 
@@ -108,11 +108,11 @@
                                 <h5>Minimum Rating</h5>
                                 <input class="rating" name="min_rating" type="hidden" value="0">
                                 <div class="stars">
-                                    <span><i class="material-icons ">star</i></span>
-                                    <span><i class="material-icons ">star</i></span>
-                                    <span><i class="material-icons ">star</i></span>
-                                    <span><i class="material-icons ">star</i></span>
-                                    <span><i class="material-icons ">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons star">star</i></span>
                                 </div>
 
                             </div>
@@ -135,7 +135,7 @@
 
 <div class="parallax-container">
     <div class="parallax">
-        <img class="" src="../static/media/images/parallax/course-4.jpg">
+        <img alt="image of the featured course" src="../static/media/images/parallax/course-4.jpg">
     </div>
 </div>
 
@@ -146,7 +146,7 @@
         <div class="col s12 m8 push-m2 l8 push-l2 xl4">
             <div class="card">
                 <div class="card-image">
-                    <img class="responsive-img"src="{{course.course_img}}">
+                    <img alt="image of a popular course" class="responsive-img" src="{{course.course_img}}">
                     <h4><span class="card-title"> {{course.course_name}}</span></h4>
                 </div>
                 <div class="card-content left-align">
@@ -181,5 +181,5 @@
 
 
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/star-rating.js') }}"></script>
+
 {% endblock %}

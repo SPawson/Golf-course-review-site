@@ -12,7 +12,7 @@
         <div class="col s12 m10 push-m1 view">
             <div class="card  left-align">
                 <div class="card-image">
-                    <img src="{{course.course_img}}">
+                    <img alt="image of the course" src="{{course.course_img}}">
                     <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
                 </div>
                 <div class="card-content">
@@ -30,7 +30,11 @@
                         <li><strong><span class="field-title">Description:</span></strong> {{course.description}} </li>
                         <li><strong><span class="field-title">Par:</span></strong> {{course.par}}</li>
                         <li><strong><span class="field-title">Location:</span></strong> {{course.address_line_1}}, {{course.address_line_2}},
-                            {{course.address_line_3}}, {{course.postcode}}</li>
+                            
+                            {% if course.address_line_3 %}
+                            {{course.address_line_3}},
+                            {% endif %}
+                            {{course.postcode}}</li>
                         <li class="region"><strong><span class="field-title">Region:</span></strong> {{course.region}}</li>
                     </ul>
 

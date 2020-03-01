@@ -113,14 +113,17 @@ def does_email_exist(search_item):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user_record = user_db.find_one({'email':form.email.data})
+        email_entered = form.email.data
+        user_record = user_db.find_one({'email':email_entered.lower()})
         user_email =  ""
         user_password = ""
+        
         if user_record:
             user_email =  user_record["email"]
             user_password = user_record["password"]
+            
 
-        if form.email.data == user_email and bcrypt.check_password_hash(user_password, form.password.data):
+        if email_entered.lower() ==  user_email  and bcrypt.check_password_hash(user_password, form.password.data):
             session["user_id"] = str(user_record["_id"])
             session["username"] = user_record["username"]
             session["logged_in"] = True

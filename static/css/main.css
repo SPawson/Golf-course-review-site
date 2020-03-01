@@ -349,15 +349,16 @@ textarea{
 }
 
 .grey-star{
-    font-size: 1.1em !important;
+    font-size: 1.2em !important;
 }
 .gold-star {
     color: goldenrod;
-    font-size: 1em !important; 
+    font-size: 1.2em !important; 
 }
 
 .stars span i {
     cursor: pointer;
+    font-size: 1.3em !important; 
 }
 
 .error{
@@ -404,5 +405,10 @@ textarea{
     .gold-star {
         font-size: 1.3em;
         
+    }
+
+    .stars span i {
+        cursor: pointer;
+        font-size: 1.4em !important; 
     }
 }

@@ -36,8 +36,7 @@ class Course(FlaskForm):
     ,validators=[DataRequired(), Length(min=3, max=70)])
     address_line_2 = StringField('Address Line 2'
     ,validators=[DataRequired(), Length(min=3, max=70)])
-    address_line_3 = StringField('Address Line 3'
-    ,validators=[DataRequired(), Length(min=3, max=70)])
+    address_line_3 = StringField('Address Line 3')
     postcode = StringField('Postcode'
     ,validators=[DataRequired(), Length(min=6, max=8)])
     course_img = StringField('Course Image'
