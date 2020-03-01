@@ -39,6 +39,14 @@ h6,
 .title a:hover {
     color: #5e5b5b;
 }
+/*Index*/
+.index-title{
+    margin-top: 15px;
+}
+
+.slider{
+    max-height: 70%;
+}
 
 /*Nav Bar*/
 
@@ -340,9 +348,12 @@ textarea{
     height: 10rem;
 }
 
-
+.star{
+    font-size: 1em;
+}
 .gold-star {
     color: goldenrod;
+    
 
 }
 
@@ -385,5 +396,9 @@ textarea{
 
     .no-results-text{
         margin-top: 70px;
+    }
+
+    .star{
+        font-size: 1.3em;
     }
 }

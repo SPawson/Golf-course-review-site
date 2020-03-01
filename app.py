@@ -66,11 +66,6 @@ def search():
 
     limit=4
 
-    # if dir == 'next':
-    #     session["skip"] += 1 
-    # elif dir == 'prev':
-    #     session["skip"] -= 1  
-
     if session["search_item"] != "":
         count = course_db.count(session["search_item"])
         pagination = Pagination(limit,count,page)

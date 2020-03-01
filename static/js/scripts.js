@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //Initialises index image carousel
   let options = {
     //fullWidth: true,
-    height:650,
+    height:500,
     indicators: false,
     interval: 6000
   }

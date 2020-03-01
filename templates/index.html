@@ -15,23 +15,13 @@
     </ul>
 </div>
 
-<!-- <div class="carousel carousel-slider">
-    <div class="caption center-align ">
-        <h3>Sign Up Today!</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-    </div>
-    <a class="carousel-item" href="#one!"><img src="{{ url_for('static', filename='media/images/index-slider/player.jpg')}}"></a>
-    <a class="carousel-item" href="#two!"><img src="{{ url_for('static', filename='media/images/index-slider/course-1.jpg')}}"></a>
-
-  </div> -->
-
 
 <!--Featured Course-->
 
 <div class="container">
     <div class="section center-align">
 
-        <h4>Featured Course</h4>
+        <h4 class="index-title">Featured Course</h4>
         <div class="row">
             <div class="col s12 featured">
 
@@ -47,9 +37,9 @@
                             <li><span class="field-title">Avg Rating</span> :
                                 {% for star in range(5) %}
                                 {% if loop.index <= featured.avg_rating %}
-                                <i class="material-icons gold-star">star</i>
+                                <i class="material-icons star gold-star">star</i>
                                 {% else %}
-                                <i class="material-icons grey-star">star</i>
+                                <i class="material-icons star grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
                                 <span>({{featured.num_reviews}})</span>
@@ -164,9 +154,9 @@
                         <li><span class="field-title">Avg Rating</span> :
                             {% for star in range(5) %}
                             {% if loop.index <= course.avg_rating %}
-                            <i class="material-icons gold-star">star</i>
+                            <i class="material-icons star gold-star">star</i>
                             {% else %}
-                            <i class="material-icons grey-star">star</i>
+                            <i class="material-icons star grey-star">star</i>
                             {% endif %}
                             {% endfor %}
                             <span>({{course.num_reviews}})</span>

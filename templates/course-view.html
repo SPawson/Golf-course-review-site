@@ -20,9 +20,9 @@
                         <li><strong><span class="field-title">Avg Rating</span></strong> :
                             {% for star in range(5) %}
                             {% if loop.index <= course.avg_rating %}
-                            <i class="material-icons gold-star">star</i>
+                            <i class="material-icons star gold-star">star</i>
                             {% else %}
-                            <i class="material-icons grey-star">star</i>
+                            <i class="material-icons star grey-star">star</i>
                             {% endif %}
                             {% endfor %}
                             <span>({{course.num_reviews}})</span>
@@ -65,9 +65,9 @@
                             <span class="username">{{review.username}}</span>
                             <span> {% for star in range(5) %}
                                 {% if loop.index <= review.star_rating %}
-                                <i class="material-icons gold-star">star</i>
+                                <i class="material-icons star gold-star">star</i>
                                 {% else %}
-                                <i class="material-icons grey-star">star</i>
+                                <i class="material-icons star grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
                                 
