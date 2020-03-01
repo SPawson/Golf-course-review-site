@@ -31,12 +31,12 @@
                             <li class="course-name"><span class="field-title">Course:</span><a href="{{url_for('view_course', course_id= course._id, page=[0])}}"> {{course.course_name}}</a></li>
                             <li><span class="field-title">Par:</span> {{course.par}}</li>
                             <li><span class="field-title">Location:</span> {{course.region}}</li>
-                            <li><span class="field-title">Avg Rating:</span>
+                            <li class="stars"><span class="field-title">Avg Rating:</span>
                                 {% for star in range(5) %}
                                 {% if loop.index <= course.avg_rating %}
-                                <i class="material-icons star gold-star">star</i>
+                                <i class="material-icons  gold-star">star</i>
                                 {% else %}
-                                <i class="material-icons star grey-star">star</i>
+                                <i class="material-icons grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
                                 <span>({{course.num_reviews}})</span>

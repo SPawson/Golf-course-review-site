@@ -348,13 +348,12 @@ textarea{
     height: 10rem;
 }
 
-.star{
-    font-size: 1em;
+.grey-star{
+    font-size: 1.1em !important;
 }
 .gold-star {
     color: goldenrod;
-    
-
+    font-size: 1em !important; 
 }
 
 .stars span i {
@@ -398,7 +397,12 @@ textarea{
         margin-top: 70px;
     }
 
-    .star{
+    .grey-star{
+        font-size: 1.3em ;
+    }
+
+    .gold-star {
         font-size: 1.3em;
+        
     }
 }

@@ -115,7 +115,7 @@
 
             <div class="input-field col s12 l6">
                 <i class="material-icons prefix">poll</i>
-                <select required autofocus id="region" name="region">
+                <select id="region-select" autofocus id="region" name="region">
 
                     {% if selected_region %}
                     <option value="{{selected_region}}" selected>{{ selected_region }}</option>
@@ -127,6 +127,11 @@
                     {% endfor %}
                 </select>
                 <label>Region</label>
+                <div class="invalid-feedback">
+                   
+                    <span id="region-error" class="error"></span>
+                  
+                </div>
             </div>
 
             <div class="input-field col s12 l6">
@@ -183,3 +188,7 @@
         </div>
     </div>
 </div>
+
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/form.js') }}"></script>

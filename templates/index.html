@@ -33,13 +33,13 @@
                         </h4>
                     </div>
                     <div class="card-content left-align">
-                        <ul>
+                        <ul class="stars">
                             <li><span class="field-title">Avg Rating</span> :
                                 {% for star in range(5) %}
                                 {% if loop.index <= featured.avg_rating %}
-                                <i class="material-icons star gold-star">star</i>
+                                <i class="material-icons gold-star">star</i>
                                 {% else %}
-                                <i class="material-icons star grey-star">star</i>
+                                <i class="material-icons grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
                                 <span>({{featured.num_reviews}})</span>
@@ -108,11 +108,11 @@
                                 <h5>Minimum Rating</h5>
                                 <input class="rating" name="min_rating" type="hidden" value="0">
                                 <div class="stars">
-                                    <span><i class="material-icons star">star</i></span>
-                                    <span><i class="material-icons star">star</i></span>
-                                    <span><i class="material-icons star">star</i></span>
-                                    <span><i class="material-icons star">star</i></span>
-                                    <span><i class="material-icons star">star</i></span>
+                                    <span><i class="material-icons ">star</i></span>
+                                    <span><i class="material-icons ">star</i></span>
+                                    <span><i class="material-icons ">star</i></span>
+                                    <span><i class="material-icons ">star</i></span>
+                                    <span><i class="material-icons ">star</i></span>
                                 </div>
 
                             </div>
@@ -150,13 +150,13 @@
                     <h4><span class="card-title"> {{course.course_name}}</span></h4>
                 </div>
                 <div class="card-content left-align">
-                    <ul>
+                    <ul class="stars">
                         <li><span class="field-title">Avg Rating</span> :
                             {% for star in range(5) %}
                             {% if loop.index <= course.avg_rating %}
-                            <i class="material-icons star gold-star">star</i>
+                            <i class="material-icons gold-star">star</i>
                             {% else %}
-                            <i class="material-icons star grey-star">star</i>
+                            <i class="material-icons grey-star">star</i>
                             {% endif %}
                             {% endfor %}
                             <span>({{course.num_reviews}})</span>

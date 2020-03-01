@@ -7,7 +7,7 @@
 
     <div class="row">
         <!--Add course form details-->
-        <form action="{{url_for('update_course', course_id = course._id)}}" method="POST" class="col s12">
+        <form id="edit-course-form" action="{{url_for('update_course', course_id = course._id)}}" method="POST" class="col s12">
             <div class="row">
                 {% include "partials/course-form.html" %}
             </div>

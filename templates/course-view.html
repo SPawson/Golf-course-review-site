@@ -16,13 +16,13 @@
                     <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
                 </div>
                 <div class="card-content">
-                    <ul>
+                    <ul class="stars">
                         <li><strong><span class="field-title">Avg Rating</span></strong> :
                             {% for star in range(5) %}
                             {% if loop.index <= course.avg_rating %}
-                            <i class="material-icons star gold-star">star</i>
+                            <i class="material-icons gold-star">star</i>
                             {% else %}
-                            <i class="material-icons star grey-star">star</i>
+                            <i class="material-icons grey-star">star</i>
                             {% endif %}
                             {% endfor %}
                             <span>({{course.num_reviews}})</span>
@@ -63,11 +63,11 @@
                     <div class="row">
                         <div class="col s8 left-align">
                             <span class="username">{{review.username}}</span>
-                            <span> {% for star in range(5) %}
+                            <span class="stars"> {% for star in range(5) %}
                                 {% if loop.index <= review.star_rating %}
-                                <i class="material-icons star gold-star">star</i>
+                                <i class="material-icons gold-star">star</i>
                                 {% else %}
-                                <i class="material-icons star grey-star">star</i>
+                                <i class="material-icons grey-star">star</i>
                                 {% endif %}
                                 {% endfor %}
                                 
