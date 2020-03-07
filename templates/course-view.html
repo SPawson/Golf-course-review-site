@@ -12,7 +12,7 @@
         <div class="col s12 m10 push-m1 view">
             <div class="card  left-align">
                 <div class="card-image">
-                    <img alt="image of the course" src="{{course.course_img}}">
+                    <img alt="image of the course" src="{{course.course_img}}" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
                     <span class="card-title"> <strong>{{course.course_name}}</strong> </span>
                 </div>
                 <div class="card-content">

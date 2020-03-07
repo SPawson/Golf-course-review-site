@@ -27,7 +27,7 @@
 
                 <div class="card featured-card">
                     <div class="card-image">
-                        <img alt="image of the featured course" src="{{featured.course_img}}">
+                        <img alt="image of the featured course" src="{{featured.course_img}}" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
                         <h4>
                             <span class="card-title"> {{featured.course_name}}</span>
                         </h4>
@@ -44,7 +44,6 @@
                                 {% endfor %}
                                 <span>({{featured.num_reviews}})</span>
                             </li>
-                            <li><span class="field-title">Description:</span> <p>{{featured.description}}</p> </li>
                             <li><span class="field-title">Par:</span> {{featured.par}}</li>
                             <li class="region"><span class="field-title">Region:</span> {{featured.region}}</li>
                         </ul>
@@ -135,7 +134,7 @@
 
 <div class="parallax-container">
     <div class="parallax">
-        <img alt="image of the featured course" src="../static/media/images/parallax/course-4.jpg">
+        <img alt="image of the featured course" src="../static/media/images/parallax/course-4.jpg" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
     </div>
 </div>
 
