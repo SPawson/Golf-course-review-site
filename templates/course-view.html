@@ -39,7 +39,7 @@
                     </ul>
 
                     <div class="center-align">
-                        <a href="{{course.affiliate_link}}" class="modal-trigger waves-effect waves-light btn btn_small">Book</a>
+                        <a target="_blank" href="{{course.affiliate_link}}" class="modal-trigger waves-effect waves-light btn btn_small">Book</a>
                         {% if session.logged_in %}
                         <a href="{{url_for('add_review',course_id = course._id)}}" class="waves-effect waves-light btn btn_small btn-review">Review</a>
                         {% endif %}

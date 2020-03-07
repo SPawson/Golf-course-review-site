@@ -74,12 +74,12 @@ nav .nav-wrapper {
 
 /*Homepage*/
 .slider .slides li .caption h3 {
-    text-shadow: 5px 4px 3px rgba(150, 150, 144, 0.7);
+    text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.81);
     font-size: 4rem;
 }
 
 .slider .slides li .caption h5 {
-    text-shadow: 5px 4px 3px rgba(150, 150, 144, 0.7);
+    text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.81);
 }
 
 .parallax-container {
@@ -242,14 +242,14 @@ font-size: 2em;
     border-radius: 8%;
 }
 
-.btn:hover {
+.btn:hover, .btn:focus {
     background-color: #3e7145;
     border: #3e7145 solid 2px;
 }
 
 .btn-register {
-    background-color: #ff8f53;
-    border: #ff8f53 solid 2px;
+    background-color: #ff9e6b;
+    border: #ff9e6b solid 2px;
     font-size: 16px;
     letter-spacing: 2.5px;
     height: 40px;
@@ -259,6 +259,22 @@ font-size: 2em;
 .btn-register:hover {
     background-color: #d8692e;
     border: #d8692e solid 2px;
+
+}
+
+.btn-contact {
+    background-color: #f6ff6e;
+    border: #f6ff6e solid 2px;
+    color: #6a6262;
+    font-size: 16px;
+    letter-spacing: 2.5px;
+    height: 40px;
+
+}
+
+.btn-contact:hover,.btn-contact:focus {
+    background-color: #d7df5f;
+    border: #d7df5f solid 2px;
 
 }
 
