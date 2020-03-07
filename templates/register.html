@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">person</i>
-                        <label for="icon_prefix">{{ form.username.label() }}</label>
+                        <label>{{ form.username.label() }}</label>
                         {% if form.username.errors %}
                             {{  form.username() }}
                             <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <div class="class row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">mail_outline</i>
-                        <label for="icon_prefix">{{ form.email.label() }}</label>
+                        <label>{{ form.email.label() }}</label>
                         {% if form.email.errors %}
                         {{  form.email() }}
                         <div class="invalid-feedback">
@@ -47,7 +47,7 @@
                 <div class="class row">
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">dialpad</i>
-                        <label for="icon_prefix">{{ form.password.label() }}</label>
+                        <label>{{ form.password.label() }}</label>
                         {% if form.password.errors %}
                         {{  form.password() }}
                         <div class="invalid-feedback">
@@ -63,7 +63,7 @@
         
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">dialpad</i>
-                        <label for="icon_prefix">{{ form.confirm_password.label() }}</label>
+                        <label>{{ form.confirm_password.label() }}</label>
                         {% if form.confirm_password.errors %}
                         {{  form.confirm_password() }}
                         <div class="invalid-feedback">

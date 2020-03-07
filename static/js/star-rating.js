@@ -1,18 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     //Add mouse click event to each star element
     let stars = document.querySelectorAll('.star');
-    stars.forEach(function(star) {
+    stars.forEach(function (star) {
         star.addEventListener('click', setRating);
     });
+    let ratingSelector = document.querySelector('.rating');
+    if (ratingSelector != null) {
+        let rating = parseInt(ratingSelector.getAttribute('value'));
+        var selected = stars[rating - 1];
+    }
 
-    let rating = parseInt(document.querySelector('.rating').getAttribute('value'));
-    let selected = stars[rating - 1];
 
-    if(selected != null){
+    if (selected != null) {
         selected.dispatchEvent(new MouseEvent('click'));
     }
-    
+
 
 });
 
@@ -21,19 +24,18 @@ function setRating(ev) {
     let span = ev.currentTarget;
     let stars = document.querySelectorAll('.star');
     let match = false;
-    let num= 0;
+    let num = 0;
 
     //Looks through each star obj and assigns gold class depending on onj clicked
-    stars.forEach(function(star, index) {
-        if(match) {
+    stars.forEach(function (star, index) {
+        if (match) {
             star.classList.remove('gold-star');
-        }
-        else{
+        } else {
             star.classList.add('gold-star');
         }
-        if(star == span){
+        if (star == span) {
             match = true;
-            num= index +1;
+            num = index + 1;
         }
         let starValue = parseInt(document.querySelector('.rating').getAttribute('value'))
     });
