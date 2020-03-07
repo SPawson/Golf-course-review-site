@@ -222,6 +222,7 @@ def update_course(course_id):
         if form.validate_on_submit():
             data = Record.create_course_record(request.form)
             course_db.update({'_id': ObjectId(course_id)}, data)
+            average_review(course_id)
             return redirect(url_for('manage_courses', page=[0]))
         else:
             return render_template("edit-course.html", regions = region_list , course = selected_course, form = form, selected_region=selected_region)
