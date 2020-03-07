@@ -42,6 +42,7 @@
         </nav>
 
         <ul class="sidenav" id="mobile-demo">
+            <li><a href="{{url_for('index')}}">Home</a></li>
             <li><a href="/home#nav-search">Search</a></li>
             {% if not session.logged_in %}
             <li><a href="{{url_for('login')}}">Login</a></li>

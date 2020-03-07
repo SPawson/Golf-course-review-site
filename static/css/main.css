@@ -45,7 +45,8 @@ h6,
 }
 
 .slider{
-    max-height: 70%;
+    max-height: 70vh;
+    overflow: hidden;
 }
 
 /*Nav Bar*/
@@ -206,10 +207,6 @@ font-size: 2em;
 .view .card img {
     max-height: 500px;
     max-width: 600px;
-}
-
-.review .username{
-    
 }
 
 .card .region {
