@@ -20,7 +20,11 @@
                     {% endif %}
                     <div class="card">
                         <div class="card-image">
-                            <img alt="image of the searched course" class="responsive-img" src="{{course.course_img}}" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
+                            <a href="{{url_for('view_course', course_id= course._id, page=[0])}}">
+                                <img alt="image of the searched course" class="responsive-img"
+                                    src="{{course.course_img}}"
+                                    onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
+                            </a>
                             <h4><span class="card-title"> {{course.course_name}}</span></h4>
                         </div>
                         <div class="card-content left-align">

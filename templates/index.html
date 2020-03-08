@@ -26,7 +26,7 @@
                 <h5 class="light text-lighten-3">Get intouch with us today!</h5>
                 <a target="_blank" href="mailto:play-golf-admin@gmail.com?Subject=Course%20Enquiry"
                     class="modal-trigger del-btn waves-effect waves-light btn btn_small btn-contact">Contact Us</a>
-               
+
             </div>
         </li>
     </ul>
@@ -44,7 +44,10 @@
 
                 <div class="card featured-card">
                     <div class="card-image">
-                        <img alt="image of the featured course" src="{{featured.course_img}}" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
+                        <a href="{{url_for('view_course', course_id= featured._id, page=[0])}}">
+                            <img alt="image of the featured course" src="{{featured.course_img}}"
+                                onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
+                        </a>
                         <h4>
                             <span class="card-title"> {{featured.course_name}}</span>
                         </h4>
@@ -151,7 +154,8 @@
 
 <div class="parallax-container">
     <div class="parallax">
-        <img alt="image of the featured course" src="../static/media/images/parallax/course-4.jpg" onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
+        <img alt="image of the featured course" src="../static/media/images/parallax/course-4.jpg"
+            onerror='this.onerror = null; this.src="../static/media/images/fallback/fallback.jpg"'>
     </div>
 </div>
 
@@ -162,7 +166,9 @@
         <div class="col s12 m8 push-m2 l8 push-l2 xl4">
             <div class="card">
                 <div class="card-image">
-                    <img alt="image of a popular course" class="responsive-img" src="{{course.course_img}}">
+                    <a href="{{url_for('view_course',course_id= course._id, page=[0])}}">
+                        <img alt="image of a popular course" class="responsive-img" src="{{course.course_img}}">
+                    </a>
                     <h4><span class="card-title"> {{course.course_name}}</span></h4>
                 </div>
                 <div class="card-content left-align">
