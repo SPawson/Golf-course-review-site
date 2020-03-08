@@ -6,7 +6,6 @@ class Time(object):
     def return_time(unix_time):
         timestamp = float(unix_time)
         conversion = datetime.fromtimestamp(timestamp)
-
         time = conversion.strftime("%d %B %Y")
 
         return time
