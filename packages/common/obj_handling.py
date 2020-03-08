@@ -118,7 +118,7 @@ class Record:
 
     @staticmethod
     def convert_time(obj):
-        
+        #Converts time to readable date
         records = []
         for record in obj:
             unix_time = Record.find_single_value(record, "date")

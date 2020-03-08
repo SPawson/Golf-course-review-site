@@ -32,21 +32,17 @@ review_db = mongo.db.review
 Index Page Controller
 
 """
-
+#Loads the homepage of the site 
 @app.route('/')
 @app.route('/home')
 def index():
-    
     featured_course = Record.return_list(list(course_db.aggregate([{'$sample': {'size':1}}]))) 
-
     regions = region_db.find().sort('name', 1)
     region_list = Record.return_list(regions)
-
     top_courses = course_db.find().sort('num_reviews', -1).limit(3)
     tc_list = Record.return_list(top_courses)
 
     return render_template("index.html", featured = featured_course[0], regions = region_list, tc_courses = tc_list)
-
 
 """
 Search Course
@@ -57,15 +53,13 @@ Search Course
 def search():
     searching = request.args["search"]
     page = int(request.args["page"])
+    limit=4
     if searching == 'True':
         region = request.form.get('region')
         course_name = request.form.get('course_name')
         min_rating = int(request.form.get('min_rating'))
         session["search_item"] = Search.search_term(region,course_name,min_rating)
         session["skip"] = 0
-
-    limit=4
-
     if session["search_item"] != "":
         count = course_db.count(session["search_item"])
         pagination = Pagination(limit,count,page)
@@ -78,12 +72,11 @@ def search():
     return render_template('search-results.html', pagination = pagination)
 
 
-    
-
 """
 Registration/Login Controllers
 
 """
+#Adds new users to the Db
 @app.route("/register", methods=['GET','POST'])
 def register():
     form = RegistrationForm()       
@@ -107,7 +100,6 @@ def does_email_exist(search_item):
     else:
         return True 
 
-
 #logs in the user and sets the session variables
 @app.route("/login", methods=['GET','POST'])
 def login():
@@ -117,12 +109,11 @@ def login():
         user_record = user_db.find_one({'email':email_entered.lower()})
         user_email =  ""
         user_password = ""
-        
+
         if user_record:
             user_email =  user_record["email"]
             user_password = user_record["password"]
             
-
         if email_entered.lower() ==  user_email  and bcrypt.check_password_hash(user_password, form.password.data):
             session["user_id"] = str(user_record["_id"])
             session["username"] = user_record["username"]
@@ -133,19 +124,18 @@ def login():
         else:
             flash('Login Unsuccesfull, please check email and password', 'card-panel teal lighten-2')
             return render_template('login.html', title = 'Login', form=form)
-
     else:
         return render_template('login.html', title = 'Login', form=form)
 
-
+#Removes the current user details from the session variable
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
     session.pop('username', None)
     session.pop('logged_in', None)
     session.pop('is_admin', None)
-    return redirect(url_for('index'))
 
+    return redirect(url_for('index'))
 
 """
 Golf course management controllers
@@ -156,10 +146,7 @@ Golf course management controllers
 @app.route('/manage-courses')
 def manage_courses():
     page = int(request.args["page"])
-    
     limit=5
-   
-
     count = course_db.count()
     pagination = Pagination(limit,count,page)
     pagination.results = course_db.find().skip(pagination.skips).limit(pagination.limit)
@@ -167,7 +154,6 @@ def manage_courses():
     return render_template("manage-courses.html", pagination = pagination)
 
 #retrieves add course template and popualtes region drop box
-
 @app.route('/add-course', methods=['POST','GET'])
 def add_course():
     if session["logged_in"]:
@@ -201,7 +187,6 @@ def edit_course(course_id, methods=['POST','GET']):
         form_data = Record.prepopulate_course_form(selected_course)
         form = Course(obj = form_data)
 
-
         return render_template("edit-course.html", regions = region_list , course = selected_course, form = form, selected_region=selected_region)
             
     else:
@@ -217,7 +202,6 @@ def update_course(course_id):
         form = Course()
         regions = region_db.find().sort('name', 1)
         region_list = Record.return_list(regions)
-        
         selected_course = course_db.find_one({"_id": ObjectId(course_id)})
         selected_region = Record.find_single_value(selected_course, "region")
         if form.validate_on_submit():
@@ -238,24 +222,18 @@ Review Management controller
 #Retrieves list of all reviews created by user logged in
 @app.route('/manage-reviews')
 def manage_reviews():
-    
-
     limit = 4
     page = int(request.args["page"])
     count = review_db.count({"user_id": ObjectId(session["user_id"])})
     pagination = Pagination(limit,count,page)
-
     review_list = list(review_db.find({"user_id": ObjectId(session["user_id"])}).sort('date', -1).skip(pagination.skips).limit(pagination.limit))
     #converts the unix time to dd/mm/yy
     updated_reviews = Record.convert_time(review_list)
-
     pagination.results = updated_reviews
-
     list_courseIds = Record.find_course_ids(review_list)
     list_of_courses = []
     for id in list_courseIds:
         list_of_courses += course_db.find({"_id": ObjectId(id)})
-
     courses = list(list_of_courses)
 
     return render_template("manage-reviews.html", pagination = pagination, courses = courses)
@@ -276,15 +254,11 @@ def add_review(course_id):
     else:
         return redirect(url_for('view_course', course_id = course_id, page=[0]))
         
-
-
-
 #calculates the average score from all reviews associated with the given course_id
 def average_review(course_id):
     list_of_reviews = review_db.find({"course_id": ObjectId(course_id)})
     review_avg = Record.average_rating(list_of_reviews)
     num_reviews = review_db.find({"course_id": ObjectId(course_id)}).count()
-
     course_db.update_one({"_id": ObjectId(course_id)}, 
     {"$set": {
         "avg_rating": review_avg,
@@ -299,7 +273,6 @@ def edit_review(review_id):
     form = Review(obj = form_data)
 
     return render_template('edit-review.html', review = selected_review, form= form)
-
 
 #Updates review record and updates average score for course
 @app.route('/edit-review/update/<review_id>&<course_id>', methods=['POST','GET'])
@@ -316,36 +289,26 @@ def delete_review(review_id,course_id):
     average_review(course_id)
     return redirect(url_for('manage_reviews', page=[0]))
 
-
 """
 Course View
 
 """
-
 @app.route('/view/<course_id>')
 def view_course(course_id):
-
     page = int(request.args["page"])
-    
     limit=4
-
     count = review_db.count({"course_id": ObjectId(course_id)})
     pagination = Pagination(limit,count,page)
-
     course_data = course_db.find_one({"_id": ObjectId(course_id)})
-
     list_of_reviews = review_db.find({"course_id": ObjectId(course_id)}).sort('date', -1).skip(pagination.skips).limit(pagination.limit)
     updated_reviews = Record.convert_time(list_of_reviews)
-
     pagination.results = updated_reviews
 
     return render_template('course-view.html', course = course_data, pagination = pagination)
 
-
-
 #Setting app runtime conditions 
 if __name__ == '__main__':
-    app.run(host = config.host_val , port = config.port_val, debug=True)
+    app.run(host = config.host_val , port = config.port_val, debug=False)
 
 
 

@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
+#Controls validation for registration form
 class RegistrationForm(FlaskForm):
     username = StringField('Username'
     ,validators=[DataRequired(), Length(min=2, max=20)])
@@ -16,6 +17,7 @@ class RegistrationForm(FlaskForm):
 
     submit = SubmitField('Register')
 
+#Controls validation for Login form
 class LoginForm(FlaskForm):
   
     email = StringField('Email'
@@ -26,6 +28,8 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
 
     submit = SubmitField('Login')
+
+#Controls validation for Course form
 class Course(FlaskForm):
     course_name = StringField('Course Name'
     ,validators=[DataRequired("A valid number must be used"), Length(min=3, max=90)])
@@ -44,6 +48,7 @@ class Course(FlaskForm):
     affiliate_link = StringField('Affiliate Link'
     ,validators=[DataRequired()])
 
+#Course object used for the preloading of course data
 class CourseObj():
     def __init__(self):
         self.course_name = None
@@ -56,10 +61,12 @@ class CourseObj():
         self.course_img = None
         self.affiliate_link = None
 
+#Controls validation for the review form
 class Review(FlaskForm):
     review_title = StringField('Title',validators=[DataRequired(), Length(min=3, max=45)])
     review_article = TextAreaField('Review',validators=[DataRequired(), Length(min=5)])
 
+#Review object used for preloading the review data
 class ReviewObj():
     def __init__(self):
         self.review_title = None

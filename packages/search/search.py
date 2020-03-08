@@ -1,4 +1,3 @@
-from packages.common.obj_handling import Record
 import math
 
 class Pagination:
@@ -12,33 +11,31 @@ class Pagination:
         self.skips = None
         self.count = count
         self.pagination_amount= None
-
         self.paginiation()
         self.calculate_skips()
-
         self.nextUrl = self.has_next_url()
         self.prevUrl = self.has_prev_url()
 
-        
-        
-
+    #Determines amount of pagination
     def paginiation(self):
         self.pagination_amount = math.ceil(self.count / self.limit)
-
+    #Calculates number of records to be skiped in pagination
     def calculate_skips(self):
         self.skips = round(int(self.page) * self.limit)
-
+    #Determines if the current pagination item has a next url
     def has_next_url(self):
         if self.pagination_amount -1 != int(self.page) and self.count != 0:
             return True
         else:
             return False
+    #Determines if the current pagination item has a previous url
     def has_prev_url(self):
         if int(self.page) != 0:
             return True
         else:
             return False
 
+#Determines the search terms to be uses in DB Query
 class Search:
 
     @staticmethod
