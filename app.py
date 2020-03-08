@@ -127,7 +127,8 @@ def login():
             session["user_id"] = str(user_record["_id"])
             session["username"] = user_record["username"]
             session["logged_in"] = True
-            session["is_admin"] = user_record["is_admin"]
+            #Administration removed for demonstration purposes
+            session["is_admin"] = True #user_record["is_admin"]
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccesfull, please check email and password', 'card-panel teal lighten-2')
