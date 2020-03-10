@@ -398,6 +398,13 @@ textarea{
     color: #ff4b4b;
 }
 
+.success {
+    color: #1dbb1d;
+  }
+
+.warning{
+    min-width: 300px;
+}
 .slider {
     max-height: 70vh;
     display: block;

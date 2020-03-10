@@ -81,16 +81,26 @@ Registration/Login Controllers
 def register():
     form = RegistrationForm()       
     if form.validate_on_submit():
-        if does_email_exist(form.email.data):
-            flash(f'Account with email {form.email.data} exists', 'card-panel teal lighten-2')
+        email_exists = does_email_exist(form.email.data)
+        username_exists = does_username_exist(form.username.data)
+
+        if email_exists and username_exists:
+            flash(f"Account with the email '{form.email.data}' exists", 'error')
+            flash(f"Account with the username '{form.username.data}' exists", 'error')
+            return redirect(url_for('register'))
+        elif email_exists:
+            flash(f"Account with the email '{form.email.data}' exists", 'error')
+            return redirect(url_for('register'))
+        elif username_exists:
+            flash(f"Account with the username '{form.username.data}' exists", 'error')
             return redirect(url_for('register'))
         else:
             secure_password = bcrypt.generate_password_hash(form.password.data).decode('utf8')
             data = Record.create_user_record(request.form, secure_password)
             user_db.insert_one(data)
-            flash(f'Account created for {form.username.data}!', 'card-panel teal lighten-2')
+            flash(f'Account created for {form.username.data}!', 'success')
             return redirect(url_for('login'))
-
+            
     return render_template('register.html', title = 'Register', form=form)
 #Determines if the email exists
 def does_email_exist(search_item):
@@ -98,7 +108,14 @@ def does_email_exist(search_item):
     if not result:
         return False
     else:
-        return True 
+        return True
+#Determines if the email exists
+def does_username_exist(search_item):
+    result = user_db.find_one({'username':search_item})
+    if not result:
+        return False
+    else:
+        return True
 
 #logs in the user and sets the session variables
 @app.route("/login", methods=['GET','POST'])
