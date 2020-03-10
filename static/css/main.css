@@ -249,6 +249,10 @@ font-size: 2em;
     color: #1f5433;
 }
 
+.invalid-feedback{
+    margin-top: 10px;
+}
+
 /*buttons*/
 
 .btn {
