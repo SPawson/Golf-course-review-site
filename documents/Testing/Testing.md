@@ -22,13 +22,13 @@
 <h3> User story 2 - As a user, I would like to be able to find golf courses which have a good reputation so as to ensure its quality </h3>
 <h4>Star Rating System</h4>
 <ol>
-<li>In order to meet this user criteria, I implemented a rating system in the form of a star rating system. The main reason I choose this is that it is familiar to all users and is a easy visual way of seeing what others think of a golf course. The star rating works on a 1-5 star rating and also displays the number of reviews left on certain parts of the website. </li>
-<li>Users are able to affect the rating of the different courses by being able to leave reviews if they are a registered user. This enables the star ratings to be generated for each of the courses. Thanks to these reviews, a user is then able to see clearly the quality of each course being viewed and is then able to come to a decision on course. </li>
+<li>In order to meet this user criteria, I implemented a rating system in the form of a star rating system. The main reason I choose this is that it is familiar to all users and is an easy visual way of seeing what others think of a golf course. The star rating works on a 1-5 star rating and also displays the number of reviews left on certain parts of the website. </li>
+<li>Users are able to affect the rating of the different courses by being able to leave reviews if they are a registered user. This enables the star ratings to be generated for each of the courses. Thanks to these reviews, a user is then able to see clearly the quality of each course being viewed and is then able to come to a decision on the course. </li>
 </ol>
 <h3> User story 3 - As a user, I would like to discover new golf courses that I haven’t played before </h3>
 <h4>Featured Course</h4>
 <ol>
-<li>As mentioned previously, in order to meet this user criteria, I implemented a featured course section near on the homepage, as this would see a lot a traffic. The main idea around the featured course, was to give the user an opportunity to discover new courses that they maybe had not seen before. In future this featured section could be used to feature courses based on a users preferences or past search history. </li>
+<li>As mentioned previously, in order to meet this user criteria, I implemented a featured course section on the homepage, as this would see a lot of traffic. The main idea around the featured course, was to give the user an opportunity to discover a new course that they maybe had not seen before. In future this featured section could be used to feature courses based on a users preferences or past search history. </li>
 </ol>
 
 <h4>Popular Course</h4>
