@@ -10,12 +10,14 @@
 <p>The web application can be viewed on Heroku via the following address:
 <a target="_blank" href="https://play-golf-course-finder.herokuapp.com/">https://play-golf-course-finder.herokuapp.com/</a></p>
 
+<p>For demonstration purposes the course management system is available to all registered users. When this site goes live, this functionality will be limited to administrators only.</p>
+
 </hr>
 <h2>UX</h2>
 
 <h3>Overview</h3>
 
-<p>The main focus of this application is to allow golfers the ability to search for and review golf courses around England. This means therefore, that the whole design of the application is to further enhance the users experience to ensure it is as easy to use the interact with the sites features.</p>
+<p>The main focus of this application is to allow golfers the ability to search for and review golf courses around England. This means therefore, that the whole design of the application is to further enhance the users experience to ensure it is easy to interact with the sites features.</p>
 
 <h3>Wireframes</h3>
 <p> During the development stage of my project I generated some wireframes for both the mobile and desktop approaches using Balsamiq. Throughout the course of developing the website, I have deviated from the wireframes in certain sections. This is mainly due to me discovering a better design during the development, or issues with implementing the feature. </p>
@@ -49,7 +51,7 @@
 <h3>Existing Features</h3>
 
 <h4>Feature 1 – User Registration</h4>
-<p> The user is able to register as a member of the site, in order to access features of site, such as being able to leave reviews. The feature was implemented as I needed to provide a secure way to enable user to interact with the site and give traceability to the reviews that were being left on the site. It is not a necessity for users to register in order to use the site, however this greatly enhances their experience. </p>
+<p> The user is able to register as a member of the site, in order to access certain features, such as being able to leave reviews. The feature was implemented as I needed to provide a secure way to enable users to interact with the site and give traceability to the reviews that were being left. It is not a necessity for users to register in order to use the site, however this greatly enhances their experience. </p>
 
 <h4>Feature 2 – User Login</h4>
 <p> If the user has valid login details, they are able to log into the site which enables them to access more features. The feature was implemented in this way to allow only registered users certain privileges when interacting with the site. If this was not the case, anybody could access these features, which could lead to issues. Another element of this feature is to distinguish between admin users, as admin users have further features which can be taken advantage of, which will be explained later. </p>
@@ -64,17 +66,17 @@
 <p> An administrative user has access to more features of the course such as the Golf course management system. The feature was implemented in this way in order to allow only select users the ability to create and manage the golf courses on the site. This is important as it means that only trusted individuals are able to update content for the courses, meaning no malicious actions can be taken affect rival courses for instance. </p>
 
 <h4>Feature 6 – Golf Course Management System</h4>
-<p> The golf course management system allows admin users to create and manage golf courses for other users of the site to interact with. The main reason this system was implemented was to ensure that only verified users would be able to access some of the most critical features of the site. By limiting the course content management to certain users, this means that greater control can be taken in order to ensure only correct information is posted on the site in regard to the various golf courses on the site. The management system main focus is to allow users to not only create new golf courses on the site, but also gives them the ability to edit and also delete courses. This would prove very useful in situations where an aspect of a site changes such as the par of the course. </p>
+<p> The golf course management system allows admin users to create and manage golf courses for other users of the site to interact with. The main reason this system was implemented was to ensure that only verified users would be able to access some of the most critical features of the site. By limiting the course content management to certain users, this means that greater control can be taken in order to ensure only correct information is posted on the site in regards to the various golf courses on the site. The management systems main focus is to allow users to not only create new golf courses on the site, but it also gives them the ability to edit and also delete courses. This would prove very useful in situations where an aspect of a course changes such as the par. </p>
 
 <h4>Feature 7 – Featured Course</h4>
-<p>The home page contains a featured course section, which highlights a random course from the database, every time the user visits the homepage. This was implemented in this way to expose users to different courses that they may not normally come across or know existed. This is also very beneficial to course owners, as it may encourage more golfers to come and visit their golf course. </p>
+<p>The homepage contains a featured course section, which highlights a random course from the database, every time the user visits the homepage. The feature was implemented in this way to expose users to different courses that they may not normally come across or know existed. This is also very beneficial to course owners, as it may encourage more golfers to come and visit their golf course. </p>
 
 <h4>Feature 8 – Popular Courses</h4>
 <p>The home page contains a number of popular courses, which are filtered based on the number of reviews each course has. The reason the feature has been implemented in this way, is that a course with more reviews, is more likely to be of a higher quality, due to the number of golfers playing there. This again will allow users to be exposed to courses that they not have seen before, which could give them a new place to play. </p>
 
 
 <h4>Feature 9 – Course Search</h4>
-<p>The site contains a comprehensive search system, which allows users to search for golf courses by either name, region, rating or a combination of all three. The reason this feature was implemented was to allow users a quick and efficient way to search the courses that the website contains. This will allow users to search for the courses they are interested in and may also allow them to find courses that they haven’t seen before. Users are able to see the important information from </p>
+<p>The site contains a comprehensive search system, which allows users to search for golf courses by either name, region, rating or a combination of all three. The reason this feature was implemented was to allow users a quick and efficient way to search the courses that the website contains. This will allow users to search for the courses they are interested in and may also allow them to find courses that they haven’t seen before. </p>
 
 <h3>Features left to implement</h3>
 
@@ -103,7 +105,7 @@
 
 <h3>Materialize</h3>
 <p>
-The project uses the Materialize framework and a start template in order to assist with the styling and look of the website. This can be seen with items such as the forms, card and parallax images.
+The project uses the Materialize framework and a start template in order to assist with the styling and look of the website. This can be seen with items such as the forms, cards and parallax images.
 </p>
 <a target="_blank" href="https://materializecss.com/">https://materializecss.com/</a>
 
@@ -166,7 +168,7 @@ The project uses the Materialize framework and a start template in order to assi
 
 <li>When diagnosing the issue with the search system, I found that it was looking for an exact match to the value that was entered in the search system. As a result, if a user only entered a part name, this wouldn’t match with any records in the database. In order to rectify this, I had to use a $Regex (Regular Expression) operator. This would allow me to search the records in the DB based on terms which matched the Course Name field. This ultimately allowed the user to be able to search with key words, such as Selby, Valley etc.</li>
 
-<li>I found that when the user attempted to login to the site using the correct email, but with a capital letter for instance. This would prevent the user from logging in and would result in it appearing to the user that the user details were incorrect. I found the issue was with the part of login function where it searched the DB for a matching email. As my records are all stored in lowercase, this meant the user would never be found as the terms didn’t match failing the login. TO rectify this, I had to change this by making sure the email entered was put into a lowercase format first and then used to search the DB. This allowed me to resolve the issue. </li>
+<li>I found that when the user attempted to login to the site using the correct email, but with a capital letter for instance. This would prevent the user from logging in and would result in it appearing to the user that the user details were incorrect. I found the issue was with the part of the login function where it searched the DB for a matching email. As my records are all stored in lowercase, this meant the user would never be found as the terms didn’t match failing the login. TO rectify this, I had to change this by making sure the email entered was put into a lowercase format first and then used to search the DB. This allowed me to resolve the issue. </li>
 
 <li>I found that when a user tried to edit an existing item such as a course, the information would not load correctly after I implemented WTForms for my form control. I found the solution to this issue was to preload the form with an object of the data on instantiation of the form class. This meant that the form would be given all the information it required in order to load the form correctly.</li>
 
@@ -208,8 +210,6 @@ The project uses the Materialize framework and a start template in order to assi
 <ul>
 
 <li>Images used in the slider and parallax sections were obtained from<a href=”https://unsplash.com/” target=”_blank”>Unsplash</a></li>
-
-<li>Knight for the back of the card image was taken from Google images</li>
 
 </ul>
 <h3>Acknowledgements</h3>
