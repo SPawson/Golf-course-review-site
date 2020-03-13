@@ -143,6 +143,9 @@ def does_username_exist(search_item):
 # logs in the user and sets the session variables
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if session["logged_in"] == True:
+        return redirect(url_for('index'))
+
     form = LoginForm()
     if form.validate_on_submit():
         email_entered = form.email.data
