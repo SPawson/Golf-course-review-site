@@ -10,13 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let rating = parseInt(ratingSelector.getAttribute('value'));
         var selected = stars[rating - 1];
     }
-
-
+    
     if (selected != null) {
         selected.dispatchEvent(new MouseEvent('click'));
     }
-
-
 });
 
 //sets the graphical and attribute rating
@@ -37,9 +34,9 @@ function setRating(ev) {
             match = true;
             num = index + 1;
         }
-        let starValue = parseInt(document.querySelector('.rating').getAttribute('value'))
+        let starValue = parseInt(document.querySelector('.rating').getAttribute('value'));
     });
-    document.querySelector('.rating').setAttribute('value', num)
+    document.querySelector('.rating').setAttribute('value', num);
 
 
 }

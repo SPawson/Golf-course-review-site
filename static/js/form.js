@@ -6,7 +6,7 @@ var regionSelect = document.getElementById("region");
 var textSearch = document.getElementById("review-title");
 var minRating = document.getElementById("min-rating");
 var searchForm = document.getElementById("search");
-var searchError= document.getElementById("search-error")
+var searchError= document.getElementById("search-error");
 
 if(editCourse != null){
     editCourse.addEventListener("submit", courseValidation, false);
@@ -18,8 +18,6 @@ if(searchForm != null){
     searchForm.addEventListener("submit", searchValidation, false);
 }
 
-
-
 function courseValidation(event){
     let messages = [];
     if (region.value == "" || region.value == null){
@@ -28,11 +26,10 @@ function courseValidation(event){
 
     if (messages.length > 0){
         event.preventDefault();
-        errorElement.innerHTML = messages.join()
+        errorElement.innerHTML = messages.join();
     }
     
 }
-
 
 function searchValidation(event){
     let messages = [];
@@ -42,7 +39,7 @@ function searchValidation(event){
 
     if (messages.length > 0){
         event.preventDefault();
-        searchError.innerHTML = messages.join()
+        searchError.innerHTML = messages.join();
     }
     
 }
