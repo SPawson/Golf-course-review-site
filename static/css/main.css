@@ -354,7 +354,7 @@ font-size: 2em;
     border: #f02a2a solid 2px;
     color: white;
 }
-.btn-delete:hover{
+.btn-delete:hover , .btn-delete:focus{
     background-color: #cd2222;
     border: #cd2222 solid 2px;
 }
