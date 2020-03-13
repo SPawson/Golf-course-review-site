@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
   //parallax initialisation
   $('.parallax').parallax();
 
+  //Slider initialise
+  var sliderElement = document.querySelectorAll('.slider');
+  var instances = M.Slider.init(sliderElement, options);
+
   //Initialises index image carousel
   let options = {
     //fullWidth: true,
